@@ -1,6 +1,8 @@
 ## Biography
 
-I am a master student at Beihang University. My research interests include differential privacy and artificial intelligence. My recent work focuses on Privacy-Preserving Deep Learning. Previously, I received my B.E. degree of Communication Engineering from Jilin University in 2019.
+I am a master student at Beihang University. My research interests include differential privacy and artificial intelligence. My recent work focuses on Privacy Preserving Deep Learning. Previously, I received my B.E. degree from Jilin University in 2019.
+
+
 
 
 
@@ -11,21 +13,27 @@ I am a master student at Beihang University. My research interests include diffe
 
 
 
+
+
 ## Education
 
 - M.S. in Cyber Security, 2019-now
 
   Beihang University (BUAA)
 
-- B.E. in Communication engineering, 2015-2019
+- B.E. in Communication Engineering, 2015-2019
 
   Jilin University (JLU)
+
+
 
 
 
 ## Publications
 
 1. coming soon :)
+
+
 
 
 
