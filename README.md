@@ -1,3 +1,3 @@
-## xuefeng-xu.github.io
+# xuefeng-xu.github.io
 
 Xuefeng Xu's Homepage.
