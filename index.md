@@ -1,8 +1,10 @@
+# Xuefeng Xu
+
+
+
 ## Biography
 
 I am a master student at Beihang University. My research interests include differential privacy and artificial intelligence. My recent work focuses on Privacy Preserving Deep Learning. Previously, I received my B.E. degree from Jilin University in 2019.
-
-
 
 
 
@@ -10,8 +12,6 @@ I am a master student at Beihang University. My research interests include diffe
 
 - Email: [xuxf100@buaa.edu.cn](mailto:xuxuf100@buaa.edu.cn)
 - Github: [xuefeng-xu]( https://github.com/xuefeng-xu/)
-
-
 
 
 
@@ -27,13 +27,9 @@ I am a master student at Beihang University. My research interests include diffe
 
 
 
-
-
 ## Publications
 
 1. coming soon :)
-
-
 
 
 
