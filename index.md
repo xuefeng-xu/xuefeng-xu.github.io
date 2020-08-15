@@ -12,6 +12,7 @@ I am a master student at Beihang University. My research interests include diffe
 
 - Email: [xuxf100@buaa.edu.cn](mailto:xuxuf100@buaa.edu.cn)
 - Github: [xuefeng-xu]( https://github.com/xuefeng-xu/)
+- LinkedIn: [xuefeng-xu](https://www.linkedin.com/in/xuefeng-xu-10a268177)
 
 
 
