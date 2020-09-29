@@ -10,21 +10,21 @@ I am a master student at Beihang University. My research interests include diffe
 
 ## Contact
 
-- Email: [xuxf100@buaa.edu.cn](mailto:xuxuf100@buaa.edu.cn)
-- Github: [xuefeng-xu]( https://github.com/xuefeng-xu/)
-- LinkedIn: [xuefeng-xu](https://www.linkedin.com/in/xuefeng-xu-10a268177)
+- **Email**: [xuxf100@buaa.edu.cn](mailto:xuxuf100@buaa.edu.cn)
+- **Github**: [xuefeng-xu]( https://github.com/xuefeng-xu/)
+- **LinkedIn**: [xuefeng-xu](https://www.linkedin.com/in/xuefeng-xu-10a268177)
 
 
 
 ## Education
 
-- M.S. in Cyber Security, 2019-now
+- 2019 - present, **Beihang University**
 
-  Beihang University (BUAA)
+  M. S. in Cyber Security
 
-- B.E. in Communication Engineering, 2015-2019
+- 2015 - 2019,  **Jilin University**
 
-  Jilin University (JLU)
+  B. E. in Communication Engineering
 
 
 
