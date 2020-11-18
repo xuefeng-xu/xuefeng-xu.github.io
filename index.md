@@ -30,7 +30,11 @@ I am a master student at Beihang University. My research interests include diffe
 
 ## Publications
 
-1. coming soon :)
+1. Deep Learning Algorithms Design and Implementation Based on Differential Privacy
+
+   **Xuefeng Xu**, Yanqing Yao and Lei Cheng
+
+   International Conference on Machine Learning for Cyber Security, 2020
 
 
 
