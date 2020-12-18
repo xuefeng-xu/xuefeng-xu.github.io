@@ -40,23 +40,12 @@ I am a master student at Beihang University. My research interests include diffe
 
 ## Great CS Courses
 
-- MIT **18.06 Linear Algebra** by Prof. Gilbert Strang
+- MIT [18.06 Linear Algebra](https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/resource-index/) by Prof. Gilbert Strang
 
-  [Course materials (mit ocw)](https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/resource-index/)
+- MIT [The Missing Semester of Your CS Education](https://missing.csail.mit.edu) by three PhD students
 
-- MIT **The Missing Semester of Your CS Education** by three PhD students
+- Coursera [Deep Learning Specialization](https://www.coursera.org/specializations/deep-learning) by Prof. Andrew Ng
 
-  [Course website](https://missing.csail.mit.edu)
+- Stanford [CS229 Machine Learning](http://cs229.stanford.edu) by Prof. Andrew Ng
 
-- Coursera **Deep Learning Specialization** by Prof. Andrew Ng
-
-  [Course website](https://www.coursera.org/specializations/deep-learning)
-
-- Stanford **CS229 Machine Learning** by Prof. Andrew Ng
-
-  [Course website](http://cs229.stanford.edu)
-
-- Coursera **Algorithms** by Prof. Robert Sedgewick
-
-  Course website: [part1](https://www.coursera.org/learn/algorithms-part1) and [part2](https://www.coursera.org/learn/algorithms-part2)
-
+- Coursera Algorithms [part1](https://www.coursera.org/learn/algorithms-part1) and [part2](https://www.coursera.org/learn/algorithms-part2) by Prof. Robert Sedgewick
