@@ -36,6 +36,12 @@ p {
 	margin: 10px;
 }
 
+.work li {
+	font-size: 20px;
+	line-height: 30px;
+	margin: 10px;
+}
+
 .publication li{
 	font-size: 20px;
 	line-height: 30px;
