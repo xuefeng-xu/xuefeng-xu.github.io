@@ -18,13 +18,13 @@ p {
 	margin:30px 0;
 }
 
-.photo{
+.photo {
     float:left;
     width:20%;
 	margin:30px 0;
 }
 
-.intro{
+.intro {
     float:right;
     width:70%;
 	margin:30px 0;
@@ -42,19 +42,19 @@ p {
 	margin: 10px;
 }
 
-.publication li{
+.publication li {
 	font-size: 20px;
 	line-height: 30px;
 	margin: 10px;
 }
 
-.course li{
+.course li {
 	font-size: 20px;
 	line-height: 30px;
 	margin: 5px;
 }
 
-.misc li{
+.misc li {
 	font-size: 20px;
 	line-height: 30px;
 	margin: 5px;
