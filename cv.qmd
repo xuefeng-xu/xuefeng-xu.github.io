@@ -1,0 +1,46 @@
+---
+title: "Xuefeng Xu"
+date-modified: last-modified
+---
+
+## Education
+
+<ul class="loose_margin">
+  <li>
+    University of Warwick \| Coventry, UK<br>
+    Ph.D. in Computer Science | September 2024 - Present
+  </li>
+  <li>
+    Beihang University \| Beijing, China<br>
+    M.E. in Cyberspace Security | September 2019 - January 2022
+  </li>
+  <li>
+    Jilin University \| Changchun, China<br>
+    B.E. in Communication Engineering | September 2015 - July 2019
+  </li>
+</ul>
+
+## Experience
+
+<ul class="loose_margin">
+  <li>
+    PrimiHub \| Beijing, China<br>
+    Privacy Engineer \| December 2022 - August 2024
+  </li>
+  <li>
+    OPPO \| Shenzhen, China<br>
+    Machine Learning Intern \| May 2022 - August 2022
+  </li>
+</ul>
+
+## Research
+
+{{< include research.qmd >}}
+
+## Teaching
+
+{{< include teach.qmd >}}
+
+## Service
+
+-   Conference Reviewer: ICLR 2025

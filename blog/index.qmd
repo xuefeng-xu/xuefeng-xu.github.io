@@ -1,0 +1,12 @@
+---
+listing:
+  contents:
+    - "*.qmd"
+  sort: "date"
+  type: default
+  feed: true
+  sort-ui: [date]
+  filter-ui: true
+  categories: numbered
+page-layout: full
+---

@@ -1,0 +1,22 @@
+### Books
+
+-   [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/ila6/indexila6.html)
+-   [Algorithms](https://algs4.cs.princeton.edu)
+-   [Numerical Recipes: The Art of Scientific Computing](https://numerical.recipes/book.html)
+-   [Pattern Recognition and Machine Learning](https://www.microsoft.com/en-us/research/people/cmbishop/prml-book/)
+-   [The Elements of Statistical Learning](https://hastie.su.domains/ElemStatLearn/)
+-   [Probabilistic Machine Learning](https://github.com/probml/pml-book)
+-   [Foundations of Machine Learning](https://cs.nyu.edu/~mohri/mlbook/)
+-   [The Algorithmic Foundations of Differential Privacy](https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf)
+-   [The Complexity of Differential Privacy](https://scholar.harvard.edu/files/salil/files/manuscript_2017.pdf)
+-   [Introduction to Modern Cryptography](https://www.cs.umd.edu/~jkatz/imc.html)
+-   [Effective Python](https://effectivepython.com)
+
+### Courses
+
+-   MIT [18.06 Linear Algebra](https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/resource-index/)
+-   Coursera Algorithms [Part 1](https://www.coursera.org/learn/algorithms-part1) and [Part 2](https://www.coursera.org/learn/algorithms-part2)
+-   Stanford [CS229 Machine Learning](https://cs229.stanford.edu)
+-   Coursera [Deep Learning Specialization](https://www.coursera.org/specializations/deep-learning)
+-   Coursera [Cryptography](https://www.coursera.org/learn/cryptography)
+-   MIT [The Missing Semester of Your CS Education](https://missing.csail.mit.edu/)

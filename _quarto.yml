@@ -1,0 +1,36 @@
+project:
+  type: website
+
+execute:
+  freeze: auto
+
+website:
+  title: "Xuefeng Xu"
+  site-url: https://xuefeng-xu.github.io
+  repo-url: https://github.com/xuefeng-xu/xuefeng-xu.github.io
+  repo-branch: master
+  repo-actions: [source]
+  google-analytics: "G-9QXY2VK8LM"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: research.qmd
+        text: Research
+      - href: teach.qmd
+        text: Teaching
+      - href: blog/index.qmd
+        text: Blog
+      - href: cv.qmd
+        text: CV
+      - href: misc/index.qmd
+        text: Misc.
+        
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-title: Contents
+    toc-location: left
