@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Xuefeng Xu</title>
+<link>https://xuefeng-xu.github.io/blog/</link>
+<atom:link href="https://xuefeng-xu.github.io/blog/index.xml" rel="self" type="application/rss+xml"/>
+<description></description>
+<generator>quarto-1.6.39</generator>
+<lastBuildDate>Thu, 13 Mar 2025 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Monotone Piecewise Cubic Interpolation</title>
+  <link>https://xuefeng-xu.github.io/blog/pchip.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Piecewise Cubic Hermite Interpolating Polynomial (PCHIP) is a cubic spline-based interpolation method designed to preserve monotonicity. See <a href="https://mathworks.com/help/matlab/ref/pchip.html">MATLAB</a> or <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.PchipInterpolator.html">SciPy</a> for the implementation details.</p>
+<section id="interpolation-function" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="interpolation-function"><span class="header-section-number">1</span> Interpolation Function</h2>
+<p>Given <img src="https://latex.codecogs.com/png.latex?n"> data points <img src="https://latex.codecogs.com/png.latex?(x_1,y_1),%5Cdots,(x_n,y_n)"> with <img src="https://latex.codecogs.com/png.latex?x_1%3C%5Ccdots%3Cx_n">, where <img src="https://latex.codecogs.com/png.latex?y"> is monotonic (either <img src="https://latex.codecogs.com/png.latex?y_i%5Cle%20y_%7Bi+1%7D"> or <img src="https://latex.codecogs.com/png.latex?y_%7Bi+1%7D%5Cge%20y_i">), define:</p>
+<p><span id="eq-h-s"><img src="https://latex.codecogs.com/png.latex?%0Ah_i=x_%7Bi+1%7D-x_i,%5C%20s_i=%5Cfrac%7By_%7Bi+1%7D-y_i%7D%7Bh_i%7D%0A%5Ctag%7B1%7D"></span></p>
+<p>For <img src="https://latex.codecogs.com/png.latex?x_i%3Cx%3Cx_%7Bi+1%7D">, the interpolation function <img src="https://latex.codecogs.com/png.latex?f(x)"> is a cubic polynomial:</p>
+<p><span id="eq-cubic-poly"><img src="https://latex.codecogs.com/png.latex?%0Af(x)=c_0+c_1(x-x_i)+c_2(x-x_i)%5E2+c_3(x-x_i)%5E3%0A%5Ctag%7B2%7D"></span></p>
+<p>satisfying:</p>
+<p><span id="eq-cubic-poly-cond"><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign*%7D%0Af(x_i)&amp;=y_i,%20&amp;f(x_%7Bi+1%7D)&amp;=y_%7Bi+1%7D%5C%5C%0Af'(x_i)&amp;=d_i,%20&amp;f'(x_%7Bi+1%7D)&amp;=d_%7Bi+1%7D%0A%5Cend%7Balign*%7D%0A%5Ctag%7B3%7D"></span></p>
+<p>Solving for the coefficients:</p>
+<p><span id="eq-cubic-poly-coef"><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign*%7D%0Ac_0&amp;=y_i,%20&amp;c_2&amp;=%5Cfrac%7B3s_i-2d_i-d_%7Bi+1%7D%7D%7Bh_i%7D%5C%5C%0Ac_1&amp;=d_i,%20&amp;c_3&amp;=%5Cfrac%7B-2s_i+d_i+d_%7Bi+1%7D%7D%7Bh_i%5E2%7D%5C%5C%0A%5Cend%7Balign*%7D%0A%5Ctag%7B4%7D"></span></p>
+<p>Thus, computing derivatives <img src="https://latex.codecogs.com/png.latex?d_1,%5Cdots,d_n"> determines <img src="https://latex.codecogs.com/png.latex?c_0,c_1,c_2,c_3"> for each interval.</p>
+</section>
+<section id="derivative-computation" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="derivative-computation"><span class="header-section-number">2</span> Derivative Computation</h2>
+<p>The derivative at <img src="https://latex.codecogs.com/png.latex?x_i"> is computed using local information from three neighboring points <span class="citation" data-cites="Fritsch1984">(Fritsch and Butland 1984)</span>:</p>
+<p><span id="eq-d"><img src="https://latex.codecogs.com/png.latex?%0Ad_i=G(s_%7Bi-1%7D,s_i,h_%7Bi-1%7D,h_i)=%0A%5Cbegin%7Bcases%7D%0A%5Cfrac%7Bs_%7Bi-1%7Ds_i%7D%7Brs_i+(1-r)s_%7Bi-1%7D%7D%20&amp;%20%5Cmathrm%7Bif~%7Ds_%7Bi-1%7Ds_i%3E0,%20%5C%5C%0A0%20&amp;%20%5Ctext%7Botherwise%7D%20&amp;%0A%5Cend%7Bcases%7D%0A%5Ctag%7B5%7D"></span></p>
+<p>where the ratio <img src="https://latex.codecogs.com/png.latex?r"> (<img src="https://latex.codecogs.com/png.latex?1/3%3Cr%3C2/3">) is given by:</p>
+<p><span id="eq-r"><img src="https://latex.codecogs.com/png.latex?%0Ar=%5Cfrac%7Bh_%7Bi-1%7D+2h_i%7D%7B3h_%7Bi-1%7D+3h_i%7D=%5Cfrac%7B1%7D%7B3%7D%5CBig(1+%5Cfrac%7Bh_i%7D%7Bh_%7Bi+1%7D+h_i%7D%5CBig)%0A%5Ctag%7B6%7D"></span></p>
+<p>If <img src="https://latex.codecogs.com/png.latex?s_%7Bi-1%7D"> and <img src="https://latex.codecogs.com/png.latex?s_i"> have opposite signs (indicating non-monotonicity) or one is zero, then <img src="https://latex.codecogs.com/png.latex?d_i=0">. Otherwise, <img src="https://latex.codecogs.com/png.latex?d_i"> is a weighted harmonic mean:</p>
+<p><span id="eq-harmonic-mean"><img src="https://latex.codecogs.com/png.latex?%0A%5Cfrac%7B1%7D%7Bd_i%7D=%5Cfrac%7Br%7D%7Bs_%7Bi-1%7D%7D+%5Cfrac%7B1-r%7D%7Bs_i%7D%0A%5Ctag%7B7%7D"></span></p>
+<p>For endpoints <img src="https://latex.codecogs.com/png.latex?x_1"> and <img src="https://latex.codecogs.com/png.latex?x_n">, derivatives are computed separately <span class="citation" data-cites="Moler2004">(Moler 2004, chap. 3)</span>:</p>
+<p><span id="eq-d1"><img src="https://latex.codecogs.com/png.latex?%0Ad_1=%0A%5Cbegin%7Bcases%7D%0A0%20&amp;%20%5Cmathrm%7Bif~%7D%5Ctext%7Bsgn%7D(%5Chat%7Bd%7D_1)%5Cneq%20%5Ctext%7Bsgn%7D(s_1),%20%5C%5C%0A3s_1%20&amp;%20%5Cmathrm%7Bif~%7D%5Ctext%7Bsgn%7D(s_1)%5Cneq%20%5Ctext%7Bsgn%7D(s_2)%20%5Cland%7C%5Chat%7Bd%7D_1%7C%3E3%7Cs_1%7C,%5C%5C%0A%5Chat%7Bd%7D_1%20&amp;%20%5Ctext%7Botherwise%7D%20&amp;%0A%5Cend%7Bcases%7D%0A%5Ctag%7B8%7D"></span></p>
+<p>where:</p>
+<p><span id="eq-hat-d1"><img src="https://latex.codecogs.com/png.latex?%0A%5Chat%7Bd%7D_1=%5Cfrac%7B(2h_1+h_2)s_1%20-%20h_1s_2%7D%7B%7Bh_1+h_2%7D%7D%0A%5Ctag%7B9%7D"></span></p>
+<p>A quadratic polynomial <img src="https://latex.codecogs.com/png.latex?%5Chat%7Bf%7D(x)=%5Chat%7Bc%7D_0+%5Chat%7Bc%7D_1x+%5Chat%7Bc%7D_2x%5E2"> is fit through the first three points, and its derivative at <img src="https://latex.codecogs.com/png.latex?x_1"> is computed to obtain <img src="https://latex.codecogs.com/png.latex?%5Chat%7Bd%7D_1">. Additional rules are then applied to preserve monotonicity. Similar rules apply for <img src="https://latex.codecogs.com/png.latex?d_n">.</p>
+</section>
+<section id="monotonicity-conditions" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="monotonicity-conditions"><span class="header-section-number">3</span> Monotonicity Conditions</h2>
+<p>To ensure monotonicity, define:</p>
+<p><span id="eq-alpha-beta"><img src="https://latex.codecogs.com/png.latex?%0A%5Calpha_i=%5Cfrac%7Bd_i%7D%7Bs_i%7D,%5C%0A%5Cbeta_i=%5Cfrac%7Bd_%7Bi+1%7D%7D%7Bs_i%7D%0A%5Ctag%7B10%7D"></span></p>
+<div id="lem-monotone-cond" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 1</strong></span> A sufficient condition for monotonicity is <span class="citation" data-cites="Fritsch1980">(Fritsch and Carlson 1980)</span>:</p>
+<p><span id="eq-monotone-cond"><img src="https://latex.codecogs.com/png.latex?%0A%5Calpha_i,%5Cbeta_i%5Cge0%0A%5Cland%0A%5CBig(%0A%5Calpha_i,%5Cbeta_i%5Cle3%0A%5Clor%0A%5Cphi(%5Calpha_i,%5Cbeta_i)%5Cge0%0A%5CBig)%0A%5Ctag%7B11%7D"></span></p>
+<p>where:</p>
+<p><span id="eq-phi-alpha-beta"><img src="https://latex.codecogs.com/png.latex?%0A%5Cphi(%5Calpha,%5Cbeta)=%5Calpha-%5Cfrac%7B(2%5Calpha+%5Cbeta-3)%5E2%7D%7B3(%5Calpha+%5Cbeta-2)%7D%0A%5Ctag%7B12%7D"></span></p>
+</div>
+<p>If <img src="https://latex.codecogs.com/png.latex?s_%7Bi-1%7Ds_i%3E0">, then <img src="https://latex.codecogs.com/png.latex?%5Calpha_i%3E0">; otherwise, <img src="https://latex.codecogs.com/png.latex?%5Calpha_i=0">. Since the ratio <img src="https://latex.codecogs.com/png.latex?r"> satisfies <img src="https://latex.codecogs.com/png.latex?1/3%3Cr%3C2/3">, <img src="https://latex.codecogs.com/png.latex?%5Calpha_i"> is upper-bounded by 3:</p>
+<p><span id="eq-alpha-ub"><img src="https://latex.codecogs.com/png.latex?%0A%5Calpha_i%0A=%5Cfrac%7B1%7D%7Brs_i/s_%7Bi-1%7D+(1-r)%7D%0A%3C%5Cfrac%7B1%7D%7B1-r%7D%3C3%0A%5Ctag%7B13%7D"></span></p>
+<p>For endpoint <img src="https://latex.codecogs.com/png.latex?%5Calpha_1">, we only need to show the condition of <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bsgn%7D(%5Chat%7Bd%7D_1)=%5Ctext%7Bsgn%7D(s_1)=%5Ctext%7Bsgn%7D(s_2)">, since other conditions already lie within the region <img src="https://latex.codecogs.com/png.latex?%5B0,3%5D">.</p>
+<p><span id="eq-alpha1-ub"><img src="https://latex.codecogs.com/png.latex?%0A%5Calpha_1%0A=1+%5Cfrac%7B1-s_2/s_1%7D%7B1+h_2/h_1%7D%3C2%0A%5Ctag%7B14%7D"></span></p>
+<p>Similarly, <img src="https://latex.codecogs.com/png.latex?%5Cbeta_i"> and endpoint <img src="https://latex.codecogs.com/png.latex?%5Cbeta_%7Bn-1%7D"> all satisfy the monotonicity condition.</p>
+</section>
+<section id="proof-of-monotonicity-conditions" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="proof-of-monotonicity-conditions"><span class="header-section-number">4</span> Proof of Monotonicity Conditions</h2>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>To preserve monotonicity, the derivatives <img src="https://latex.codecogs.com/png.latex?d_i"> and <img src="https://latex.codecogs.com/png.latex?d_%7Bi+1%7D"> must align with the direction of the slope of the interval <img src="https://latex.codecogs.com/png.latex?s_i">. This is a necessary condition <span class="citation" data-cites="Fritsch1980">(Fritsch and Carlson 1980)</span>:</p>
+<p><span id="eq-monotone-cond-alpha-beta"><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7Bsgn%7D(d_i)=%5Ctext%7Bsgn%7D(d_%7Bi+1%7D)=%5Ctext%7Bsgn%7D(s_i)%0A%5CLeftrightarrow%0A%5Calpha_i,%5Cbeta_i%5Cge0%0A%5Ctag%7B15%7D"></span></p>
+<p>The derivative of <img src="https://latex.codecogs.com/png.latex?f(x)"> is a quadratic polynomial:</p>
+<p><span id="eq-cubic-poly-derivative"><img src="https://latex.codecogs.com/png.latex?%0Af'(x)=c_1+%0A2c_2(x-x_i)+%0A3c_3(x-x_i)%5E2%0A%5Ctag%7B16%7D"></span></p>
+<p>It has a unique extremum at:</p>
+<p><span id="eq-x-extrem"><img src="https://latex.codecogs.com/png.latex?%0Ax%5E*=x_i+%5Cfrac%7Bh_i%7D%7B3%7D%5Ccdot%5Cfrac%7B2%5Calpha_i+%5Cbeta_i-3%7D%7B%5Calpha_i+%5Cbeta_i-2%7D%0A%5Ctag%7B17%7D"></span></p>
+<p>and</p>
+<p><span id="eq-y-extrem"><img src="https://latex.codecogs.com/png.latex?%0Af'(x%5E*)=%5Cphi(%5Calpha_i,%5Cbeta_i)s_i%0A%5Ctag%7B18%7D"></span></p>
+<p>There are three conditions to check: 1) <img src="https://latex.codecogs.com/png.latex?x%5E*%3Cx_i">; 2) <img src="https://latex.codecogs.com/png.latex?x%5E*%3Ex_%7Bi+1%7D">; 3) <img src="https://latex.codecogs.com/png.latex?x_i%5Cle%20x%5E*%5Cle%20x_%7Bi+1%7D">.</p>
+<p>Condition 1) is equivalent to <span id="eq-monotone-cond-1"><img src="https://latex.codecogs.com/png.latex?%0A%5Calpha_i,%5Cbeta_i%5Cge0%0A%5Cland%0A%5Cfrac%7B2%5Calpha_i+%5Cbeta_i-3%7D%7B%5Calpha_i+%5Cbeta_i-2%7D%3C0%0A%5Ctag%7B19%7D"></span></p>
+<p>The analysis of Condition 2) and 3) are similar, leading to:</p>
+<p><span id="eq-monotone-cond-2"><img src="https://latex.codecogs.com/png.latex?%0A%5Calpha_i,%5Cbeta_i%5Cge0%0A%5Cland%0A%5Cfrac%7B%5Calpha_i+2%5Cbeta_i-3%7D%7B%5Calpha_i+%5Cbeta_i-2%7D%3C0%0A%5Ctag%7B20%7D"></span></p>
+<p>and</p>
+<p><span id="eq-monotone-cond-2"><img src="https://latex.codecogs.com/png.latex?%0A%5Calpha_i,%5Cbeta_i%5Cge0%0A%5Cland%0A%5Cfrac%7B2%5Calpha_i+%5Cbeta_i-3%7D%7B%5Calpha_i+%5Cbeta_i-2%7D%5Cge0%0A%5Cland%0A%5Cfrac%7B%5Calpha_i+2%5Cbeta_i-3%7D%7B%5Calpha_i+%5Cbeta_i-2%7D%5Cge0%0A%5Cland%0A%5Cphi(%5Calpha_i,%5Cbeta_i)%5Cge0%0A%5Ctag%7B21%7D"></span></p>
+<p>Figure&nbsp;1 illustrates these conditions separately: Condition 1) — blue, Condition 2) — green, Condition 3) — red.</p>
+<div id="cell-fig-monotone-region" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-3"></span>
+<span id="cb1-4">x_vals <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.linspace(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>)</span>
+<span id="cb1-5">y_vals <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.linspace(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>)</span>
+<span id="cb1-6">x, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.meshgrid(x_vals, y_vals)</span>
+<span id="cb1-7"></span>
+<span id="cb1-8">cond1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> (y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> ((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-9">cond2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> (y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> ((x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-10">cond3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (</span>
+<span id="cb1-11">    (x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-12">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> (y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-13">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> ((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-14">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> ((x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-15">    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> (x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> ((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> (x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-16">)</span>
+<span id="cb1-17"></span>
+<span id="cb1-18">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>))</span>
+<span id="cb1-19"></span>
+<span id="cb1-20">ax.contourf(x, y, cond1, levels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, colors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blue"</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb1-21">ax.contourf(x, y, cond2, levels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, colors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"green"</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb1-22">ax.contourf(x, y, cond3, levels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, colors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.25</span>)</span>
+<span id="cb1-23"></span>
+<span id="cb1-24">ax.set_xlabel(<span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">r"$\alpha$"</span>)</span>
+<span id="cb1-25">ax.set_ylabel(<span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">r"$\beta$"</span>)</span>
+<span id="cb1-26">ax.set_xlim([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>])</span>
+<span id="cb1-27">ax.set_ylim([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>])</span>
+<span id="cb1-28">ax.xaxis.set_ticks(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(np.arange(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)))</span>
+<span id="cb1-29">ax.yaxis.set_ticks(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(np.arange(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)))</span>
+<span id="cb1-30"></span>
+<span id="cb1-31">ax.grid(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb1-32">ax.tick_params(</span>
+<span id="cb1-33">    bottom<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb1-34">    top<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb1-35">    left<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb1-36">    right<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb1-37">    labelbottom<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb1-38">    labeltop<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb1-39">    labelleft<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb1-40">    labelright<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb1-41">)</span>
+<span id="cb1-42">plt.show()</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-monotone-region" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-monotone-region-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://xuefeng-xu.github.io/blog/pchip_files/figure-html/fig-monotone-region-output-1.png" width="398" height="378" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-monotone-region-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The monotonicity region
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Finally, simplifying yields the final monotonicity condition (Lemma&nbsp;1).</p>
+</div>
+</section>
+<section id="cubic-hermite-interpolation" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="cubic-hermite-interpolation"><span class="header-section-number">5</span> Cubic Hermite Interpolation</h2>
+<p>Cubic Hermite Interpolation constructs <img src="https://latex.codecogs.com/png.latex?f(x)"> using both function values and derivatives:</p>
+<p><span id="eq-cubic-hermite"><img src="https://latex.codecogs.com/png.latex?%0Af(x)=y_iH_1(x)+y_%7Bi+1%7DH_2(x)+d_iH_3(x)+d_%7Bi+1%7DH_4(x)%0A%5Ctag%7B22%7D"></span></p>
+<p>where basis functions are:</p>
+<p><span id="eq-cubic-hermite-basis"><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign*%7D%0AH_%7B1%7D(x)&amp;=%5Cphi%5CBig(%5Cfrac%7Bx_%7Bi+1%7D-x%7D%7Bh_%7Bi%7D%7D%5CBig),%20&amp;H_%7B2%7D(x)&amp;=%5Cphi%5CBig(%5Cfrac%7Bx-x_%7Bi%7D%7D%7Bh_%7Bi%7D%7D%5CBig)%5C%5C%0AH_%7B3%7D(x)&amp;=-h_%7Bi%7D%5Cpsi%5CBig(%5Cfrac%7Bx_%7Bi+1%7D-x%7D%7Bh_%7Bi%7D%7D%5CBig),%20&amp;H_%7B4%7D(x)&amp;=h_%7Bi%7D%5Cpsi%5CBig(%5Cfrac%7Bx-x_%7Bi%7D%7D%7Bh_%7Bi%7D%7D%5CBig)%0A%5Cend%7Balign*%7D%0A%5Ctag%7B23%7D"></span></p>
+<p>with:</p>
+<p><span id="eq-phi-psi"><img src="https://latex.codecogs.com/png.latex?%0A%5Cphi(t)=3t%5E%7B2%7D-2t%5E%7B3%7D,%5C%20%20%5Cpsi(t)=t%5E%7B3%7D-t%5E%7B2%7D%0A%5Ctag%7B24%7D"></span></p>
+<p>This formulation aligns with the cubic polynomial definition above.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-Fritsch1984" class="csl-entry">
+Fritsch, F. N., and J. Butland. 1984. <span>“A Method for Constructing Local Monotone Piecewise Cubic Interpolants.”</span> <em>SIAM Journal on Scientific and Statistical Computing</em> 5 (2): 300–304. <a href="https://doi.org/10.1137/0905021">https://doi.org/10.1137/0905021</a>.
+</div>
+<div id="ref-Fritsch1980" class="csl-entry">
+Fritsch, F. N., and R. E. Carlson. 1980. <span>“Monotone Piecewise Cubic Interpolation.”</span> <em>SIAM Journal on Numerical Analysis</em> 17 (2): 238–46. <a href="https://doi.org/10.1137/0717021">https://doi.org/10.1137/0717021</a>.
+</div>
+<div id="ref-Moler2004" class="csl-entry">
+Moler, Cleve B. 2004. <em>Numerical Computing with Matlab</em>. Society for Industrial; Applied Mathematics. <a href="https://doi.org/10.1137/1.9780898717952.ch3">https://doi.org/10.1137/1.9780898717952.ch3</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>Statistics</category>
+  <guid>https://xuefeng-xu.github.io/blog/pchip.html</guid>
+  <pubDate>Thu, 13 Mar 2025 00:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
