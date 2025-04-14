@@ -2,7 +2,7 @@
 listing:
   contents:
     - "*.qmd"
-  sort: "date"
+  sort: "date desc"
   type: default
   feed: true
   sort-ui: [date]

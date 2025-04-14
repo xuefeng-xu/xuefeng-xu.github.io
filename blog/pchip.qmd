@@ -7,10 +7,7 @@ categories: [Statistics]
 format:
   html:
     number-sections: true
-    html-math-method: katex
     code-fold: true
-    link-external-newwindow: true
-    crossrefs-hover: false
     jupyter: python3
 ---
 

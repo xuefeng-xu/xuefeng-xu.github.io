@@ -6,6 +6,7 @@ execute:
 
 website:
   title: "Xuefeng Xu"
+  description: "Xuefeng Xu's Homepage"
   site-url: https://xuefeng-xu.github.io
   repo-url: https://github.com/xuefeng-xu/xuefeng-xu.github.io
   repo-branch: master
@@ -25,7 +26,6 @@ website:
         text: CV
       - href: misc/index.qmd
         text: Misc.
-        
 
 format:
   html:
@@ -34,3 +34,6 @@ format:
     toc: true
     toc-title: Contents
     toc-location: left
+    html-math-method: katex
+    link-external-newwindow: true
+    crossrefs-hover: false
