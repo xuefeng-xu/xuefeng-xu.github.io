@@ -1,16 +1,15 @@
 ---
 title: Power Transform
+description: "Box-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability."
 date: April 14, 2025
 date-modified: last-modified
 bibliography: reference.bib
 categories: [Statistics, Python]
 format:
   html:
-    number-sections: true
     code-fold: false
   ipynb:
     number-sections: true
-jupyter: python3
 ---
 
 Power transforms are parametric methods that convert data into a Gaussian-like distribution. Two widely used transformations in this category are the Box-Cox [@Box1964] and Yeo-Johnson [@Yeo2000] methods, both of which rely on a single parameter $\lambda$.
@@ -96,13 +95,14 @@ def power_plot(x_min, x_max, power):
 ```
 
 ::: {#fig-power-transform layout-ncol=2}
+:::{.preview-image}
 ```{python}
 #| code-fold: true
 #| label: fig-box-cox
 #| fig-cap: "Box-Cox"
 power_plot(x_min=0, x_max=3, power="BC")
 ```
-
+:::
 ```{python}
 #| code-fold: true
 #| label: fig-yeo-johnson

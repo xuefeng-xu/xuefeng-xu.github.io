@@ -6,3 +6,16 @@ freeze: true
 
 # Enable banner style title blocks
 title-block-banner: true
+
+# Set default style
+format:
+  html:
+    number-sections: true
+    code-fold: true
+jupyter: python3
+
+# Enable Giscus for comments
+comments:
+  giscus:
+    repo: xuefeng-xu/xuefeng-xu.github.io
+    category: Announcements

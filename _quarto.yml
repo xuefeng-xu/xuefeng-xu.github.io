@@ -26,6 +26,9 @@ website:
         text: CV
       - href: misc/index.qmd
         text: Misc.
+    right:
+      - icon: rss
+        href: blog/index.xml
 
 format:
   html:

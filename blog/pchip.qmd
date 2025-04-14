@@ -1,14 +1,10 @@
 ---
 title: Monotone Piecewise Cubic Interpolation
+description: "PCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots."
 date: March 13, 2025
 date-modified: last-modified
 bibliography: reference.bib
 categories: [Statistics]
-format:
-  html:
-    number-sections: true
-    code-fold: true
-    jupyter: python3
 ---
 
 Piecewise Cubic Hermite Interpolating Polynomial (PCHIP) is a cubic spline-based interpolation method designed to preserve monotonicity. See [MATLAB](https://mathworks.com/help/matlab/ref/pchip.html) or [SciPy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.PchipInterpolator.html) for the implementation details.
@@ -198,6 +194,7 @@ $$ {#eq-monotone-cond-2}
 
 @fig-monotone-region illustrates these conditions separately: Condition 1) — blue, Condition 2) — green, Condition 3) — red.
 
+:::{.preview-image}
 ```{python}
 #| label: fig-monotone-region
 #| fig-cap: "The monotonicity region"
@@ -245,7 +242,7 @@ ax.tick_params(
 )
 plt.show()
 ```
-
+:::
 Finally, simplifying yields the final monotonicity condition (@lem-monotone-cond).
 :::
 

@@ -4,9 +4,13 @@ listing:
     - "*.qmd"
   sort: "date desc"
   type: default
-  feed: true
+  feed:
+    type: metadata
   sort-ui: [date]
   filter-ui: true
   categories: numbered
 page-layout: full
+comments: false
+description: "Xuefeng Xu's Blog"
+margin-header: subscribe.html
 ---
