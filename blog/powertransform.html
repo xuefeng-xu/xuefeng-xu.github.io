@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-04-14">
+
+<title>Power Transform – Xuefeng Xu</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-9QXY2VK8LM"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
+</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Xuefeng Xu</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../research.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../teach.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../blog/index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../cv.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../misc/index.html"> 
+<span class="menu-text">Misc.</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Power Transform</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Statistics</div>
+                <div class="quarto-category">Python</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 14, 2025</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">April 14, 2025</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#two-transformations" id="toc-two-transformations" class="nav-link active" data-scroll-target="#two-transformations"><span class="header-section-number">1</span> Two Transformations</a></li>
+  <li><a href="#numerical-instabilities" id="toc-numerical-instabilities" class="nav-link" data-scroll-target="#numerical-instabilities"><span class="header-section-number">2</span> Numerical Instabilities</a></li>
+  <li><a href="#solution-from-the-mass-package" id="toc-solution-from-the-mass-package" class="nav-link" data-scroll-target="#solution-from-the-mass-package"><span class="header-section-number">3</span> Solution from the MASS Package</a></li>
+  <li><a href="#log-space-computation" id="toc-log-space-computation" class="nav-link" data-scroll-target="#log-space-computation"><span class="header-section-number">4</span> Log-Space Computation</a></li>
+  <li><a href="#constrained-optimization" id="toc-constrained-optimization" class="nav-link" data-scroll-target="#constrained-optimization"><span class="header-section-number">5</span> Constrained Optimization</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/xuefeng-xu/xuefeng-xu.github.io/blob/master/blog/powertransform.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="powertransform.ipynb" download="powertransform.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>Power transforms are parametric methods that convert data into a Gaussian-like distribution. Two widely used transformations in this category are the Box-Cox <span class="citation" data-cites="Box1964">(<a href="#ref-Box1964" role="doc-biblioref">Box and Cox 1964</a>)</span> and Yeo-Johnson <span class="citation" data-cites="Yeo2000">(<a href="#ref-Yeo2000" role="doc-biblioref">I. Yeo and Johnson 2000</a>)</span> methods, both of which rely on a single parameter <span class="math inline">\lambda</span>.</p>
+<section id="two-transformations" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="two-transformations"><span class="header-section-number">1</span> Two Transformations</h2>
+<p>The Box-Cox transformation requires strictly positive data (<span class="math inline">x &gt; 0</span>) and is defined as:</p>
+<p><span id="eq-box-cox"><span class="math display">
+\psi_{\text{BC}}(\lambda, x) =
+\begin{cases}
+\frac{x^\lambda-1}{\lambda} &amp; \text{if } \lambda\neq0,\\
+\ln x &amp; \text{if } \lambda=0.
+\end{cases}
+\tag{1}</span></span></p>
+<p>The Yeo-Johnson transformation generalizes Box-Cox to handle non-positive values and is defined as:</p>
+<p><span id="eq-yeo-johnson"><span class="math display">
+\psi_{\text{YJ}}(\lambda, x) =
+\begin{cases}
+\frac{(x+1)^\lambda-1}{\lambda} &amp; \text{if } \lambda\neq0,x\ge0,\\
+\ln(x+1) &amp; \text{if } \lambda=0,x\ge0,\\
+-\frac{(-x+1)^{2-\lambda}-1}{2-\lambda} &amp; \text{if } \lambda\neq2,x&lt;0,\\
+-\ln(-x+1) &amp; \text{if } \lambda=2,x&lt;0.\\
+\end{cases}
+\tag{2}</span></span></p>
+<p><a href="#fig-power-transform" class="quarto-xref">Figure&nbsp;1</a> visualizes these transformations across various <span class="math inline">\lambda</span> values.</p>
+<div id="6cd1bb4d" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> boxcox</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> yeojohnson</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> power_plot(x_min, x_max, power):</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> power <span class="op">==</span> <span class="st">"BC"</span>:</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        power_func <span class="op">=</span> boxcox</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        power_func <span class="op">=</span> yeojohnson</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    eps <span class="op">=</span> <span class="fl">0.01</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.arange(x_min, x_max, eps)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    line_color <span class="op">=</span> [<span class="st">'dodgerblue'</span>, <span class="st">'limegreen'</span>, <span class="st">'red'</span>, <span class="st">'mediumpurple'</span>, <span class="st">'orange'</span>]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> idx, lmb <span class="kw">in</span> <span class="bu">enumerate</span>([<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>]):</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> power_func(x, lmb)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        ax.plot(x, y, label<span class="op">=</span><span class="vs">fr'$\lambda$=</span><span class="sc">{</span>lmb<span class="sc">}</span><span class="vs">'</span>, color<span class="op">=</span>line_color[idx])</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="vs">r'$x$'</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> power <span class="op">==</span> <span class="st">"BC"</span>:</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="vs">r'$\psi_{\text</span><span class="sc">{BC}</span><span class="vs">}(\lambda, x)$'</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="vs">r'$\psi_{\text</span><span class="sc">{YJ}</span><span class="vs">}(\lambda, x)$'</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(x_min, x_max)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    ax.yaxis.set_ticks(<span class="bu">list</span>(np.arange(<span class="op">-</span><span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">2</span>)))</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    ax.get_yticklabels()[<span class="dv">2</span>].<span class="bu">set</span>(color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    ax.xaxis.set_ticks(<span class="bu">list</span>(np.arange(x_min, x_max <span class="op">+</span> <span class="dv">1</span>)))</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> power <span class="op">==</span> <span class="st">"BC"</span>:</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        ax.get_xticklabels()[<span class="dv">1</span>].<span class="bu">set</span>(color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        ax.get_xticklabels()[<span class="dv">2</span>].<span class="bu">set</span>(color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    ax.axhline(<span class="dv">0</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> power <span class="op">==</span> <span class="st">"BC"</span>:</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>        ax.axvline(<span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>        ax.axvline(<span class="dv">0</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    ax.grid()</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    ax.set_aspect(<span class="fl">0.5</span>)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    leg <span class="op">=</span> ax.legend(loc<span class="op">=</span><span class="st">'lower right'</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    leg.get_texts()[<span class="dv">2</span>].<span class="bu">set</span>(color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>power_plot(x_min<span class="op">=</span><span class="dv">0</span>, x_max<span class="op">=</span><span class="dv">3</span>, power<span class="op">=</span><span class="st">"BC"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>power_plot(x_min<span class="op">=-</span><span class="dv">2</span>, x_max<span class="op">=</span><span class="dv">2</span>, power<span class="op">=</span><span class="st">"YJ"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-power-transform" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-power-transform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div id="cell-fig-box-cox" class="cell quarto-layout-cell-subref quarto-layout-cell" data-execution_count="2" data-ref-parent="fig-power-transform" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="cell-output cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-power-transform">
+<div id="fig-box-cox" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-box-cox-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="powertransform_files/figure-html/fig-box-cox-output-1.png" data-ref-parent="fig-power-transform" width="350" height="434" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-box-cox-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Box-Cox
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-fig-yeo-johnson" class="cell quarto-layout-cell-subref quarto-layout-cell" data-execution_count="3" data-ref-parent="fig-power-transform" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="cell-output cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-power-transform">
+<div id="fig-yeo-johnson" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-yeo-johnson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="powertransform_files/figure-html/fig-yeo-johnson-output-1.png" data-ref-parent="fig-power-transform" width="443" height="434" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-yeo-johnson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Yeo-Johnson
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-power-transform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Box-Cox and Yeo-Johnson transformations.
+</figcaption>
+</figure>
+</div>
+<p>The optimal <span class="math inline">\lambda</span> is typically estimated by maximizing the log-likelihood. For Box-Cox and Yeo-Johnson, the respective log-likelihood functions are:</p>
+<p><span id="eq-box-cox-llf"><span class="math display">
+\ln\mathcal{L}_{\text{BC}}(\lambda, x)=(\lambda-1) \sum_i^n \ln x_i - \frac{n}{2}\ln\sigma^2_{\psi_{\text{BC}}}
+\tag{3}</span></span></p>
+<p><span id="eq-yeo-johnson-llf"><span class="math display">
+\ln\mathcal{L}_{\text{YJ}}(\lambda, x)=(\lambda-1) \sum_i^n \text{sgn} (x_i) \ln(|x_i|+1) - \frac{n}{2}\ln\sigma^2_{\psi_{\text{YJ}}}
+\tag{4}</span></span></p>
+<p>Here, <span class="math inline">\sigma^2_\psi</span> represents the variance of the transformed data, <span class="math inline">\text{Var}[\psi(\lambda,x)]</span>. These log-likelihood functions are concave <span class="citation" data-cites="Kouider1995 Marchand2022">(<a href="#ref-Kouider1995" role="doc-biblioref">Kouider and Chen 1995</a>; <a href="#ref-Marchand2022" role="doc-biblioref">Marchand et al. 2022</a>)</span>, which guarantees a unique maximum. Brent’s method <span class="citation" data-cites="Brent2013">(<a href="#ref-Brent2013" role="doc-biblioref">Brent 2013</a>)</span> is commonly employed for optimization.</p>
+<div id="2a5d4eef" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> brent</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> max_llf(x, llf):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _neg_llf(lmb, x):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span>llf(lmb, x)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> brent(_neg_llf, args<span class="op">=</span>(x,))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="numerical-instabilities" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="numerical-instabilities"><span class="header-section-number">2</span> Numerical Instabilities</h2>
+<p>Because both transformations involve exponentiation, they are susceptible to numerical overflow. This problem has been observed by <span class="citation" data-cites="Marchand2022">(<a href="#ref-Marchand2022" role="doc-biblioref">Marchand et al. 2022</a>)</span> and discussed in <a href="https://github.com/scikit-learn/scikit-learn/issues/23319">Scikit-learn’s GitHub Issue</a>. Below is an example illustrating the problem using a naive implementation of <a href="#eq-box-cox-llf" class="quarto-xref">Equation&nbsp;3</a>:</p>
+<div id="af3f7353" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_llf_naive(lmb, x):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    logx <span class="op">=</span> np.log(x)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    logvar <span class="op">=</span> np.log(np.var(boxcox(x, lmb)))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (lmb <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> np.<span class="bu">sum</span>(logx) <span class="op">-</span> n<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> logvar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="9e4bb8e3" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="fl">9.9</span>])</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>max_llf(x, llf<span class="op">=</span>boxcox_llf_naive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/opt/miniconda3/lib/python3.12/site-packages/numpy/core/_methods.py:176: RuntimeWarning:
+
+overflow encountered in multiply
+
+/opt/miniconda3/lib/python3.12/site-packages/numpy/core/_methods.py:187: RuntimeWarning:
+
+overflow encountered in reduce
+</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>156.48528753755807</code></pre>
+</div>
+</div>
+<p>Although this returns a <span class="math inline">\lambda</span> value, it produces overflow warnings. A useful diagnostic is to visualize the log-likelihood curve:</p>
+<div id="0461779d" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_llf(x, lb, ub, llf):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    np.set_printoptions(precision<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    lmb <span class="op">=</span> np.linspace(lb, ub, <span class="dv">20</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    ll <span class="op">=</span> np.array([llf(l, x) <span class="cf">for</span> l <span class="kw">in</span> lmb])</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"llf=</span><span class="sc">{</span>ll<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    ax.plot(lmb, ll)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="vs">r"$\lambda$"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="vs">r"$\ln\mathcal</span><span class="sc">{L}</span><span class="vs">(\lambda, x)$"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="3363d178" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_llf(x, lb<span class="op">=</span><span class="dv">150</span>, ub<span class="op">=</span><span class="dv">200</span>, llf<span class="op">=</span>boxcox_llf_naive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>llf=[13.684 13.697 13.711   -inf   -inf   -inf   -inf   -inf   -inf   -inf
+   -inf   -inf   -inf   -inf   -inf   -inf   -inf   -inf   -inf   -inf]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="powertransform_files/figure-html/cell-9-output-2.png" width="392" height="356" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Unfortunately, due to overflow (<code>np.inf</code> values), the log-likelihood curve cannot be visualized in the specified range, suggesting the returned <span class="math inline">\lambda</span> is not optimal.</p>
+</section>
+<section id="solution-from-the-mass-package" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="solution-from-the-mass-package"><span class="header-section-number">3</span> Solution from the MASS Package</h2>
+<p>The MASS package in R <span class="citation" data-cites="Venables2002">(<a href="#ref-Venables2002" role="doc-biblioref">Venables and Ripley 2002</a>)</span> proposes a simple yet effective trick: divide the data by its mean. This rescales the data and avoids numerical instability without affecting the optimization outcome.</p>
+<div id="cdda7914" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x_dm <span class="op">=</span> x <span class="op">/</span> np.mean(x)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>max_llf(x_dm, llf<span class="op">=</span>boxcox_llf_naive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>357.55141884289054</code></pre>
+</div>
+</div>
+<div id="5630419a" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plot_llf(x_dm, lb<span class="op">=</span><span class="dv">330</span>, ub<span class="op">=</span><span class="dv">385</span>, llf<span class="op">=</span>boxcox_llf_naive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>llf=[23.376 23.377 23.378 23.38  23.381 23.381 23.382 23.383 23.383 23.383
+ 23.383 23.383 23.383 23.382 23.382 23.381 23.38  23.379 23.377 23.376]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="powertransform_files/figure-html/cell-11-output-2.png" width="392" height="356" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To see why this works, consider the log-variance term for <span class="math inline">\lambda \ne 0</span>:</p>
+<p><span id="eq-boxcox-log-var"><span class="math display">
+\begin{align*}
+\ln\text{Var}[\psi_{\text{BC}}(\lambda,x)]
+&amp;=\ln\text{Var}[(x^\lambda-1)/\lambda] \\
+&amp;=\ln\text{Var}[x^\lambda/\lambda] \\
+&amp;=\ln[\text{Var}(x^\lambda)/\lambda^2] \\
+&amp;=\ln\text{Var}(x^\lambda) - 2\ln|\lambda| \\
+\end{align*}
+\tag{5}</span></span></p>
+<p>If <span class="math inline">x</span> is scaled by a constant <span class="math inline">c &gt; 0</span>:</p>
+<p><span id="eq-boxcox-log-var-mass"><span class="math display">
+\begin{align*}
+\ln\text{Var}[\psi_{\text{BC}}(\lambda,x/c)]
+&amp;=\ln\text{Var}[(x/c)^\lambda] - 2\ln|\lambda| \\
+&amp;=\ln[\text{Var}(x^\lambda)/c^{2\lambda}] - 2\ln|\lambda| \\
+&amp;=\ln\text{Var}(x^\lambda) - 2\lambda\ln c  - 2\ln|\lambda| \\
+&amp;=\ln\text{Var}[\psi_{\text{BC}}(\lambda,x)] - 2\lambda\ln c \\
+\end{align*}
+\tag{6}</span></span></p>
+<p>Plugging into the log−likelihood:</p>
+<p><span id="eq-boxcox-llf-mass"><span class="math display">
+\begin{align*}
+\ln\mathcal{L}_{\text{BC}}(\lambda, x/c)
+&amp;=(\lambda-1) \sum_i^n \ln(x_i/c) - \frac{n}{2}\ln\text{Var}[\psi_{\text{BC}}(\lambda,x/c)] \\
+&amp;=\ln\mathcal{L}_{\text{BC}}(\lambda, x) - n(\lambda-1)\ln c + n\lambda\ln c \\
+&amp;=\ln\mathcal{L}_{\text{BC}}(\lambda, x) + n\ln c \\
+\end{align*}
+\tag{7}</span></span></p>
+<p>The additive constant <span class="math inline">n\ln c</span> does not affect the maximizer of <span class="math inline">\lambda</span>. However, this trick does not apply to Yeo-Johnson, where scaling alters the optimal parameter (see <a href="#eq-yeo-johnson-llf" class="quarto-xref">Equation&nbsp;4</a>).</p>
+</section>
+<section id="log-space-computation" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="log-space-computation"><span class="header-section-number">4</span> Log-Space Computation</h2>
+<p>To address numerical instability for both transformations, log-space computation <span class="citation" data-cites="Haberland2023">(<a href="#ref-Haberland2023" role="doc-biblioref">Haberland 2023</a>)</span> is effective. It uses the <a href="https://en.wikipedia.org/wiki/LogSumExp">Log-Sum-Exp trick</a> to compute statistics in log space:</p>
+<div id="7c29ecf0" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> logsumexp</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_mean(logx):</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute log of mean of x from log(x)</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> logsumexp(logx) <span class="op">-</span> np.log(<span class="bu">len</span>(logx))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_var(logx):</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute log of variance of x from log(x)</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    logmean <span class="op">=</span> log_mean(logx)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    pij <span class="op">=</span> np.full_like(logx, np.pi <span class="op">*</span> <span class="ot">1j</span>, dtype<span class="op">=</span>np.complex128)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    logxmu <span class="op">=</span> logsumexp([logx, logmean <span class="op">+</span> pij], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.real(logsumexp(<span class="dv">2</span> <span class="op">*</span> logxmu)) <span class="op">-</span> np.log(<span class="bu">len</span>(logx))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This allows direct computation of <span class="math inline">\ln\sigma^2_\psi</span> from <span class="math inline">\ln x</span>. Plugging in <a href="#eq-boxcox-log-var" class="quarto-xref">Equation&nbsp;5</a>, we can compute the log-likelihood in the log-space.</p>
+<div id="aa97ea91" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_llf(lmb, x):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    logx <span class="op">=</span> np.log(x)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> lmb <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        logvar <span class="op">=</span> np.log(np.var(logx))</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        logvar <span class="op">=</span> log_var(lmb <span class="op">*</span> logx) <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.log(<span class="bu">abs</span>(lmb))</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (lmb <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> np.<span class="bu">sum</span>(logx) <span class="op">-</span> n<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> logvar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This version avoids overflow and reliably returns the optimal <span class="math inline">\lambda</span>.</p>
+<div id="1fd34c8d" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>max_llf(x, llf<span class="op">=</span>boxcox_llf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>357.55141245531865</code></pre>
+</div>
+</div>
+<div id="46757965" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plot_llf(x, lb<span class="op">=</span><span class="dv">330</span>, ub<span class="op">=</span><span class="dv">385</span>, llf<span class="op">=</span>boxcox_llf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>llf=[14.175 14.177 14.178 14.179 14.18  14.181 14.182 14.182 14.183 14.183
+ 14.183 14.183 14.182 14.182 14.181 14.18  14.179 14.178 14.177 14.176]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="powertransform_files/figure-html/cell-15-output-2.png" width="392" height="356" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The same principle extends to Yeo-Johnson, even for mixed-sign inputs.</p>
+<div id="03f5719f" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_var_yeojohnson(x, lmb):</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.<span class="bu">all</span>(x <span class="op">&gt;=</span> <span class="dv">0</span>):</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(lmb) <span class="op">&lt;</span> np.spacing(<span class="fl">1.0</span>):</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> np.log(np.var(np.log1p(x)))</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> log_var(lmb <span class="op">*</span> np.log1p(x)) <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.log(<span class="bu">abs</span>(lmb))</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> np.<span class="bu">all</span>(x <span class="op">&lt;</span> <span class="dv">0</span>):</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(lmb <span class="op">-</span> <span class="dv">2</span>) <span class="op">&lt;</span> np.spacing(<span class="fl">1.0</span>):</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> np.log(np.var(np.log1p(<span class="op">-</span>x)))</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> log_var((<span class="dv">2</span> <span class="op">-</span> lmb) <span class="op">*</span> np.log1p(<span class="op">-</span>x)) <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.log(<span class="bu">abs</span>(<span class="dv">2</span> <span class="op">-</span> lmb))</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:  <span class="co"># mixed positive and negtive data</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        logyj <span class="op">=</span> np.zeros_like(x, dtype<span class="op">=</span>np.complex128)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        pos <span class="op">=</span> x <span class="op">&gt;=</span> <span class="dv">0</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># when x &gt;= 0</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(lmb) <span class="op">&lt;</span> np.spacing(<span class="fl">1.0</span>):</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>            logyj[pos] <span class="op">=</span> np.log(np.log1p(x[pos]) <span class="op">+</span> <span class="ot">0j</span>)</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:  <span class="co"># lmbda != 0</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>            logm1_pos <span class="op">=</span> np.full_like(x[pos], np.pi <span class="op">*</span> <span class="ot">1j</span>, dtype<span class="op">=</span>np.complex128)</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>            logyj[pos] <span class="op">=</span> logsumexp(</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>                [lmb <span class="op">*</span> np.log1p(x[pos]), logm1_pos], axis<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>            ) <span class="op">-</span> np.log(lmb <span class="op">+</span> <span class="ot">0j</span>)</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>        <span class="co"># when x &lt; 0</span></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(lmb <span class="op">-</span> <span class="dv">2</span>) <span class="op">&lt;</span> np.spacing(<span class="fl">1.0</span>):</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>            logyj[<span class="op">~</span>pos] <span class="op">=</span> np.log(<span class="op">-</span>np.log1p(<span class="op">-</span>x[<span class="op">~</span>pos]) <span class="op">+</span> <span class="ot">0j</span>)</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:  <span class="co"># lmbda != 2</span></span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>            logm1_neg <span class="op">=</span> np.full_like(x[<span class="op">~</span>pos], np.pi <span class="op">*</span> <span class="ot">1j</span>, dtype<span class="op">=</span>np.complex128)</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>            logyj[<span class="op">~</span>pos] <span class="op">=</span> logsumexp(</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>                [(<span class="dv">2</span> <span class="op">-</span> lmb) <span class="op">*</span> np.log1p(<span class="op">-</span>x[<span class="op">~</span>pos]), logm1_neg], axis<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>            ) <span class="op">-</span> np.log(lmb <span class="op">-</span> <span class="dv">2</span> <span class="op">+</span> <span class="ot">0j</span>)</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> log_var(logyj)</span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> yeojohnson_llf(lmb, x):</span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>    llf <span class="op">=</span> (lmb <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> np.<span class="bu">sum</span>(np.sign(x) <span class="op">*</span> np.log1p(np.<span class="bu">abs</span>(x)))</span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>    llf <span class="op">+=</span> <span class="op">-</span>n <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> log_var_yeojohnson(x, lmb)</span>
+<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> llf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="constrained-optimization" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="constrained-optimization"><span class="header-section-number">5</span> Constrained Optimization</h2>
+<p>Even with log-space computation, applying the transformation using a large absolute value of <span class="math inline">\lambda</span> can result in overflow:</p>
+<div id="b998aacc" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>lmax <span class="op">=</span> max_llf(x, llf<span class="op">=</span>boxcox_llf)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(boxcox(x, lmax))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[inf inf inf inf]</code></pre>
+</div>
+</div>
+<p>To prevent this, we constrain <span class="math inline">\lambda</span> so that the transformed values stay within a safe range.</p>
+<div id="lem-monotone-increase" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 1</strong></span> The transformation <span class="math inline">\psi(\lambda,x)</span> is monotonically increasing in both <span class="math inline">\lambda</span> and <span class="math inline">x</span> <span class="citation" data-cites="Yeo1997">(see <a href="#ref-Yeo1997" role="doc-biblioref">I.-K. Yeo 1997</a> for Yeo-Johnson proof)</span>.</p>
+</div>
+<p>This allows us to bound <span class="math inline">\lambda</span> based on <span class="math inline">\min(x)</span> and <span class="math inline">\max(x)</span>. For Box-Cox, we use <span class="math inline">x=1</span> as a threshold since <span class="math inline">\psi_\text{BC}(\lambda,1)=0</span>:</p>
+<p><span id="eq-boxcox-constraint"><span class="math display">
+\begin{align*}
+\max_\lambda \quad &amp; \ln\mathcal{L}_{\text{BC}}(\lambda, x) \\
+\textrm{s.t.} \quad &amp; \text{if } x_{\max}&gt;1, \lambda\le\psi^{-1}_{\text{BC}}(x_{\max},y_{\max}) \\
+&amp; \text{if } x_{\min}&lt;1, \lambda\ge\psi^{-1}_{\text{BC}}(x_{\min},-y_{\max}) \\
+\end{align*}
+\tag{8}</span></span></p>
+<p>The inverse Box−Cox function is given by:</p>
+<p><span id="eq-boxcox-inverse"><span class="math display">
+\psi^{-1}_{\text{BC}}(x,y)=-1/y-W(-x^{-1/y}\ln x/y)/\ln x
+\tag{9}</span></span></p>
+<div id="7940ab85" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> lambertw</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_inv_lmbda(x, y):</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    num <span class="op">=</span> lambertw(<span class="op">-</span>(x <span class="op">**</span> (<span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y)) <span class="op">*</span> np.log(x) <span class="op">/</span> y, k<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y <span class="op">-</span> np.real(num <span class="op">/</span> np.log(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="fcf3b43a" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_constranined_lmax(lmax, x, ymax):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x &gt; 1, boxcox(x) &gt; 0; x &lt; 1, boxcox(x) &lt; 0</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    xmin, xmax <span class="op">=</span> <span class="bu">min</span>(x), <span class="bu">max</span>(x)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> xmin <span class="op">&gt;=</span> <span class="dv">1</span>:</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmax</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> xmax <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmin</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:  <span class="co"># xmin &lt; 1 &lt; xmax</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        indicator <span class="op">=</span> boxcox(xmax, lmax) <span class="op">&gt;</span> <span class="bu">abs</span>(boxcox(xmin, lmax))</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmax <span class="cf">if</span> indicator <span class="cf">else</span> xmin</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">abs</span>(boxcox(x_treme, lmax)) <span class="op">&gt;</span> ymax:</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        lmax <span class="op">=</span> boxcox_inv_lmbda(x_treme, ymax <span class="op">*</span> np.sign(x_treme <span class="op">-</span> <span class="dv">1</span>))</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lmax</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This method can be verified by testing different values for <span class="math inline">y_{\max}</span>:</p>
+<div id="1e365efc" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> verify_boxcox_constranined_lmax(x):</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    np.set_printoptions(precision<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    lmax <span class="op">=</span> max_llf(x, llf<span class="op">=</span>boxcox_llf)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ymax <span class="kw">in</span> [<span class="fl">1e300</span>, <span class="fl">1e100</span>, <span class="fl">1e30</span>, <span class="fl">1e10</span>]:</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        l <span class="op">=</span> boxcox_constranined_lmax(lmax, x, ymax)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(boxcox(x, l))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="365101a8" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Positive overflow</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="fl">9.9</span>])</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>verify_boxcox_constranined_lmax(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1.000e+300 1.000e+300 1.000e+300 4.783e+298]
+[1.000e+100 1.000e+100 1.000e+100 3.587e+099]
+[1.000e+30 1.000e+30 1.000e+30 7.286e+29]
+[1.00e+10 1.00e+10 1.00e+10 8.95e+09]</code></pre>
+</div>
+</div>
+<div id="f53676b7" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative overflow</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.101</span>])</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>verify_boxcox_constranined_lmax(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[-1.00e+300 -1.00e+300 -1.00e+300 -4.93e+298]
+[-1.000e+100 -1.000e+100 -1.000e+100 -3.624e+099]
+[-1.000e+30 -1.000e+30 -1.000e+30 -7.309e+29]
+[-1.000e+10 -1.000e+10 -1.000e+10 -8.959e+09]</code></pre>
+</div>
+</div>
+<p>The constrained optimization approach can also be extended to Yeo-Johnson, ensures overflow-free transformations even for extreme values.</p>
+<div id="b8de898c" class="cell" data-execution_count="22">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> yeojohnson_inv_lmbda(x, y):</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x <span class="op">&gt;=</span> <span class="dv">0</span>:</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>        num <span class="op">=</span> lambertw(<span class="op">-</span>((x <span class="op">+</span> <span class="dv">1</span>) <span class="op">**</span> (<span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y) <span class="op">*</span> np.log1p(x)) <span class="op">/</span> y, k<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y <span class="op">+</span> np.real(<span class="op">-</span>num <span class="op">/</span> np.log1p(x))</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        num <span class="op">=</span> lambertw(((<span class="dv">1</span> <span class="op">-</span> x) <span class="op">**</span> (<span class="dv">1</span> <span class="op">/</span> y) <span class="op">*</span> np.log1p(<span class="op">-</span>x)) <span class="op">/</span> y, k<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y <span class="op">+</span> <span class="dv">2</span> <span class="op">+</span> np.real(num <span class="op">/</span> np.log1p(<span class="op">-</span>x))</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> yeojohnson_constranined_lmax(lmax, x, ymax):</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x &gt; 0, yeojohnson(x) &gt; 0; x &lt; 0, yeojohnson(x) &lt; 0</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    xmin, xmax <span class="op">=</span> <span class="bu">min</span>(x), <span class="bu">max</span>(x)</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> xmin <span class="op">&gt;=</span> <span class="dv">0</span>:</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmax</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> xmax <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmin</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:  <span class="co"># xmin &lt; 0 &lt; xmax</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> np.errstate(over<span class="op">=</span><span class="st">"ignore"</span>):</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>            indicator <span class="op">=</span> yeojohnson(xmax, lmax) <span class="op">&gt;</span> <span class="bu">abs</span>(yeojohnson(xmin, lmax))</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmax <span class="cf">if</span> indicator <span class="cf">else</span> xmin</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> np.errstate(over<span class="op">=</span><span class="st">"ignore"</span>):</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(yeojohnson(x_treme, lmax)) <span class="op">&gt;</span> ymax:</span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>            lmax <span class="op">=</span> yeojohnson_inv_lmbda(x_treme, ymax <span class="op">*</span> np.sign(x_treme))</span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lmax</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Box1964" class="csl-entry" role="listitem">
+Box, G. E. P., and D. R. Cox. 1964. <span>“An Analysis of Transformations.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 26 (2): 211–43. <a href="https://doi.org/10.1111/j.2517-6161.1964.tb00553.x">https://doi.org/10.1111/j.2517-6161.1964.tb00553.x</a>.
+</div>
+<div id="ref-Brent2013" class="csl-entry" role="listitem">
+Brent, Richard P. 2013. <em>Algorithms for Minimization Without Derivatives</em>. Dover Books on Mathematics. Dover Publications, Incorporated.
+</div>
+<div id="ref-Haberland2023" class="csl-entry" role="listitem">
+Haberland, Matt. 2023. <a href="https://github.com/scipy/scipy/pull/18852#issuecomment-1657858886">https://github.com/scipy/scipy/pull/18852#issuecomment-1657858886</a>.
+</div>
+<div id="ref-Kouider1995" class="csl-entry" role="listitem">
+Kouider, Elies, and Hanfeng Chen. 1995. <span>“Concavity of Box-Cox Log-Likelihood Function.”</span> <em>Statistics &amp; Probability Letters</em> 25 (2): 171–75. <a href="https://doi.org/10.1016/0167-7152(94)00219-X">https://doi.org/10.1016/0167-7152(94)00219-X</a>.
+</div>
+<div id="ref-Marchand2022" class="csl-entry" role="listitem">
+Marchand, Tanguy, Boris Muzellec, Constance Béguier, Jean Ogier du Terrail, and Mathieu Andreux. 2022. <span>“SecureFedYJ: A Safe Feature Gaussianization Protocol for Federated Learning.”</span> In <em>Advances in Neural Information Processing Systems</em>, 35:36585–98. Curran Associates, Inc. <a href="https://doi.org/10.48550/arXiv.2210.01639">https://doi.org/10.48550/arXiv.2210.01639</a>.
+</div>
+<div id="ref-Venables2002" class="csl-entry" role="listitem">
+Venables, W. N., and B. D. Ripley. 2002. <em>Modern Applied Statistics with s</em>. Fourth. New York: Springer. <a href="https://doi.org/10.32614/CRAN.package.MASS">https://doi.org/10.32614/CRAN.package.MASS</a>.
+</div>
+<div id="ref-Yeo1997" class="csl-entry" role="listitem">
+Yeo, In-Kwon. 1997. <span>“A New Family of Power Transformations to Reduce Skewness or Approximate Normality.”</span> PhD thesis, The University of Wisconsin-Madison. <a href="https://www.proquest.com/openview/b7835693052aecd65e635d39a6bd099a/">https://www.proquest.com/openview/b7835693052aecd65e635d39a6bd099a/</a>.
+</div>
+<div id="ref-Yeo2000" class="csl-entry" role="listitem">
+Yeo, In‐Kwon, and Richard A. Johnson. 2000. <span>“A New Family of Power Transformations to Improve Normality or Symmetry.”</span> <em>Biometrika</em> 87 (4): 954–59. <a href="https://doi.org/10.1093/biomet/87.4.954">https://doi.org/10.1093/biomet/87.4.954</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/xuefeng-xu\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/xuefeng-xu/xuefeng-xu.github.io/blob/master/blog/powertransform.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div></div></footer></body></html>
