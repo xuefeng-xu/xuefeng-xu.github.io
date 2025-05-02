@@ -1,5 +1,6 @@
 ---
 title: "Xuefeng Xu 许雪峰"
+title-prefix: ""
 image: img/me.jpg
 about:
   template: trestles

@@ -11,6 +11,7 @@ listing:
   categories: numbered
 page-layout: full
 comments: false
+pagetitle: "Blog"
 description: "Xuefeng Xu's Blog"
 margin-header: subscribe.html
 ---

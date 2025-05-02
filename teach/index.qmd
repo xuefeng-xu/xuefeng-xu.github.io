@@ -1,0 +1,5 @@
+---
+pagetitle: "Teaching"
+---
+
+{{< include teach.qmd >}}

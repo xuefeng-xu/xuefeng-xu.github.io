@@ -1,5 +1,6 @@
 ---
 title: "Xuefeng Xu"
+pagetitle: "CV"
 date-modified: last-modified
 ---
 
@@ -35,11 +36,11 @@ date-modified: last-modified
 
 ## Research
 
-{{< include research.qmd >}}
+{{< include research/research.qmd >}}
 
 ## Teaching
 
-{{< include teach.qmd >}}
+{{< include teach/teach.qmd >}}
 
 ## Service
 

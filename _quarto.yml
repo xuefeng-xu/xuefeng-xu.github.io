@@ -7,6 +7,7 @@ execute:
 website:
   title: "Xuefeng Xu"
   description: "Xuefeng Xu's Homepage"
+  favicon: "img/goose.png"
   site-url: https://xuefeng-xu.github.io
   repo-url: https://github.com/xuefeng-xu/xuefeng-xu.github.io
   repo-branch: master
@@ -16,9 +17,9 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: research.qmd
+      - href: research/index.qmd
         text: Research
-      - href: teach.qmd
+      - href: teach/index.qmd
         text: Teaching
       - href: blog/index.qmd
         text: Blog
