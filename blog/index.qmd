@@ -9,9 +9,11 @@ listing:
   sort-ui: [date]
   filter-ui: true
   categories: numbered
+  fields: [image, date, title, description, reading-time, categories]
 page-layout: full
 comments: false
 pagetitle: "Blog"
 description: "Xuefeng Xu's Blog"
-margin-header: subscribe.html
+author: ""
+citation: false
 ---

@@ -2,7 +2,6 @@
 title: Power Transform
 description: "Box-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability."
 date: April 14, 2025
-date-modified: last-modified
 bibliography: reference.bib
 categories: [Statistics, Python]
 format:
@@ -149,7 +148,7 @@ def boxcox_llf_naive(lmb, x):
 ```{python}
 #| warning: true
 x = np.array([10, 10, 10, 9.9])
-max_llf(x, llf=boxcox_llf_naive)
+print(max_llf(x, llf=boxcox_llf_naive))
 ```
 
 Although this returns a $\lambda$ value, it produces overflow warnings. A useful diagnostic is to visualize the log-likelihood curve:
@@ -170,21 +169,23 @@ def plot_llf(x, lb, ub, llf):
 ```
 
 ```{python}
+#| fig-align: center
 plot_llf(x, lb=150, ub=200, llf=boxcox_llf_naive)
 ```
 
 Unfortunately, due to overflow (`np.inf` values), the log-likelihood curve cannot be visualized in the specified range, suggesting the returned $\lambda$ is not optimal.
 
-## Solution from the MASS Package
+## Existing Solutions
 
 The MASS package in R [@Venables2002] proposes a simple yet effective trick: divide the data by its mean. This rescales the data and avoids numerical instability without affecting the optimization outcome.
 
 ```{python}
 x_dm = x / np.mean(x)
-max_llf(x_dm, llf=boxcox_llf_naive)
+print(max_llf(x_dm, llf=boxcox_llf_naive))
 ```
 
 ```{python}
+#| fig-align: center
 plot_llf(x_dm, lb=330, ub=385, llf=boxcox_llf_naive)
 ```
 
@@ -260,10 +261,11 @@ def boxcox_llf(lmb, x):
 This version avoids overflow and reliably returns the optimal $\lambda$.
 
 ```{python}
-max_llf(x, llf=boxcox_llf)
+print(max_llf(x, llf=boxcox_llf))
 ```
 
 ```{python}
+#| fig-align: center
 plot_llf(x, lb=330, ub=385, llf=boxcox_llf)
 ```
 

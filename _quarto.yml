@@ -12,6 +12,8 @@ website:
   repo-url: https://github.com/xuefeng-xu/xuefeng-xu.github.io
   repo-branch: master
   repo-actions: [source]
+  open-graph: true
+  twitter-card: true
   google-analytics: "G-9QXY2VK8LM"
   navbar:
     left:
@@ -33,7 +35,11 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: flatly
+      dark: darkly
+    linkcolor: rgb(52, 152, 219)
+    respect-user-color-scheme: true
     css: styles.css
     toc: true
     toc-title: Contents

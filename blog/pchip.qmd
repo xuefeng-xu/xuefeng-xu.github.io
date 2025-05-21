@@ -2,7 +2,6 @@
 title: Monotone Piecewise Cubic Interpolation
 description: "PCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots."
 date: March 13, 2025
-date-modified: last-modified
 bibliography: reference.bib
 categories: [Statistics]
 ---
@@ -132,7 +131,7 @@ $$ {#eq-alpha1-ub}
 
 Similarly, $\beta_i$ and endpoint $\beta_{n-1}$ all satisfy the monotonicity condition.
 
-## Proof of Monotonicity Conditions
+## Proof of Monotonicity
 
 ::: {.proof}
 To preserve monotonicity, the derivatives $d_i$ and $d_{i+1}$ must align with the direction of the slope of the interval $s_i$. This is a necessary condition [@Fritsch1980]:

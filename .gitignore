@@ -1,4 +1,6 @@
 /.quarto/
 /_site/
 /_freeze/
+/_extensions/
+/env/
 .DS_Store

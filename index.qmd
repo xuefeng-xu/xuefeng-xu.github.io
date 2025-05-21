@@ -2,23 +2,28 @@
 title: "Xuefeng Xu 许雪峰"
 title-prefix: ""
 image: img/me.jpg
+toc: false
 about:
-  template: trestles
+  id: heading
+  template: jolla
   links:
     - text: GitHub
+      icon: github
       url: "https://github.com/xuefeng-xu"
-    - text: Google Scholar
+    - text: "{{< iconify academicons:google-scholar >}} Google Scholar"
       url: "https://scholar.google.com/citations?user=RI_3VEoAAAAJ"
-    - text: LinkedIn
-      url: "https://www.linkedin.com/in/xuefengx"
-    - text: Email
-      url: "mailto:xuxf100@outlook.com"
 ---
 
-#### Biography
+::: {#heading}
+
+Email: [xuefeng.xu@warwick.ac.uk](mailto:xuefeng.xu@warwick.ac.uk)
+
+:::
+
+### Biography
 
 I am a Ph.D. student in the Department of Computer Science at the University of Warwick, supervised by Prof. [Graham Cormode](http://dimacs.rutgers.edu/~graham/). I also work with Prof. [Hakan Ferhatosmanoglu](https://warwick.ac.uk/fac/sci/dcs/people/hakan_ferhatosmanoglu/). My research focuses on Privacy and Security, particularly Differential Privacy and Machine Learning. I hold an M.E. degree from Beihang University and a B.E. degree from Jilin University.
 
-#### News
+### News
 
 - 03/2025: [Online Talk](https://www.youtube.com/live/C0pce6jfcWg?feature=shared&t=35500) at [Flower AI Summit 2025](https://flower.ai/events/flower-ai-summit-2025/)

@@ -14,6 +14,15 @@ format:
     code-fold: true
 jupyter: python3
 
+# Citation
+author: Xuefeng Xu
+citation:
+  type: post-weblog
+google-scholar: true
+
+# Subscription
+margin-header: subscribe.html
+
 # Enable Giscus for comments
 comments:
   giscus:
