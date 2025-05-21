@@ -9,19 +9,21 @@
 <link>https://xuefeng-xu.github.io/blog/</link>
 <atom:link href="https://xuefeng-xu.github.io/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Xuefeng Xu&#39;s Blog</description>
-<generator>quarto-1.6.39</generator>
+<generator>quarto-1.7.31</generator>
 <lastBuildDate>Sun, 13 Apr 2025 23:00:00 GMT</lastBuildDate>
 <item>
   <title>Power Transform</title>
-  <link>https://xuefeng-xu.github.io/blog/powertransform.html</link>
+  <dc:creator>Xuefeng Xu</dc:creator>
+  <link>https://xuefeng-xu.github.io/blog/power-transform.html</link>
   <description><![CDATA[ Box-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability. ]]></description>
   <category>Statistics</category>
   <category>Python</category>
-  <guid>https://xuefeng-xu.github.io/blog/powertransform.html</guid>
+  <guid>https://xuefeng-xu.github.io/blog/power-transform.html</guid>
   <pubDate>Sun, 13 Apr 2025 23:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Monotone Piecewise Cubic Interpolation</title>
+  <dc:creator>Xuefeng Xu</dc:creator>
   <link>https://xuefeng-xu.github.io/blog/pchip.html</link>
   <description><![CDATA[ PCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots. ]]></description>
   <category>Statistics</category>
