@@ -27,3 +27,4 @@ I am a Ph.D. student in the Department of Computer Science at the University of 
 ### News
 
 - 03/2025: [Online Talk](https://www.youtube.com/live/C0pce6jfcWg?feature=shared&t=35500) at [Flower AI Summit 2025](https://flower.ai/events/flower-ai-summit-2025/)
+- 02/2025: Lighting talk at [Privacy in Machine Learning Meetup](https://www.imperial.ac.uk/events/183182/privacy-in-machine-learning-meetup-imperial/)

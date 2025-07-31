@@ -1,5 +1,9 @@
 <ol reversed class="loose_margin">
   <li>
+    Federated Computation of ROC and PR Curves<br>
+    [Xuefeng Xu]{.underline} and Graham Cormode<br>
+    In Submission
+  <li>
     FedPS: Federated data Preprocessing via aggregated Statistics<br>
     [Code](https://github.com/xuefeng-xu/fedps)
   </li>
