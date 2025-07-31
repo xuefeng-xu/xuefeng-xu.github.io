@@ -4,7 +4,7 @@
     "href": "teach/teach.html",
     "title": "Xuefeng Xu",
     "section": "",
-    "text": "@ University of Warwick\n\nCS429/CS909 Data Mining: Spring 2025\nCS133 Professional Skills: Fall 2024\n\n\n\n@ Beihang University\n\n39112201 Abstract Algebra: Fall 2019"
+    "text": "Teaching Assistant\n\n@ University of Warwick\n\nCS429/CS909 Data Mining: Spring 2025\nCS133 Professional Skills: Fall 2024\n\n\n\n@ Beihang University\n\n39112201 Abstract Algebra: Fall 2019"
   },
   {
     "objectID": "cv.html",
@@ -32,14 +32,14 @@
     "href": "cv.html#research",
     "title": "Xuefeng Xu",
     "section": "Research",
-    "text": "Research\n\n\nFedPS: Federated data Preprocessing via aggregated Statistics Code\n\n\nDeep Learning Algorithms Design and Implementation Based on Differential Privacy Xuefeng Xu, Yanqing Yao, and Lei Cheng International Conference on Machine Learning for Cyber Security, 2020"
+    "text": "Research\n\n\nFederated Computation of ROC and PR Curves Xuefeng Xu and Graham Cormode In Submission\n\nFedPS: Federated data Preprocessing via aggregated Statistics Code\n\n\nDeep Learning Algorithms Design and Implementation Based on Differential Privacy Xuefeng Xu, Yanqing Yao, and Lei Cheng International Conference on Machine Learning for Cyber Security, 2020"
   },
   {
     "objectID": "cv.html#teaching",
     "href": "cv.html#teaching",
     "title": "Xuefeng Xu",
     "section": "Teaching",
-    "text": "Teaching\n\n@ University of Warwick\n\nCS429/CS909 Data Mining: Spring 2025\nCS133 Professional Skills: Fall 2024\n\n\n\n@ Beihang University\n\n39112201 Abstract Algebra: Fall 2019"
+    "text": "Teaching\n\nTeaching Assistant\n\n@ University of Warwick\n\nCS429/CS909 Data Mining: Spring 2025\nCS133 Professional Skills: Fall 2024\n\n\n\n@ Beihang University\n\n39112201 Abstract Algebra: Fall 2019"
   },
   {
     "objectID": "cv.html#service",
@@ -49,46 +49,39 @@
     "text": "Service\n\nConference Reviewer\n\nInternational Conference on Learning Representations (ICLR) 2025"
   },
   {
-    "objectID": "blog/index.html",
-    "href": "blog/index.html",
-    "title": "Xuefeng Xu",
+    "objectID": "blog/roc-pr-curve.html",
+    "href": "blog/roc-pr-curve.html",
+    "title": "ROC and PR Curves",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nPower Transform\n\n\n\nStatistics\n\nPython\n\n\n\nBox-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability.\n\n\n\n\n\nApr 14, 2025\n\n11 min\n\n\n\n\n\n\n\n\n\n\n\nMonotone Piecewise Cubic Interpolation\n\n\n\nStatistics\n\n\n\nPCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots.\n\n\n\n\n\nMar 13, 2025\n\n3 min\n\n\n\n\nNo matching items"
+    "text": "Receiver Operating Characteristic (ROC) and Precision–Recall (PR) curves are essential for evaluating classification models. They visualize trade-offs between True Positive Rate (TPR) and False Positive Rate (FPR) (ROC) or Precision and Recall (PR), offering deeper insights than single scalar metrics."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Xuefeng Xu 许雪峰",
-    "section": "",
-    "text": "Email: xuefeng.xu@warwick.ac.uk\n \n  \n   \n  \n    \n     GitHub\n  \n  \n      Google Scholar\n  \n\n\n\n\nBiography\nI am a Ph.D. student in the Department of Computer Science at the University of Warwick, supervised by Prof. Graham Cormode. I also work with Prof. Hakan Ferhatosmanoglu. My research focuses on Privacy and Security, particularly Differential Privacy and Machine Learning. I hold an M.E. degree from Beihang University and a B.E. degree from Jilin University.\n\n\nNews\n\n03/2025: Online Talk at Flower AI Summit 2025"
+    "objectID": "blog/roc-pr-curve.html#roc-curve",
+    "href": "blog/roc-pr-curve.html#roc-curve",
+    "title": "ROC and PR Curves",
+    "section": "1 ROC Curve",
+    "text": "1 ROC Curve\nFor binary classification, with Positive (P) and Negative (N) classes, predictions are based on model scores thresholded to produce labels. Performance is summarized using a confusion matrix (Table 1), counting True Positives (TP), False Positives (FP), True Negatives (TN), and False Negatives (FN).\n\n\n\nTable 1: The Confusion Matrix\n\n\n\n\n\nTotal=P+N\nPredicted Pos (PP)\nPredicted Neg (PN)\n\n\n\n\n\nActual Pos (P)\nTP\nFN\nP=TP+FN\n\n\nActual Neg (N)\nFP\nTN\nN=FP+TN\n\n\n\nPP=TP+FP\nPN=FN+TN\n\n\n\n\n\n\n\nThe ROC curve plots TPR vs. FPR, where:\n\n\\text{TPR}=\\text{TP}/\\text{P},\\quad \\text{FPR}=\\text{FP}/\\text{N}\n\\tag{1}\nA simple algorithm constructs the ROC curve: 1) Sort predictions in descending score order. 2) Sweep thresholds across scores, updating TP and FP counts (Fawcett 2006).\n\nimport numpy as np\n\ndef count_fp_tp(y_true, y_score):\n    fp, tp = 0, 0\n    fps, tps, thresholds = [], [], []\n    score = np.inf\n\n    for i in np.flip(np.argsort(y_score)):\n1        if y_score[i] != score:\n            fps.append(fp)\n            tps.append(tp)\n            thresholds.append(score)\n            score = y_score[i]\n\n        if y_true[i] == 1:\n            tp += 1\n        else:\n            fp += 1\n\n    fps.append(fp)\n    tps.append(tp)\n    thresholds.append(score)\n    return np.asarray(fps), np.asarray(tps), np.asarray(thresholds)\n\ndef roc_curve(y_true, y_score):\n    fps, tps, thresholds = count_fp_tp(y_true, y_score)\n    fpr = fps / sum(y_true == 0)\n    tpr = tps / sum(y_true == 1)\n    return fpr, tpr, thresholds\n\n\n1\n\nTo handle score repetitions, record (FP, TP) counts only when the score changes.\n\n\n\n\nThe ROC curve is always monotonically non-decreasing, starting at (0, 0) for the highest threshold and ending at (1, 1) for the lowest threshold. Points are connected using linear interpolation. A random classifier lies along y=x, while curves closer to the top-left indicate better performance.\n\n\nCode\nimport matplotlib.pyplot as plt\n\ndef plot_curve(x, y, curve: str, pos_frac=None, drawstyle=\"default\", ax=None):\n    if ax is None:\n        _, ax = plt.subplots()\n\n    name = f\"{curve} curve\"\n    ax.plot(x, y, \"x-\", c=\"C0\", label=name, drawstyle=drawstyle)\n    ax.set_title(name)\n\n    ax.set_aspect(\"equal\")\n    ax.set_xlim(-0.01, 1.01)\n    ax.set_ylim(-0.01, 1.01)\n    \n    chance = {\n        \"label\": \"Chance level\",\n        \"color\": \"k\",\n        \"linestyle\": \"--\",\n    }\n    if curve == \"ROC\":\n        ax.plot([0, 1], [0, 1], **chance)\n        ax.set_xlabel(\"FPR\")\n        ax.set_ylabel(\"TPR\")\n        ax.legend(loc=\"lower right\")\n    elif curve == \"PR\":  # curve == \"PR\":\n        if pos_frac is not None:\n            ax.plot([0, 1], [pos_frac, pos_frac], **chance)\n        ax.set_xlabel(\"Recall\")\n        ax.set_ylabel(\"Precision\")\n        ax.legend(loc=\"lower left\")\n    elif curve == \"PRG\":\n        ax.set_xlabel(\"Recall Gain\")\n        ax.set_ylabel(\"Precision Gain\")\n        ax.legend(loc=\"lower left\")\n    else:\n        raise ValueError(f\"Unknown curve type: {curve}\")\n\n\n\ny_true = np.array([1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0])\ny_score = np.array([\n    .9, .8, .7, .6, .55, .54, .53, .52, .51, .505,\n    .4, .39, .38, .37, .36, .35, .34, .33, .3, .1\n])\n\nfpr, tpr, _ = roc_curve(y_true, y_score)\nplot_curve(fpr, tpr, \"ROC\")"
   },
   {
-    "objectID": "misc/resource.html",
-    "href": "misc/resource.html",
-    "title": "Study Resources",
-    "section": "",
-    "text": "Books\n\nIntroduction to Linear Algebra\nAlgorithms\nNumerical Recipes: The Art of Scientific Computing\nPattern Recognition and Machine Learning\nThe Elements of Statistical Learning\nProbabilistic Machine Learning\nFoundations of Machine Learning\nThe Algorithmic Foundations of Differential Privacy\nThe Complexity of Differential Privacy\nIntroduction to Modern Cryptography\nEffective Python\n\n\n\nCourses\n\nMIT 18.06 Linear Algebra\nCoursera Algorithms Part 1 and Part 2\nStanford CS229 Machine Learning\nCoursera Deep Learning Specialization\nCoursera Cryptography\nMIT The Missing Semester of Your CS Education"
+    "objectID": "blog/roc-pr-curve.html#roc-convex-hull",
+    "href": "blog/roc-pr-curve.html#roc-convex-hull",
+    "title": "ROC and PR Curves",
+    "section": "2 ROC Convex Hull",
+    "text": "2 ROC Convex Hull\nThe ROC Convex Hull (ROCCH) highlights potentially optimal performance of a classifier (or a set of classifiers) by connecting upper boundary points (Provost and Fawcett 2001). It can be computed via algorithms like the Monotone chain algorithm.\n\ndef convex_hull(points):\n    points = sorted(set(points))\n\n    def cross(o, a, b):\n        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])\n\n    # Build upper hull\n    upper = []\n    for p in reversed(points):\n        while len(upper) &gt;= 2 and cross(upper[-2], upper[-1], p) &lt;= 0:\n            upper.pop()\n        upper.append(p)\n    \n    return upper\n\n\n\nrocch = convex_hull(zip(fpr, tpr))\n\nrocch = np.array(rocch)\nfpr_ch, tpr_ch = rocch[:, 0], rocch[:, 1]\n\nfig, ax = plt.subplots()\nax.plot(fpr_ch, tpr_ch, 'C1-.', label=\"ROCCH\")\nplot_curve(fpr, tpr, \"ROC\", ax=ax)"
   },
   {
-    "objectID": "research/index.html",
-    "href": "research/index.html",
-    "title": "Xuefeng Xu",
-    "section": "",
-    "text": "FedPS: Federated data Preprocessing via aggregated Statistics Code\n\n\nDeep Learning Algorithms Design and Implementation Based on Differential Privacy Xuefeng Xu, Yanqing Yao, and Lei Cheng International Conference on Machine Learning for Cyber Security, 2020"
+    "objectID": "blog/roc-pr-curve.html#pr-curve",
+    "href": "blog/roc-pr-curve.html#pr-curve",
+    "title": "ROC and PR Curves",
+    "section": "3 PR Curve",
+    "text": "3 PR Curve\nPR curves plot Precision vs. Recall. Recall equals TPR, while Precision is:\n\n\\text{Prec}=\\frac{\\text{TP}}{\\text{TP}+\\text{FP}}\n\\tag{2}\nPR curves start at (0, 1) and end at (1, \\frac{\\text{P}}{\\text{P}+\\text{N}}), where the endpoint reflects the proportion of positive samples. Because Precision depends on both TP and FP, the PR curve is non-monotonic and can decrease as Recall increases. Moreover, it is highly influenced by class imbalance (Williams 2021). For a random classifier, the PR curve is a horizontal line at y = \\frac{\\text{P}}{\\text{P}+\\text{N}}, whereas curves closer to the top-right indicate stronger performance.\n\ndef pr_curve(y_true, y_score):\n    fps, tps, thresholds = count_fp_tp(y_true, y_score)\n\n    pps = fps + tps\n    precision = np.ones_like(tps, dtype=np.float64)\n    np.divide(tps, pps, out=precision, where=(pps != 0))\n\n    recall = tps / sum(y_true == 1)\n    return np.flip(precision), np.flip(recall), np.flip(thresholds)\n\nAlthough ROC and PR curves are mathematically related, linear interpolation is incorrect for PR curves, as it yields overly optimistic estimates of performance (Davis and Goadrich 2006). Precision does not necessarily vary linearly with Recall, so naive interpolation misrepresents true model behavior.\nTo illustrate this, we convert the ROC Convex Hull (ROCCH) into PR space, treating it as the potential optimal PR curve. Using Equation 3, we express Precision in terms of TPR and FPR:\n\n\\text{Prec}=\\frac{\\text{P}\\cdot\\text{TPR}}{\\text{P}\\cdot\\text{TPR}+\\text{N}\\cdot\\text{FPR}}\n=\\frac{1}{1+\\frac{\\text{N}}{\\text{P}}\\cdot\\frac{\\text{FPR}}{\\text{TPR}}}\n\\tag{3}\n\nfrom scipy.interpolate import interp1d\n\ndef pr_from_roc(fpr, tpr, neg_to_pos):\n    fpr_tpr_func = interp1d(tpr, fpr, bounds_error=False, fill_value=(0, 1))\n\n    def prec_func(tpr):\n        fpr = fpr_tpr_func(tpr)\n        fpr_to_tpr = np.zeros_like(tpr, dtype=np.float64)\n        np.divide(fpr, tpr, out=fpr_to_tpr, where=(tpr != 0))\n        prec = 1 / (1 + neg_to_pos * fpr_to_tpr)\n        return prec\n\n    return prec_func\n\nneg_to_pos = sum(y_true == 0) / sum(y_true == 1)\nprec_ch_func = pr_from_roc(fpr_ch, tpr_ch, neg_to_pos)\n\nfig, ax = plt.subplots()\nax.plot(tpr_ch, prec_ch_func(tpr_ch), 'C2:', label=\"Linear interp ROCCH\")\n\nx = np.linspace(0, 1, 100)\nax.plot(x, prec_ch_func(x), 'C1-.', label=\"ROCCH\")\n\nprecision, recall, _ = pr_curve(y_true, y_score)\nax.scatter(recall, precision, c=\"C0\", marker=\"x\", label=\"PR points\")\n\nax.set_aspect(\"equal\")\nax.set_xlim(-0.01, 1.01)\nax.set_ylim(-0.01, 1.01)\nax.set_xlabel(\"Recall\")\nax.set_ylabel(\"Precision\")\nax.legend(loc=\"lower left\")\n\n\n\n\n\n\n\n\nThe converted ROCCH dominates the PR space but is clearly non-linear, lying beneath its own linear interpolation (dotted line). This confirms that PR curves cannot be linearly interpolated. Scikit-learn’s PrecisionRecallDisplay instead uses step-wise interpolation, consistent with average_precision_score. This ensures that the area under the PR curve equals the average precision.\n\npos_frac = sum(y_true == 1) / len(y_true)\nplot_curve(recall, precision, \"PR\", pos_frac, drawstyle=\"steps-post\")"
   },
   {
-    "objectID": "research/research.html",
-    "href": "research/research.html",
-    "title": "Xuefeng Xu",
-    "section": "",
-    "text": "FedPS: Federated data Preprocessing via aggregated Statistics Code\n\n\nDeep Learning Algorithms Design and Implementation Based on Differential Privacy Xuefeng Xu, Yanqing Yao, and Lei Cheng International Conference on Machine Learning for Cyber Security, 2020"
-  },
-  {
-    "objectID": "misc/index.html",
-    "href": "misc/index.html",
-    "title": "Xuefeng Xu",
-    "section": "",
-    "text": "Stop PP10043 !\nStudy Resources"
+    "objectID": "blog/roc-pr-curve.html#prg-curve",
+    "href": "blog/roc-pr-curve.html#prg-curve",
+    "title": "ROC and PR Curves",
+    "section": "4 PRG Curve",
+    "text": "4 PRG Curve\nROC curves benefit from linear interpolation and universal baselines, whereas PR curves lack these properties. To address this, Flach and Kull (2015) proposed the Precision–Recall-Gain (PRG) curve, which transforms Precision and Recall into Gains and plots these Precision Gain and Recall Gain within the unit square:\n\n\\text{PrecG}=\\frac{\\text{Prec}-\\pi}{(1-\\pi)\\text{Prec}},\\quad\n\\text{RecG}=\\frac{\\text{Rec}-\\pi}{(1-\\pi)\\text{Rec}}\n\\tag{4}\nwhere \\pi=\\frac{\\text{P}}{\\text{P}+\\text{N}} is the positive class fraction. Notably, Gains can be negative, and such points are typically omitted from the PRG curve.\n\ndef prg_curve(y_true, y_score):\n    prec, rec, thresholds = pr_curve(y_true, y_score)\n    pos_frac = sum(y_true == 0) / len(y_true)\n\n    # Remove negative gains\n    mask = (rec &gt;= pos_frac) & (prec &gt;= pos_frac)\n    prec = prec[mask]\n    rec = rec[mask]\n\n    prec_gain = (prec - pos_frac) / (1 - pos_frac) / prec\n    rec_gain = (rec - pos_frac) / (1 - pos_frac) / rec\n    return prec_gain, rec_gain, thresholds\n\n\nprec_gain, rec_gain, _ = prg_curve(y_true, y_score)\nplot_curve(rec_gain, prec_gain, \"PRG\")"
   },
   {
     "objectID": "blog/pchip.html",
@@ -133,6 +126,48 @@
     "text": "5 Cubic Hermite Interpolation\nCubic Hermite Interpolation constructs f(x) using both function values and derivatives:\n\nf(x)=y_iH_1(x)+y_{i+1}H_2(x)+d_iH_3(x)+d_{i+1}H_4(x)\n\\tag{22}\nwhere basis functions are:\n\n\\begin{align*}\nH_{1}(x)&=\\phi\\Big(\\frac{x_{i+1}-x}{h_{i}}\\Big), &H_{2}(x)&=\\phi\\Big(\\frac{x-x_{i}}{h_{i}}\\Big)\\\\\nH_{3}(x)&=-h_{i}\\psi\\Big(\\frac{x_{i+1}-x}{h_{i}}\\Big), &H_{4}(x)&=h_{i}\\psi\\Big(\\frac{x-x_{i}}{h_{i}}\\Big)\n\\end{align*}\n\\tag{23}\nwith:\n\n\\phi(t)=3t^{2}-2t^{3},\\  \\psi(t)=t^{3}-t^{2}\n\\tag{24}\nThis formulation aligns with the cubic polynomial definition above."
   },
   {
+    "objectID": "misc/index.html",
+    "href": "misc/index.html",
+    "title": "Xuefeng Xu",
+    "section": "",
+    "text": "Stop PP10043 !\nStudy Resources"
+  },
+  {
+    "objectID": "research/research.html",
+    "href": "research/research.html",
+    "title": "Xuefeng Xu",
+    "section": "",
+    "text": "Federated Computation of ROC and PR Curves Xuefeng Xu and Graham Cormode In Submission\n\nFedPS: Federated data Preprocessing via aggregated Statistics Code\n\n\nDeep Learning Algorithms Design and Implementation Based on Differential Privacy Xuefeng Xu, Yanqing Yao, and Lei Cheng International Conference on Machine Learning for Cyber Security, 2020"
+  },
+  {
+    "objectID": "research/index.html",
+    "href": "research/index.html",
+    "title": "Xuefeng Xu",
+    "section": "",
+    "text": "Federated Computation of ROC and PR Curves Xuefeng Xu and Graham Cormode In Submission\n\nFedPS: Federated data Preprocessing via aggregated Statistics Code\n\n\nDeep Learning Algorithms Design and Implementation Based on Differential Privacy Xuefeng Xu, Yanqing Yao, and Lei Cheng International Conference on Machine Learning for Cyber Security, 2020"
+  },
+  {
+    "objectID": "misc/resource.html",
+    "href": "misc/resource.html",
+    "title": "Study Resources",
+    "section": "",
+    "text": "Books\n\nIntroduction to Linear Algebra\nAlgorithms\nNumerical Recipes: The Art of Scientific Computing\nPattern Recognition and Machine Learning\nThe Elements of Statistical Learning\nProbabilistic Machine Learning\nFoundations of Machine Learning\nThe Algorithmic Foundations of Differential Privacy\nThe Complexity of Differential Privacy\nIntroduction to Modern Cryptography\nEffective Python\n\n\n\nCourses\n\nMIT 18.06 Linear Algebra\nCoursera Algorithms Part 1 and Part 2\nStanford CS229 Machine Learning\nCoursera Deep Learning Specialization\nCoursera Cryptography\nMIT The Missing Semester of Your CS Education"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Xuefeng Xu 许雪峰",
+    "section": "",
+    "text": "Email: xuefeng.xu@warwick.ac.uk\n \n  \n   \n  \n    \n     GitHub\n  \n  \n      Google Scholar\n  \n\n\n\n\nBiography\nI am a Ph.D. student in the Department of Computer Science at the University of Warwick, supervised by Prof. Graham Cormode. I also work with Prof. Hakan Ferhatosmanoglu. My research focuses on Privacy and Security, particularly Differential Privacy and Machine Learning. I hold an M.E. degree from Beihang University and a B.E. degree from Jilin University.\n\n\nNews\n\n03/2025: Online Talk at Flower AI Summit 2025\n02/2025: Lighting talk at Privacy in Machine Learning Meetup"
+  },
+  {
+    "objectID": "blog/index.html",
+    "href": "blog/index.html",
+    "title": "Xuefeng Xu",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nROC and PR Curves\n\n\n\nData Science\n\nPython\n\n\n\nROC and PR curves are graphical tools for evaluating classification models, highlighting trade-offs in model performance.\n\n\n\n\n\nJul 31, 2025\n\n8 min\n\n\n\n\n\n\n\n\n\n\n\nPower Transform\n\n\n\nStatistics\n\nPython\n\n\n\nBox-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability.\n\n\n\n\n\nApr 14, 2025\n\n11 min\n\n\n\n\n\n\n\n\n\n\n\nMonotone Piecewise Cubic Interpolation\n\n\n\nStatistics\n\n\n\nPCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots.\n\n\n\n\n\nMar 13, 2025\n\n3 min\n\n\n\n\nNo matching items"
+  },
+  {
     "objectID": "blog/power-transform.html",
     "href": "blog/power-transform.html",
     "title": "Power Transform",
@@ -144,7 +179,7 @@
     "href": "blog/power-transform.html#two-transformations",
     "title": "Power Transform",
     "section": "1 Two Transformations",
-    "text": "1 Two Transformations\nThe Box-Cox transformation requires strictly positive data (x &gt; 0) and is defined as:\n\n\\psi_{\\text{BC}}(\\lambda, x) =\n\\begin{cases}\n\\frac{x^\\lambda-1}{\\lambda} & \\text{if } \\lambda\\neq0,\\\\\n\\ln x & \\text{if } \\lambda=0.\n\\end{cases}\n\\tag{1}\nThe Yeo-Johnson transformation generalizes Box-Cox to handle non-positive values and is defined as:\n\n\\psi_{\\text{YJ}}(\\lambda, x) =\n\\begin{cases}\n\\frac{(x+1)^\\lambda-1}{\\lambda} & \\text{if } \\lambda\\neq0,x\\ge0,\\\\\n\\ln(x+1) & \\text{if } \\lambda=0,x\\ge0,\\\\\n-\\frac{(-x+1)^{2-\\lambda}-1}{2-\\lambda} & \\text{if } \\lambda\\neq2,x&lt;0,\\\\\n-\\ln(-x+1) & \\text{if } \\lambda=2,x&lt;0.\\\\\n\\end{cases}\n\\tag{2}\nFigure 1 visualizes these transformations across various \\lambda values.\n\n\nCode\nimport numpy as np\nfrom scipy.special import boxcox\nfrom scipy.stats import yeojohnson\nimport matplotlib.pyplot as plt\n\ndef power_plot(x_min, x_max, power):\n    if power == \"BC\":\n        power_func = boxcox\n    else:\n        power_func = yeojohnson\n\n    eps = 0.01\n    x = np.arange(x_min, x_max, eps)\n\n    fig, ax = plt.subplots()\n    line_color = ['dodgerblue', 'limegreen', 'red', 'mediumpurple', 'orange']\n    for idx, lmb in enumerate([3, 2, 1, 0, -1]):\n        y = power_func(x, lmb)\n        ax.plot(x, y, label=fr'$\\lambda$={lmb}', color=line_color[idx])\n    \n    ax.set_xlabel(r'$x$')\n    if power == \"BC\":\n        ax.set_ylabel(r'$\\psi_{\\text{BC}}(\\lambda, x)$')\n    else:\n        ax.set_ylabel(r'$\\psi_{\\text{YJ}}(\\lambda, x)$')\n\n    ax.set_xlim(x_min, x_max)\n    ax.set_ylim(-4, 4)\n\n    ax.yaxis.set_ticks(list(np.arange(-4, 5, 2)))\n    ax.get_yticklabels()[2].set(color=\"red\")\n    ax.xaxis.set_ticks(list(np.arange(x_min, x_max + 1)))\n    if power == \"BC\":\n        ax.get_xticklabels()[1].set(color=\"red\")\n    else:\n        ax.get_xticklabels()[2].set(color=\"red\")\n\n    ax.axhline(0, linestyle='--', color='k')\n    if power == \"BC\":\n        ax.axvline(1, linestyle='--', color='k')\n    else:\n        ax.axvline(0, linestyle='--', color='k')\n\n    ax.grid()\n    ax.set_aspect(0.5)\n\n    leg = ax.legend(loc='lower right')\n    leg.get_texts()[2].set(color=\"red\")\n\n    plt.show()\n\n\n\nCode\npower_plot(x_min=0, x_max=3, power=\"BC\")\npower_plot(x_min=-2, x_max=2, power=\"YJ\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Box-Cox\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Yeo-Johnson\n\n\n\n\n\n\n\n\nFigure 1: Box-Cox and Yeo-Johnson transformations.\n\n\n\nThe optimal \\lambda is typically estimated by maximizing the log-likelihood. For Box-Cox and Yeo-Johnson, the respective log-likelihood functions are:\n\n\\ln\\mathcal{L}_{\\text{BC}}(\\lambda, x)=(\\lambda-1) \\sum_i^n \\ln x_i - \\frac{n}{2}\\ln\\sigma^2_{\\psi_{\\text{BC}}}\n\\tag{3}\n\n\\ln\\mathcal{L}_{\\text{YJ}}(\\lambda, x)=(\\lambda-1) \\sum_i^n \\text{sgn} (x_i) \\ln(|x_i|+1) - \\frac{n}{2}\\ln\\sigma^2_{\\psi_{\\text{YJ}}}\n\\tag{4}\nHere, \\sigma^2_\\psi represents the variance of the transformed data, \\text{Var}[\\psi(\\lambda,x)]. These log-likelihood functions are concave (Kouider and Chen 1995; Marchand et al. 2022), which guarantees a unique maximum. Brent’s method (Brent 2013) is commonly employed for optimization.\n\nfrom scipy.optimize import brent\n\ndef max_llf(x, llf):\n    def _neg_llf(lmb, x):\n        return -llf(lmb, x)\n    return brent(_neg_llf, args=(x,))"
+    "text": "1 Two Transformations\nThe Box-Cox transformation requires strictly positive data (x &gt; 0) and is defined as:\n\n\\psi_{\\text{BC}}(\\lambda, x) =\n\\begin{cases}\n\\frac{x^\\lambda-1}{\\lambda} & \\text{if } \\lambda\\neq0,\\\\\n\\ln x & \\text{if } \\lambda=0.\n\\end{cases}\n\\tag{1}\nThe Yeo-Johnson transformation generalizes Box-Cox to handle non-positive values and is defined as:\n\n\\psi_{\\text{YJ}}(\\lambda, x) =\n\\begin{cases}\n\\frac{(x+1)^\\lambda-1}{\\lambda} & \\text{if } \\lambda\\neq0,x\\ge0,\\\\\n\\ln(x+1) & \\text{if } \\lambda=0,x\\ge0,\\\\\n-\\frac{(-x+1)^{2-\\lambda}-1}{2-\\lambda} & \\text{if } \\lambda\\neq2,x&lt;0,\\\\\n-\\ln(-x+1) & \\text{if } \\lambda=2,x&lt;0.\\\\\n\\end{cases}\n\\tag{2}\nFigure 1 visualizes these transformations across various \\lambda values.\n\n\nCode\nimport numpy as np\nfrom scipy.special import boxcox\nfrom scipy.stats import yeojohnson\nimport matplotlib.pyplot as plt\n\ndef power_plot(x_min, x_max, power):\n    if power == \"BC\":\n        power_func = boxcox\n    else:\n        power_func = yeojohnson\n\n    eps = 0.01\n    x = np.arange(x_min, x_max, eps)\n\n    fig, ax = plt.subplots()\n    line_color = ['dodgerblue', 'limegreen', 'red', 'mediumpurple', 'orange']\n    for idx, lmb in enumerate([3, 2, 1, 0, -1]):\n        y = power_func(x, lmb)\n        ax.plot(x, y, label=fr'$\\lambda$={lmb}', color=line_color[idx])\n    \n    ax.set_xlabel(r'$x$')\n    if power == \"BC\":\n        ax.set_ylabel(r'$\\psi_{\\text{BC}}(\\lambda, x)$')\n    else:\n        ax.set_ylabel(r'$\\psi_{\\text{YJ}}(\\lambda, x)$')\n\n    ax.set_xlim(x_min, x_max)\n    ax.set_ylim(-4, 4)\n\n    ax.yaxis.set_ticks(list(np.arange(-4, 5, 2)))\n    ax.get_yticklabels()[2].set(color=\"red\")\n    ax.xaxis.set_ticks(list(np.arange(x_min, x_max + 1)))\n    if power == \"BC\":\n        ax.get_xticklabels()[1].set(color=\"red\")\n    else:\n        ax.get_xticklabels()[2].set(color=\"red\")\n\n    ax.axhline(0, linestyle='--', color='k')\n    if power == \"BC\":\n        ax.axvline(1, linestyle='--', color='k')\n    else:\n        ax.axvline(0, linestyle='--', color='k')\n\n    ax.grid()\n    ax.set_aspect(0.5)\n\n    leg = ax.legend(loc='lower right')\n    leg.get_texts()[2].set(color=\"red\")\n\n    plt.show()\n\n\n\nCode\npower_plot(x_min=0, x_max=3, power=\"BC\")\npower_plot(x_min=-2, x_max=2, power=\"YJ\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Box-Cox\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Yeo-Johnson\n\n\n\n\n\n\n\n\n\nFigure 1: Box-Cox and Yeo-Johnson transformations.\n\n\n\nThe optimal \\lambda is typically estimated by maximizing the log-likelihood. For Box-Cox and Yeo-Johnson, the respective log-likelihood functions are:\n\n\\ln\\mathcal{L}_{\\text{BC}}(\\lambda, x)=(\\lambda-1) \\sum_i^n \\ln x_i - \\frac{n}{2}\\ln\\sigma^2_{\\psi_{\\text{BC}}}\n\\tag{3}\n\n\\ln\\mathcal{L}_{\\text{YJ}}(\\lambda, x)=(\\lambda-1) \\sum_i^n \\text{sgn} (x_i) \\ln(|x_i|+1) - \\frac{n}{2}\\ln\\sigma^2_{\\psi_{\\text{YJ}}}\n\\tag{4}\nHere, \\sigma^2_\\psi represents the variance of the transformed data, \\text{Var}[\\psi(\\lambda,x)]. These log-likelihood functions are concave (Kouider and Chen 1995; Marchand et al. 2022), which guarantees a unique maximum. Brent’s method (Brent 2013) is commonly employed for optimization.\n\nfrom scipy.optimize import brent\n\ndef max_llf(x, llf):\n    def _neg_llf(lmb, x):\n        return -llf(lmb, x)\n    return brent(_neg_llf, args=(x,))"
   },
   {
     "objectID": "blog/power-transform.html#numerical-instabilities",
@@ -179,6 +214,6 @@
     "href": "teach/index.html",
     "title": "Xuefeng Xu",
     "section": "",
-    "text": "@ University of Warwick\n\nCS429/CS909 Data Mining: Spring 2025\nCS133 Professional Skills: Fall 2024\n\n\n\n@ Beihang University\n\n39112201 Abstract Algebra: Fall 2019"
+    "text": "Teaching Assistant\n\n@ University of Warwick\n\nCS429/CS909 Data Mining: Spring 2025\nCS133 Professional Skills: Fall 2024\n\n\n\n@ Beihang University\n\n39112201 Abstract Algebra: Fall 2019"
   }
 ]

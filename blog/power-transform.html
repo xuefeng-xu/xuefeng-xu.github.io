@@ -187,15 +187,15 @@ window.Quarto = {
 <link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="Power Transform – Xuefeng Xu">
 <meta property="og:description" content="Box-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability.">
-<meta property="og:image" content="https://xuefeng-xu.github.io/blog/power-transform_files/figure-html/fig-box-cox-output-1.png">
+<meta property="og:image" content="https://xuefeng-xu.github.io/blog/power-transform_files/figure-html/fig-yeo-johnson-output-1.png">
 <meta property="og:site_name" content="Xuefeng Xu">
 <meta property="og:image:height" content="868">
-<meta property="og:image:width" content="699">
+<meta property="og:image:width" content="886">
 <meta name="twitter:title" content="Power Transform – Xuefeng Xu">
 <meta name="twitter:description" content="Box-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability.">
-<meta name="twitter:image" content="https://xuefeng-xu.github.io/blog/power-transform_files/figure-html/fig-box-cox-output-1.png">
+<meta name="twitter:image" content="https://xuefeng-xu.github.io/blog/power-transform_files/figure-html/fig-yeo-johnson-output-1.png">
 <meta name="twitter:image-height" content="868">
-<meta name="twitter:image-width" content="699">
+<meta name="twitter:image-width" content="886">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="citation_title" content="Power Transform">
 <meta name="citation_author" content="Xuefeng Xu">
@@ -216,6 +216,11 @@ window.Quarto = {
 <meta name="citation_reference" content="citation_title=Algorithms for minimization without derivatives;,citation_author=Richard P. Brent;,citation_publication_date=2013;,citation_cover_date=2013;,citation_year=2013;,citation_isbn=9780486143682;,citation_series_title=Dover books on mathematics;">
 <meta name="citation_reference" content="citation_title=SecureFedYJ: A safe feature gaussianization protocol for federated learning;,citation_author=Tanguy Marchand;,citation_author=Boris Muzellec;,citation_author=Constance Béguier;,citation_author=Jean Ogier du Terrail;,citation_author=Mathieu Andreux;,citation_publication_date=2022;,citation_cover_date=2022;,citation_year=2022;,citation_doi=10.48550/arXiv.2210.01639;,citation_volume=35;,citation_conference_title=Advances in neural information processing systems;,citation_conference=Curran Associates, Inc.;">
 <meta name="citation_reference" content="citation_author=Matt Haberland;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://github.com/scipy/scipy/pull/18852#issuecomment-1657858886;">
+<meta name="citation_reference" content="citation_title=Robust classification for imprecise environments;,citation_author=Foster J. Provost;,citation_author=Tom Fawcett;,citation_publication_date=2001;,citation_cover_date=2001;,citation_year=2001;,citation_issue=3;,citation_doi=10.1023/A:1007601015854;,citation_volume=42;,citation_journal_title=Machine Learning;">
+<meta name="citation_reference" content="citation_title=The relationship between precision-recall and ROC curves;,citation_author=Jesse Davis;,citation_author=Mark Goadrich;,citation_publication_date=2006;,citation_cover_date=2006;,citation_year=2006;,citation_doi=10.1145/1143844.1143874;,citation_conference_title=Proceedings of the 23rd international conference on machine learning;,citation_conference=Association for Computing Machinery;,citation_series_title=ICML ’06;">
+<meta name="citation_reference" content="citation_title=An introduction to ROC analysis;,citation_author=Tom Fawcett;,citation_publication_date=2006;,citation_cover_date=2006;,citation_year=2006;,citation_issue=8;,citation_doi=10.1016/j.patrec.2005.10.010;,citation_volume=27;,citation_journal_title=Pattern Recognition Letters;">
+<meta name="citation_reference" content="citation_title=Precision-recall-gain curves: PR analysis done right;,citation_author=Peter Flach;,citation_author=Meelis Kull;,citation_publication_date=2015;,citation_cover_date=2015;,citation_year=2015;,citation_fulltext_html_url=https://papers.nips.cc/paper/5867-precision-recall-gain-curves-pr-analysis-done-right;,citation_volume=28;,citation_conference_title=Advances in neural information processing systems;,citation_conference=Curran Associates, Inc.;">
+<meta name="citation_reference" content="citation_title=The effect of class imbalance on precision-recall curves;,citation_author=Christopher K. I. Williams;,citation_publication_date=2021-04;,citation_cover_date=2021-04;,citation_year=2021;,citation_issue=4;,citation_doi=10.1162/neco_a_01362;,citation_volume=33;,citation_journal_title=Neural Computation;">
 </head>
 
 <body class="floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -545,7 +550,7 @@ window.Quarto = {
 \end{cases}
 \tag{2}</span></span></p>
 <p><a href="#fig-power-transform" class="quarto-xref">Figure&nbsp;1</a> visualizes these transformations across various <span class="math inline">\lambda</span> values.</p>
-<div id="df4f13dd" class="cell" data-execution_count="1">
+<div id="bb0810af" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -609,8 +614,7 @@ window.Quarto = {
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-power-transform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
-<div class="preview-image quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-power-transform" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="cell-fig-box-cox" class="cell quarto-layout-cell-subref" data-execution_count="2" data-ref-parent="fig-power-transform">
+<div id="cell-fig-box-cox" class="cell quarto-layout-cell-subref quarto-layout-cell" data-execution_count="2" data-ref-parent="fig-power-transform" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="cell-output cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-power-transform">
 <div id="fig-box-cox" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
@@ -624,8 +628,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</div>
-<div id="cell-fig-yeo-johnson" class="cell quarto-layout-cell-subref quarto-layout-cell" data-execution_count="3" data-ref-parent="fig-power-transform" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="preview-image quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-power-transform" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="cell-fig-yeo-johnson" class="cell quarto-layout-cell-subref" data-execution_count="3" data-ref-parent="fig-power-transform">
 <div class="cell-output cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-power-transform">
 <div id="fig-yeo-johnson" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
@@ -636,6 +640,7 @@ window.Quarto = {
 (b) Yeo-Johnson
 </figcaption>
 </figure>
+</div>
 </div>
 </div>
 </div>
@@ -654,7 +659,7 @@ Figure&nbsp;1: Box-Cox and Yeo-Johnson transformations.
 \ln\mathcal{L}_{\text{YJ}}(\lambda, x)=(\lambda-1) \sum_i^n \text{sgn} (x_i) \ln(|x_i|+1) - \frac{n}{2}\ln\sigma^2_{\psi_{\text{YJ}}}
 \tag{4}</span></span></p>
 <p>Here, <span class="math inline">\sigma^2_\psi</span> represents the variance of the transformed data, <span class="math inline">\text{Var}[\psi(\lambda,x)]</span>. These log-likelihood functions are concave <span class="citation" data-cites="Kouider1995 Marchand2022">(<a href="#ref-Kouider1995" role="doc-biblioref">Kouider and Chen 1995</a>; <a href="#ref-Marchand2022" role="doc-biblioref">Marchand et al. 2022</a>)</span>, which guarantees a unique maximum. Brent’s method <span class="citation" data-cites="Brent2013">(<a href="#ref-Brent2013" role="doc-biblioref">Brent 2013</a>)</span> is commonly employed for optimization.</p>
-<div id="5d302eca" class="cell" data-execution_count="4">
+<div id="35ae15af" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> brent</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> max_llf(x, llf):</span>
@@ -666,14 +671,14 @@ Figure&nbsp;1: Box-Cox and Yeo-Johnson transformations.
 <section id="numerical-instabilities" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="numerical-instabilities"><span class="header-section-number">2</span> Numerical Instabilities</h2>
 <p>Because both transformations involve exponentiation, they are susceptible to numerical overflow. This problem has been observed by <span class="citation" data-cites="Marchand2022">(<a href="#ref-Marchand2022" role="doc-biblioref">Marchand et al. 2022</a>)</span> and discussed in <a href="https://github.com/scikit-learn/scikit-learn/issues/23319">Scikit-learn’s GitHub Issue</a>. Below is an example illustrating the problem using a naive implementation of <a href="#eq-box-cox-llf" class="quarto-xref">Equation&nbsp;3</a>:</p>
-<div id="c0b432eb" class="cell" data-execution_count="5">
+<div id="b1baad5a" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_llf_naive(lmb, x):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    logx <span class="op">=</span> np.log(x)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    logvar <span class="op">=</span> np.log(np.var(boxcox(x, lmb)))</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (lmb <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> np.<span class="bu">sum</span>(logx) <span class="op">-</span> n<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> logvar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="a5fd9103" class="cell" data-execution_count="6">
+<div id="11c480b8" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="fl">9.9</span>])</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(max_llf(x, llf<span class="op">=</span>boxcox_llf_naive))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -691,7 +696,7 @@ overflow encountered in reduce
 </div>
 </div>
 <p>Although this returns a <span class="math inline">\lambda</span> value, it produces overflow warnings. A useful diagnostic is to visualize the log-likelihood curve:</p>
-<div id="8cbc319b" class="cell" data-execution_count="7">
+<div id="1702d15c" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_llf(x, lb, ub, llf):</span>
@@ -707,7 +712,7 @@ overflow encountered in reduce
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="19ab97b5" class="cell" data-execution_count="8">
+<div id="976c199a" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_llf(x, lb<span class="op">=</span><span class="dv">150</span>, ub<span class="op">=</span><span class="dv">200</span>, llf<span class="op">=</span>boxcox_llf_naive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>llf=[13.684 13.697 13.711   -inf   -inf   -inf   -inf   -inf   -inf   -inf
@@ -726,14 +731,14 @@ overflow encountered in reduce
 <section id="existing-solutions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="existing-solutions"><span class="header-section-number">3</span> Existing Solutions</h2>
 <p>The MASS package in R <span class="citation" data-cites="Venables2002">(<a href="#ref-Venables2002" role="doc-biblioref">Venables and Ripley 2002</a>)</span> proposes a simple yet effective trick: divide the data by its mean. This rescales the data and avoids numerical instability without affecting the optimization outcome.</p>
-<div id="b2804961" class="cell" data-execution_count="9">
+<div id="7fdb4591" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x_dm <span class="op">=</span> x <span class="op">/</span> np.mean(x)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(max_llf(x_dm, llf<span class="op">=</span>boxcox_llf_naive))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>357.55141884289054</code></pre>
 </div>
 </div>
-<div id="92482741" class="cell" data-execution_count="10">
+<div id="ce66ccdd" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plot_llf(x_dm, lb<span class="op">=</span><span class="dv">330</span>, ub<span class="op">=</span><span class="dv">385</span>, llf<span class="op">=</span>boxcox_llf_naive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>llf=[23.376 23.377 23.378 23.38  23.381 23.381 23.382 23.383 23.383 23.383
@@ -781,7 +786,7 @@ overflow encountered in reduce
 <section id="log-space-computation" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="log-space-computation"><span class="header-section-number">4</span> Log-Space Computation</h2>
 <p>To address numerical instability for both transformations, log-space computation <span class="citation" data-cites="Haberland2023">(<a href="#ref-Haberland2023" role="doc-biblioref">Haberland 2023</a>)</span> is effective. It uses the <a href="https://en.wikipedia.org/wiki/LogSumExp">Log-Sum-Exp trick</a> to compute statistics in log space:</p>
-<div id="26031445" class="cell" data-execution_count="11">
+<div id="d65237cf" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> logsumexp</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_mean(logx):</span>
@@ -796,7 +801,7 @@ overflow encountered in reduce
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.real(logsumexp(<span class="dv">2</span> <span class="op">*</span> logxmu)) <span class="op">-</span> np.log(<span class="bu">len</span>(logx))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This allows direct computation of <span class="math inline">\ln\sigma^2_\psi</span> from <span class="math inline">\ln x</span>. Plugging in <a href="#eq-boxcox-log-var" class="quarto-xref">Equation&nbsp;5</a>, we can compute the log-likelihood in the log-space.</p>
-<div id="bc3ba895" class="cell" data-execution_count="12">
+<div id="668b00ed" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_llf(lmb, x):</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    logx <span class="op">=</span> np.log(x)</span>
@@ -807,13 +812,13 @@ overflow encountered in reduce
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (lmb <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> np.<span class="bu">sum</span>(logx) <span class="op">-</span> n<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> logvar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This version avoids overflow and reliably returns the optimal <span class="math inline">\lambda</span>.</p>
-<div id="6254e503" class="cell" data-execution_count="13">
+<div id="0982dbc4" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(max_llf(x, llf<span class="op">=</span>boxcox_llf))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>357.55141245531865</code></pre>
 </div>
 </div>
-<div id="15e8697c" class="cell" data-execution_count="14">
+<div id="522ea72e" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plot_llf(x, lb<span class="op">=</span><span class="dv">330</span>, ub<span class="op">=</span><span class="dv">385</span>, llf<span class="op">=</span>boxcox_llf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>llf=[14.175 14.177 14.178 14.179 14.18  14.181 14.182 14.182 14.183 14.183
@@ -828,7 +833,7 @@ overflow encountered in reduce
 </div>
 </div>
 <p>The same principle extends to Yeo-Johnson, even for mixed-sign inputs.</p>
-<div id="44965fdd" class="cell" data-execution_count="15">
+<div id="3182de10" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_var_yeojohnson(x, lmb):</span>
@@ -877,7 +882,7 @@ overflow encountered in reduce
 <section id="constrained-optimization" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="constrained-optimization"><span class="header-section-number">5</span> Constrained Optimization</h2>
 <p>Even with log-space computation, applying the transformation using a large absolute value of <span class="math inline">\lambda</span> can result in overflow:</p>
-<div id="3ff32e62" class="cell" data-execution_count="16">
+<div id="a30048b3" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>lmax <span class="op">=</span> max_llf(x, llf<span class="op">=</span>boxcox_llf)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(boxcox(x, lmax))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -900,14 +905,14 @@ overflow encountered in reduce
 <p><span id="eq-boxcox-inverse"><span class="math display">
 \psi^{-1}_{\text{BC}}(x,y)=-1/y-W(-x^{-1/y}\ln x/y)/\ln x
 \tag{9}</span></span></p>
-<div id="d9a408c7" class="cell" data-execution_count="17">
+<div id="de2d36e9" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> lambertw</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_inv_lmbda(x, y):</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    num <span class="op">=</span> lambertw(<span class="op">-</span>(x <span class="op">**</span> (<span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y)) <span class="op">*</span> np.log(x) <span class="op">/</span> y, k<span class="op">=-</span><span class="dv">1</span>)</span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y <span class="op">-</span> np.real(num <span class="op">/</span> np.log(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="4f372bba" class="cell" data-execution_count="18">
+<div id="624a2316" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_constranined_lmax(lmax, x, ymax):</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x &gt; 1, boxcox(x) &gt; 0; x &lt; 1, boxcox(x) &lt; 0</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    xmin, xmax <span class="op">=</span> <span class="bu">min</span>(x), <span class="bu">max</span>(x)</span>
@@ -924,7 +929,7 @@ overflow encountered in reduce
 <span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lmax</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This method can be verified by testing different values for <span class="math inline">y_{\max}</span>:</p>
-<div id="99463815" class="cell" data-execution_count="19">
+<div id="f6f5121d" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> verify_boxcox_constranined_lmax(x):</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    np.set_printoptions(precision<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    lmax <span class="op">=</span> max_llf(x, llf<span class="op">=</span>boxcox_llf)</span>
@@ -932,7 +937,7 @@ overflow encountered in reduce
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        l <span class="op">=</span> boxcox_constranined_lmax(lmax, x, ymax)</span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(boxcox(x, l))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="7970e3db" class="cell" data-execution_count="20">
+<div id="873322a6" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Positive overflow</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="fl">9.9</span>])</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>verify_boxcox_constranined_lmax(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -943,7 +948,7 @@ overflow encountered in reduce
 [1.00e+10 1.00e+10 1.00e+10 8.95e+09]</code></pre>
 </div>
 </div>
-<div id="833e9e70" class="cell" data-execution_count="21">
+<div id="2e5089c5" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative overflow</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.101</span>])</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>verify_boxcox_constranined_lmax(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -955,7 +960,7 @@ overflow encountered in reduce
 </div>
 </div>
 <p>The constrained optimization approach can also be extended to Yeo-Johnson, ensures overflow-free transformations even for extreme values.</p>
-<div id="c2c30446" class="cell" data-execution_count="22">
+<div id="96c5bd2c" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> yeojohnson_inv_lmbda(x, y):</span>

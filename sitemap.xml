@@ -2,43 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://xuefeng-xu.github.io/teach/teach.html</loc>
-    <lastmod>2025-05-02T15:52:58.373Z</lastmod>
+    <lastmod>2025-05-23T20:49:35.880Z</lastmod>
   </url>
   <url>
     <loc>https://xuefeng-xu.github.io/cv.html</loc>
     <lastmod>2025-05-03T15:19:19.792Z</lastmod>
   </url>
   <url>
-    <loc>https://xuefeng-xu.github.io/blog/index.html</loc>
-    <lastmod>2025-05-18T10:37:33.372Z</lastmod>
-  </url>
-  <url>
-    <loc>https://xuefeng-xu.github.io/index.html</loc>
-    <lastmod>2025-05-20T18:03:01.625Z</lastmod>
-  </url>
-  <url>
-    <loc>https://xuefeng-xu.github.io/misc/resource.html</loc>
-    <lastmod>2025-04-25T11:43:12.884Z</lastmod>
-  </url>
-  <url>
-    <loc>https://xuefeng-xu.github.io/research/index.html</loc>
-    <lastmod>2025-05-02T16:00:32.424Z</lastmod>
-  </url>
-  <url>
-    <loc>https://xuefeng-xu.github.io/research/research.html</loc>
-    <lastmod>2025-05-12T13:28:22.383Z</lastmod>
-  </url>
-  <url>
-    <loc>https://xuefeng-xu.github.io/misc/index.html</loc>
-    <lastmod>2025-04-25T11:48:56.374Z</lastmod>
+    <loc>https://xuefeng-xu.github.io/blog/roc-pr-curve.html</loc>
+    <lastmod>2025-07-31T19:57:44.141Z</lastmod>
   </url>
   <url>
     <loc>https://xuefeng-xu.github.io/blog/pchip.html</loc>
     <lastmod>2025-05-18T10:44:56.039Z</lastmod>
   </url>
   <url>
+    <loc>https://xuefeng-xu.github.io/misc/index.html</loc>
+    <lastmod>2025-04-25T11:48:56.374Z</lastmod>
+  </url>
+  <url>
+    <loc>https://xuefeng-xu.github.io/research/research.html</loc>
+    <lastmod>2025-07-31T20:20:06.267Z</lastmod>
+  </url>
+  <url>
+    <loc>https://xuefeng-xu.github.io/research/index.html</loc>
+    <lastmod>2025-05-02T16:00:32.424Z</lastmod>
+  </url>
+  <url>
+    <loc>https://xuefeng-xu.github.io/misc/resource.html</loc>
+    <lastmod>2025-04-25T11:43:12.884Z</lastmod>
+  </url>
+  <url>
+    <loc>https://xuefeng-xu.github.io/index.html</loc>
+    <lastmod>2025-07-31T20:17:10.624Z</lastmod>
+  </url>
+  <url>
+    <loc>https://xuefeng-xu.github.io/blog/index.html</loc>
+    <lastmod>2025-07-31T20:16:28.767Z</lastmod>
+  </url>
+  <url>
     <loc>https://xuefeng-xu.github.io/blog/power-transform.html</loc>
-    <lastmod>2025-05-21T18:24:00.116Z</lastmod>
+    <lastmod>2025-07-31T20:13:12.976Z</lastmod>
   </url>
   <url>
     <loc>https://xuefeng-xu.github.io/teach/index.html</loc>

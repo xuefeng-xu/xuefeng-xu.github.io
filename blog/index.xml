@@ -10,7 +10,17 @@
 <atom:link href="https://xuefeng-xu.github.io/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Xuefeng Xu&#39;s Blog</description>
 <generator>quarto-1.7.31</generator>
-<lastBuildDate>Sun, 13 Apr 2025 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 30 Jul 2025 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>ROC and PR Curves</title>
+  <dc:creator>Xuefeng Xu</dc:creator>
+  <link>https://xuefeng-xu.github.io/blog/roc-pr-curve.html</link>
+  <description><![CDATA[ ROC and PR curves are graphical tools for evaluating classification models, highlighting trade-offs in model performance. ]]></description>
+  <category>Data Science</category>
+  <category>Python</category>
+  <guid>https://xuefeng-xu.github.io/blog/roc-pr-curve.html</guid>
+  <pubDate>Wed, 30 Jul 2025 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Power Transform</title>
   <dc:creator>Xuefeng Xu</dc:creator>
