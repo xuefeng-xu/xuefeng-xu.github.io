@@ -26,7 +26,7 @@
   <dc:creator>Xuefeng Xu</dc:creator>
   <link>https://xuefeng-xu.github.io/blog/power-transform.html</link>
   <description><![CDATA[ Box-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability. ]]></description>
-  <category>Statistics</category>
+  <category>Numerical</category>
   <category>Python</category>
   <guid>https://xuefeng-xu.github.io/blog/power-transform.html</guid>
   <pubDate>Sun, 13 Apr 2025 23:00:00 GMT</pubDate>

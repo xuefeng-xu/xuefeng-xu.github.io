@@ -189,13 +189,13 @@ window.Quarto = {
 <meta property="og:description" content="PCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots.">
 <meta property="og:image" content="https://xuefeng-xu.github.io/blog/pchip_files/figure-html/fig-monotone-region-output-1.png">
 <meta property="og:site_name" content="Xuefeng Xu">
-<meta property="og:image:height" content="755">
-<meta property="og:image:width" content="796">
+<meta property="og:image:height" content="607">
+<meta property="og:image:width" content="647">
 <meta name="twitter:title" content="Monotone Piecewise Cubic Interpolation – Xuefeng Xu">
 <meta name="twitter:description" content="PCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots.">
 <meta name="twitter:image" content="https://xuefeng-xu.github.io/blog/pchip_files/figure-html/fig-monotone-region-output-1.png">
-<meta name="twitter:image-height" content="755">
-<meta name="twitter:image-width" content="796">
+<meta name="twitter:image-height" content="607">
+<meta name="twitter:image-width" content="647">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="citation_title" content="Monotone Piecewise Cubic Interpolation">
 <meta name="citation_author" content="Xuefeng Xu">
@@ -690,7 +690,7 @@ f'(x^*)=\phi(\alpha_i,\beta_i)s_i
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> (x <span class="op">-</span> ((<span class="dv">2</span> <span class="op">*</span> x <span class="op">+</span> y <span class="op">-</span> <span class="dv">3</span>) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> (<span class="dv">3</span> <span class="op">*</span> (x <span class="op">+</span> y <span class="op">-</span> <span class="dv">2</span>)) <span class="op">&gt;</span> <span class="dv">0</span>)</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>ax.contourf(x, y, cond1, levels<span class="op">=</span><span class="dv">1</span>, colors<span class="op">=</span>[<span class="st">"white"</span>, <span class="st">"blue"</span>], alpha<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>ax.contourf(x, y, cond2, levels<span class="op">=</span><span class="dv">1</span>, colors<span class="op">=</span>[<span class="st">"white"</span>, <span class="st">"green"</span>], alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
@@ -720,7 +720,7 @@ f'(x^*)=\phi(\alpha_i,\beta_i)s_i
 <div id="fig-monotone-region" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-monotone-region-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pchip_files/figure-html/fig-monotone-region-output-1.png" width="398" height="378" class="figure-img">
+<img src="pchip_files/figure-html/fig-monotone-region-output-1.png" width="324" height="304" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-monotone-region-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: The monotonicity region
@@ -766,14 +766,14 @@ Fritsch, F. N., and R. E. Carlson. 1980. <span>“Monotone Piecewise Cubic Inter
 <div id="ref-Moler2004" class="csl-entry" role="listitem">
 Moler, Cleve B. 2004. <em>Numerical Computing with Matlab</em>. Society for Industrial; Applied Mathematics. <a href="https://doi.org/10.1137/1.9780898717952.ch3">https://doi.org/10.1137/1.9780898717952.ch3</a>.
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{xu2025,
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{pchip,
   author = {Xu, Xuefeng},
   title = {Monotone {Piecewise} {Cubic} {Interpolation}},
   date = {2025-03-13},
   url = {https://xuefeng-xu.github.io/blog/pchip.html},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-xu2025" class="csl-entry quarto-appendix-citeas" role="listitem">
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-pchip" class="csl-entry quarto-appendix-citeas" role="listitem">
 Xu, Xuefeng. 2025. <span>“Monotone Piecewise Cubic
 Interpolation.”</span> March 13, 2025. <a href="https://xuefeng-xu.github.io/blog/pchip.html">https://xuefeng-xu.github.io/blog/pchip.html</a>.
 </div></div></section></div></main> <!-- /main -->

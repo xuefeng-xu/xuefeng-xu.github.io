@@ -187,15 +187,15 @@ window.Quarto = {
 <link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="ROC and PR Curves – Xuefeng Xu">
 <meta property="og:description" content="ROC and PR curves are graphical tools for evaluating classification models, highlighting trade-offs in model performance.">
-<meta property="og:image" content="https://xuefeng-xu.github.io/blog/roc-pr-curve_files/figure-html/cell-6-output-1.png">
+<meta property="og:image" content="https://xuefeng-xu.github.io/blog/roc-pr-curve_files/figure-html/cell-7-output-1.png">
 <meta property="og:site_name" content="Xuefeng Xu">
-<meta property="og:image:height" content="898">
-<meta property="og:image:width" content="889">
+<meta property="og:image:height" content="603">
+<meta property="og:image:width" content="604">
 <meta name="twitter:title" content="ROC and PR Curves – Xuefeng Xu">
 <meta name="twitter:description" content="ROC and PR curves are graphical tools for evaluating classification models, highlighting trade-offs in model performance.">
-<meta name="twitter:image" content="https://xuefeng-xu.github.io/blog/roc-pr-curve_files/figure-html/cell-6-output-1.png">
-<meta name="twitter:image-height" content="898">
-<meta name="twitter:image-width" content="889">
+<meta name="twitter:image" content="https://xuefeng-xu.github.io/blog/roc-pr-curve_files/figure-html/cell-7-output-1.png">
+<meta name="twitter:image-height" content="603">
+<meta name="twitter:image-width" content="604">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="citation_title" content="ROC and PR Curves">
 <meta name="citation_author" content="Xuefeng Xu">
@@ -575,7 +575,7 @@ Table&nbsp;1: The Confusion Matrix
 \text{TPR}=\text{TP}/\text{P},\quad \text{FPR}=\text{FP}/\text{N}
 \tag{1}</span></span></p>
 <p>A simple algorithm constructs the ROC curve: 1) Sort predictions in descending score order. 2) Sweep thresholds across scores, updating TP and FP counts <span class="citation" data-cites="Fawcett2006">(<a href="#ref-Fawcett2006" role="doc-biblioref">Fawcett 2006</a>)</span>.</p>
-<div id="fd624840" class="cell" data-execution_count="1">
+<div id="c32a1502" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_fp_tp(y_true, y_score):</span>
@@ -598,13 +598,7 @@ Table&nbsp;1: The Confusion Matrix
 <span id="annotated-cell-1-20"><a href="#annotated-cell-1-20" aria-hidden="true" tabindex="-1"></a>    fps.append(fp)</span>
 <span id="annotated-cell-1-21"><a href="#annotated-cell-1-21" aria-hidden="true" tabindex="-1"></a>    tps.append(tp)</span>
 <span id="annotated-cell-1-22"><a href="#annotated-cell-1-22" aria-hidden="true" tabindex="-1"></a>    thresholds.append(score)</span>
-<span id="annotated-cell-1-23"><a href="#annotated-cell-1-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.asarray(fps), np.asarray(tps), np.asarray(thresholds)</span>
-<span id="annotated-cell-1-24"><a href="#annotated-cell-1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-1-25"><a href="#annotated-cell-1-25" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> roc_curve(y_true, y_score):</span>
-<span id="annotated-cell-1-26"><a href="#annotated-cell-1-26" aria-hidden="true" tabindex="-1"></a>    fps, tps, thresholds <span class="op">=</span> count_fp_tp(y_true, y_score)</span>
-<span id="annotated-cell-1-27"><a href="#annotated-cell-1-27" aria-hidden="true" tabindex="-1"></a>    fpr <span class="op">=</span> fps <span class="op">/</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">0</span>)</span>
-<span id="annotated-cell-1-28"><a href="#annotated-cell-1-28" aria-hidden="true" tabindex="-1"></a>    tpr <span class="op">=</span> tps <span class="op">/</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">1</span>)</span>
-<span id="annotated-cell-1-29"><a href="#annotated-cell-1-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fpr, tpr, thresholds</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-1-23"><a href="#annotated-cell-1-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.asarray(fps), np.asarray(tps), np.asarray(thresholds)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
@@ -614,61 +608,68 @@ Table&nbsp;1: The Confusion Matrix
 </dl>
 </div>
 </div>
+<div id="0705c0fd" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> roc_curve(y_true, y_score):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    fps, tps, thresholds <span class="op">=</span> count_fp_tp(y_true, y_score)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    fpr <span class="op">=</span> fps <span class="op">/</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">0</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    tpr <span class="op">=</span> tps <span class="op">/</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fpr, tpr, thresholds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>The ROC curve is always monotonically non-decreasing, starting at <span class="math inline">(0, 0)</span> for the highest threshold and ending at <span class="math inline">(1, 1)</span> for the lowest threshold. Points are connected using linear interpolation. A random classifier lies along <span class="math inline">y=x</span>, while curves closer to the top-left indicate better performance.</p>
-<div id="0d0b9be2" class="cell" data-execution_count="2">
+<div id="fbc070c5" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_curve(x, y, curve: <span class="bu">str</span>, pos_frac<span class="op">=</span><span class="va">None</span>, drawstyle<span class="op">=</span><span class="st">"default"</span>, ax<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ax <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        _, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>curve<span class="sc">}</span><span class="ss"> curve"</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    ax.plot(x, y, <span class="st">"x-"</span>, c<span class="op">=</span><span class="st">"C0"</span>, label<span class="op">=</span>name, drawstyle<span class="op">=</span>drawstyle)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    ax.set_title(name)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    ax.set_aspect(<span class="st">"equal"</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(<span class="op">-</span><span class="fl">0.01</span>, <span class="fl">1.01</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="op">-</span><span class="fl">0.01</span>, <span class="fl">1.01</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    chance <span class="op">=</span> {</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"label"</span>: <span class="st">"Chance level"</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"color"</span>: <span class="st">"k"</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"linestyle"</span>: <span class="st">"--"</span>,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> curve <span class="op">==</span> <span class="st">"ROC"</span>:</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        ax.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], <span class="op">**</span>chance)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        ax.set_xlabel(<span class="st">"FPR"</span>)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="st">"TPR"</span>)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        ax.legend(loc<span class="op">=</span><span class="st">"lower right"</span>)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> curve <span class="op">==</span> <span class="st">"PR"</span>:  <span class="co"># curve == "PR":</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pos_frac <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>            ax.plot([<span class="dv">0</span>, <span class="dv">1</span>], [pos_frac, pos_frac], <span class="op">**</span>chance)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        ax.set_xlabel(<span class="st">"Recall"</span>)</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="st">"Precision"</span>)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        ax.legend(loc<span class="op">=</span><span class="st">"lower left"</span>)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> curve <span class="op">==</span> <span class="st">"PRG"</span>:</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        ax.set_xlabel(<span class="st">"Recall Gain"</span>)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="st">"Precision Gain"</span>)</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        ax.legend(loc<span class="op">=</span><span class="st">"lower left"</span>)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"Unknown curve type: </span><span class="sc">{</span>curve<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_curve(x, y, curve: <span class="bu">str</span>, pos_frac<span class="op">=</span><span class="va">None</span>, drawstyle<span class="op">=</span><span class="st">"default"</span>, ax<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ax <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        _, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>curve<span class="sc">}</span><span class="ss"> curve"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    ax.plot(x, y, <span class="st">"x-"</span>, c<span class="op">=</span><span class="st">"C0"</span>, label<span class="op">=</span>name, drawstyle<span class="op">=</span>drawstyle)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    ax.set_title(name)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    ax.set_aspect(<span class="st">"equal"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(<span class="op">-</span><span class="fl">0.01</span>, <span class="fl">1.01</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="op">-</span><span class="fl">0.01</span>, <span class="fl">1.01</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    chance <span class="op">=</span> {</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"label"</span>: <span class="st">"Chance level"</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"color"</span>: <span class="st">"k"</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"linestyle"</span>: <span class="st">"--"</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> curve <span class="op">==</span> <span class="st">"ROC"</span>:</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        ax.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], <span class="op">**</span>chance)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        ax.set_xlabel(<span class="st">"FPR"</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="st">"TPR"</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        ax.legend(loc<span class="op">=</span><span class="st">"lower right"</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> curve <span class="op">==</span> <span class="st">"PR"</span>:  <span class="co"># curve == "PR":</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pos_frac <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>            ax.plot([<span class="dv">0</span>, <span class="dv">1</span>], [pos_frac, pos_frac], <span class="op">**</span>chance)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        ax.set_xlabel(<span class="st">"Recall"</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="st">"Precision"</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        ax.legend(loc<span class="op">=</span><span class="st">"lower left"</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> curve <span class="op">==</span> <span class="st">"PRG"</span>:</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        ax.set_xlabel(<span class="st">"Recall Gain"</span>)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="st">"Precision Gain"</span>)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        ax.legend(loc<span class="op">=</span><span class="st">"lower left"</span>)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"Unknown curve type: </span><span class="sc">{</span>curve<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="db18ec60" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>])</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y_score <span class="op">=</span> np.array([</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fl">.9</span>, <span class="fl">.8</span>, <span class="fl">.7</span>, <span class="fl">.6</span>, <span class="fl">.55</span>, <span class="fl">.54</span>, <span class="fl">.53</span>, <span class="fl">.52</span>, <span class="fl">.51</span>, <span class="fl">.505</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">.4</span>, <span class="fl">.39</span>, <span class="fl">.38</span>, <span class="fl">.37</span>, <span class="fl">.36</span>, <span class="fl">.35</span>, <span class="fl">.34</span>, <span class="fl">.33</span>, <span class="fl">.3</span>, <span class="fl">.1</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>fpr, tpr, _ <span class="op">=</span> roc_curve(y_true, y_score)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>plot_curve(fpr, tpr, <span class="st">"ROC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="16e43128" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>y_score <span class="op">=</span> np.array([</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fl">.9</span>, <span class="fl">.8</span>, <span class="fl">.7</span>, <span class="fl">.6</span>, <span class="fl">.55</span>, <span class="fl">.54</span>, <span class="fl">.53</span>, <span class="fl">.52</span>, <span class="fl">.51</span>, <span class="fl">.505</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">.4</span>, <span class="fl">.39</span>, <span class="fl">.38</span>, <span class="fl">.37</span>, <span class="fl">.36</span>, <span class="fl">.35</span>, <span class="fl">.34</span>, <span class="fl">.33</span>, <span class="fl">.3</span>, <span class="fl">.1</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>fpr, tpr, _ <span class="op">=</span> roc_curve(y_true, y_score)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plot_curve(fpr, tpr, <span class="st">"ROC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="roc-pr-curve_files/figure-html/cell-4-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="445" height="449"></p>
+<p><img src="roc-pr-curve_files/figure-html/cell-5-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="302" height="302"></p>
 </figure>
 </div>
 </div>
@@ -677,36 +678,36 @@ Table&nbsp;1: The Confusion Matrix
 <section id="roc-convex-hull" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="roc-convex-hull"><span class="header-section-number">2</span> ROC Convex Hull</h2>
 <p>The ROC <a href="https://en.wikipedia.org/wiki/Convex_hull">Convex Hull</a> (ROCCH) highlights potentially optimal performance of a classifier (or a set of classifiers) by connecting upper boundary points <span class="citation" data-cites="Provost2001">(<a href="#ref-Provost2001" role="doc-biblioref">Provost and Fawcett 2001</a>)</span>. It can be computed via algorithms like the <a href="https://en.wikibooks.org/wiki/Algorithm_Implementation/Geometry/Convex_hull/Monotone_chain#Python">Monotone chain algorithm</a>.</p>
-<div id="180377a4" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convex_hull(points):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    points <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(points))</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> cross(o, a, b):</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (a[<span class="dv">0</span>] <span class="op">-</span> o[<span class="dv">0</span>]) <span class="op">*</span> (b[<span class="dv">1</span>] <span class="op">-</span> o[<span class="dv">1</span>]) <span class="op">-</span> (a[<span class="dv">1</span>] <span class="op">-</span> o[<span class="dv">1</span>]) <span class="op">*</span> (b[<span class="dv">0</span>] <span class="op">-</span> o[<span class="dv">0</span>])</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Build upper hull</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    upper <span class="op">=</span> []</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> p <span class="kw">in</span> <span class="bu">reversed</span>(points):</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="bu">len</span>(upper) <span class="op">&gt;=</span> <span class="dv">2</span> <span class="kw">and</span> cross(upper[<span class="op">-</span><span class="dv">2</span>], upper[<span class="op">-</span><span class="dv">1</span>], p) <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            upper.pop()</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        upper.append(p)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> upper</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="50091aad" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convex_hull(points):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    points <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(points))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> cross(o, a, b):</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (a[<span class="dv">0</span>] <span class="op">-</span> o[<span class="dv">0</span>]) <span class="op">*</span> (b[<span class="dv">1</span>] <span class="op">-</span> o[<span class="dv">1</span>]) <span class="op">-</span> (a[<span class="dv">1</span>] <span class="op">-</span> o[<span class="dv">1</span>]) <span class="op">*</span> (b[<span class="dv">0</span>] <span class="op">-</span> o[<span class="dv">0</span>])</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Build upper hull</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    upper <span class="op">=</span> []</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> p <span class="kw">in</span> <span class="bu">reversed</span>(points):</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="bu">len</span>(upper) <span class="op">&gt;=</span> <span class="dv">2</span> <span class="kw">and</span> cross(upper[<span class="op">-</span><span class="dv">2</span>], upper[<span class="op">-</span><span class="dv">1</span>], p) <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            upper.pop()</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        upper.append(p)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> upper</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="preview-image">
-<div id="e77b0164" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rocch <span class="op">=</span> convex_hull(<span class="bu">zip</span>(fpr, tpr))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>rocch <span class="op">=</span> np.array(rocch)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>fpr_ch, tpr_ch <span class="op">=</span> rocch[:, <span class="dv">0</span>], rocch[:, <span class="dv">1</span>]</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>ax.plot(fpr_ch, tpr_ch, <span class="st">'C1-.'</span>, label<span class="op">=</span><span class="st">"ROCCH"</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plot_curve(fpr, tpr, <span class="st">"ROC"</span>, ax<span class="op">=</span>ax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="025451c5" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rocch <span class="op">=</span> convex_hull(<span class="bu">zip</span>(fpr, tpr))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>rocch <span class="op">=</span> np.array(rocch)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>fpr_ch, tpr_ch <span class="op">=</span> rocch[:, <span class="dv">0</span>], rocch[:, <span class="dv">1</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>ax.plot(fpr_ch, tpr_ch, <span class="st">'C1-.'</span>, label<span class="op">=</span><span class="st">"ROCCH"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plot_curve(fpr, tpr, <span class="st">"ROC"</span>, ax<span class="op">=</span>ax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="roc-pr-curve_files/figure-html/cell-6-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="445" height="449"></p>
+<p><img src="roc-pr-curve_files/figure-html/cell-7-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="302" height="302"></p>
 </figure>
 </div>
 </div>
@@ -720,16 +721,16 @@ Table&nbsp;1: The Confusion Matrix
 \text{Prec}=\frac{\text{TP}}{\text{TP}+\text{FP}}
 \tag{2}</span></span></p>
 <p>PR curves start at <span class="math inline">(0, 1)</span> and end at <span class="math inline">(1, \frac{\text{P}}{\text{P}+\text{N}})</span>, where the endpoint reflects the proportion of positive samples. Because Precision depends on both TP and FP, the PR curve is non-monotonic and can decrease as Recall increases. Moreover, it is highly influenced by class imbalance <span class="citation" data-cites="Williams2021">(<a href="#ref-Williams2021" role="doc-biblioref">Williams 2021</a>)</span>. For a random classifier, the PR curve is a horizontal line at <span class="math inline">y = \frac{\text{P}}{\text{P}+\text{N}}</span>, whereas curves closer to the top-right indicate stronger performance.</p>
-<div id="ae7e02b9" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pr_curve(y_true, y_score):</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    fps, tps, thresholds <span class="op">=</span> count_fp_tp(y_true, y_score)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    pps <span class="op">=</span> fps <span class="op">+</span> tps</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    precision <span class="op">=</span> np.ones_like(tps, dtype<span class="op">=</span>np.float64)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    np.divide(tps, pps, out<span class="op">=</span>precision, where<span class="op">=</span>(pps <span class="op">!=</span> <span class="dv">0</span>))</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    recall <span class="op">=</span> tps <span class="op">/</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">1</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.flip(precision), np.flip(recall), np.flip(thresholds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="47997d4b" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pr_curve(y_true, y_score):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    fps, tps, thresholds <span class="op">=</span> count_fp_tp(y_true, y_score)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    pps <span class="op">=</span> fps <span class="op">+</span> tps</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    precision <span class="op">=</span> np.ones_like(tps, dtype<span class="op">=</span>np.float64)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    np.divide(tps, pps, out<span class="op">=</span>precision, where<span class="op">=</span>(pps <span class="op">!=</span> <span class="dv">0</span>))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    recall <span class="op">=</span> tps <span class="op">/</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.flip(precision), np.flip(recall), np.flip(thresholds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Although ROC and PR curves are mathematically related, linear interpolation is incorrect for PR curves, as it yields overly optimistic estimates of performance <span class="citation" data-cites="Davis2006">(<a href="#ref-Davis2006" role="doc-biblioref">Davis and Goadrich 2006</a>)</span>. Precision does not necessarily vary linearly with Recall, so naive interpolation misrepresents true model behavior.</p>
 <p>To illustrate this, we convert the ROC Convex Hull (ROCCH) into PR space, treating it as the potential optimal PR curve. Using <a href="#eq-prec-tpr-fpr" class="quarto-xref">Equation&nbsp;3</a>, we express Precision in terms of TPR and FPR:</p>
@@ -737,55 +738,56 @@ Table&nbsp;1: The Confusion Matrix
 \text{Prec}=\frac{\text{P}\cdot\text{TPR}}{\text{P}\cdot\text{TPR}+\text{N}\cdot\text{FPR}}
 =\frac{1}{1+\frac{\text{N}}{\text{P}}\cdot\frac{\text{FPR}}{\text{TPR}}}
 \tag{3}</span></span></p>
-<div id="6d2943ce" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.interpolate <span class="im">import</span> interp1d</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pr_from_roc(fpr, tpr, neg_to_pos):</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    fpr_tpr_func <span class="op">=</span> interp1d(tpr, fpr, bounds_error<span class="op">=</span><span class="va">False</span>, fill_value<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> prec_func(tpr):</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        fpr <span class="op">=</span> fpr_tpr_func(tpr)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        fpr_to_tpr <span class="op">=</span> np.zeros_like(tpr, dtype<span class="op">=</span>np.float64)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        np.divide(fpr, tpr, out<span class="op">=</span>fpr_to_tpr, where<span class="op">=</span>(tpr <span class="op">!=</span> <span class="dv">0</span>))</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        prec <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> neg_to_pos <span class="op">*</span> fpr_to_tpr)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> prec</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> prec_func</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>neg_to_pos <span class="op">=</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">1</span>)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>prec_ch_func <span class="op">=</span> pr_from_roc(fpr_ch, tpr_ch, neg_to_pos)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>ax.plot(tpr_ch, prec_ch_func(tpr_ch), <span class="st">'C2:'</span>, label<span class="op">=</span><span class="st">"Linear interp ROCCH"</span>)</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">100</span>)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>ax.plot(x, prec_ch_func(x), <span class="st">'C1-.'</span>, label<span class="op">=</span><span class="st">"ROCCH"</span>)</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>precision, recall, _ <span class="op">=</span> pr_curve(y_true, y_score)</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>ax.scatter(recall, precision, c<span class="op">=</span><span class="st">"C0"</span>, marker<span class="op">=</span><span class="st">"x"</span>, label<span class="op">=</span><span class="st">"PR points"</span>)</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>ax.set_aspect(<span class="st">"equal"</span>)</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="op">-</span><span class="fl">0.01</span>, <span class="fl">1.01</span>)</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="fl">0.01</span>, <span class="fl">1.01</span>)</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Recall"</span>)</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Precision"</span>)</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">"lower left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="0bd6ba98" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.interpolate <span class="im">import</span> interp1d</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pr_from_roc(fpr, tpr, neg_to_pos):</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    fpr_tpr_func <span class="op">=</span> interp1d(tpr, fpr, bounds_error<span class="op">=</span><span class="va">False</span>, fill_value<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> prec_func(tpr):</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        fpr <span class="op">=</span> fpr_tpr_func(tpr)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        fpr_to_tpr <span class="op">=</span> np.zeros_like(tpr, dtype<span class="op">=</span>np.float64)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        np.divide(fpr, tpr, out<span class="op">=</span>fpr_to_tpr, where<span class="op">=</span>(tpr <span class="op">!=</span> <span class="dv">0</span>))</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        prec <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> neg_to_pos <span class="op">*</span> fpr_to_tpr)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> prec</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> prec_func</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="04002a0e" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>neg_to_pos <span class="op">=</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>prec_ch_func <span class="op">=</span> pr_from_roc(fpr_ch, tpr_ch, neg_to_pos)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>ax.plot(tpr_ch, prec_ch_func(tpr_ch), <span class="st">'C2:'</span>, label<span class="op">=</span><span class="st">"Linear interp ROCCH"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">100</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>ax.plot(x, prec_ch_func(x), <span class="st">'C1-.'</span>, label<span class="op">=</span><span class="st">"ROCCH"</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>precision, recall, _ <span class="op">=</span> pr_curve(y_true, y_score)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>ax.scatter(recall, precision, c<span class="op">=</span><span class="st">"C0"</span>, marker<span class="op">=</span><span class="st">"x"</span>, label<span class="op">=</span><span class="st">"PR points"</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>ax.set_aspect(<span class="st">"equal"</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="op">-</span><span class="fl">0.01</span>, <span class="fl">1.01</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="fl">0.01</span>, <span class="fl">1.01</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Recall"</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Precision"</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">"lower left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="roc-pr-curve_files/figure-html/cell-8-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="445" height="431"></p>
+<p><img src="roc-pr-curve_files/figure-html/cell-10-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="302" height="284"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>The converted ROCCH dominates the PR space but is clearly non-linear, lying beneath its own linear interpolation (dotted line). This confirms that PR curves cannot be linearly interpolated. Scikit-learn’s <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.PrecisionRecallDisplay.html">PrecisionRecallDisplay</a> instead uses step-wise interpolation, consistent with <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html">average_precision_score</a>. This ensures that the area under the PR curve equals the average precision.</p>
-<div id="e193f354" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pos_frac <span class="op">=</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">1</span>) <span class="op">/</span> <span class="bu">len</span>(y_true)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plot_curve(recall, precision, <span class="st">"PR"</span>, pos_frac, drawstyle<span class="op">=</span><span class="st">"steps-post"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="8a3211aa" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pos_frac <span class="op">=</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">1</span>) <span class="op">/</span> <span class="bu">len</span>(y_true)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plot_curve(recall, precision, <span class="st">"PR"</span>, pos_frac, drawstyle<span class="op">=</span><span class="st">"steps-post"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="roc-pr-curve_files/figure-html/cell-9-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="445" height="449"></p>
+<p><img src="roc-pr-curve_files/figure-html/cell-11-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="302" height="302"></p>
 </figure>
 </div>
 </div>
@@ -799,27 +801,27 @@ Table&nbsp;1: The Confusion Matrix
 \text{RecG}=\frac{\text{Rec}-\pi}{(1-\pi)\text{Rec}}
 \tag{4}</span></span></p>
 <p>where <span class="math inline">\pi=\frac{\text{P}}{\text{P}+\text{N}}</span> is the positive class fraction. Notably, Gains can be negative, and such points are typically omitted from the PRG curve.</p>
-<div id="4b4052c2" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prg_curve(y_true, y_score):</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    prec, rec, thresholds <span class="op">=</span> pr_curve(y_true, y_score)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    pos_frac <span class="op">=</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_true)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove negative gains</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> (rec <span class="op">&gt;=</span> pos_frac) <span class="op">&amp;</span> (prec <span class="op">&gt;=</span> pos_frac)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    prec <span class="op">=</span> prec[mask]</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    rec <span class="op">=</span> rec[mask]</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    prec_gain <span class="op">=</span> (prec <span class="op">-</span> pos_frac) <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> pos_frac) <span class="op">/</span> prec</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    rec_gain <span class="op">=</span> (rec <span class="op">-</span> pos_frac) <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> pos_frac) <span class="op">/</span> rec</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> prec_gain, rec_gain, thresholds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="c3713334" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prg_curve(y_true, y_score):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    prec, rec, thresholds <span class="op">=</span> pr_curve(y_true, y_score)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    pos_frac <span class="op">=</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_true)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove negative gains</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> (rec <span class="op">&gt;=</span> pos_frac) <span class="op">&amp;</span> (prec <span class="op">&gt;=</span> pos_frac)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    prec <span class="op">=</span> prec[mask]</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    rec <span class="op">=</span> rec[mask]</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    prec_gain <span class="op">=</span> (prec <span class="op">-</span> pos_frac) <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> pos_frac) <span class="op">/</span> prec</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    rec_gain <span class="op">=</span> (rec <span class="op">-</span> pos_frac) <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> pos_frac) <span class="op">/</span> rec</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> prec_gain, rec_gain, thresholds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="26ff6f13" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>prec_gain, rec_gain, _ <span class="op">=</span> prg_curve(y_true, y_score)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plot_curve(rec_gain, prec_gain, <span class="st">"PRG"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="ce916d8d" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>prec_gain, rec_gain, _ <span class="op">=</span> prg_curve(y_true, y_score)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plot_curve(rec_gain, prec_gain, <span class="st">"PRG"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="roc-pr-curve_files/figure-html/cell-11-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="445" height="449"></p>
+<p><img src="roc-pr-curve_files/figure-html/cell-13-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="302" height="302"></p>
 </figure>
 </div>
 </div>
@@ -845,14 +847,14 @@ Provost, Foster J., and Tom Fawcett. 2001. <span>“Robust Classification for Im
 <div id="ref-Williams2021" class="csl-entry" role="listitem">
 Williams, Christopher K. I. 2021. <span>“The Effect of Class Imbalance on Precision-Recall Curves.”</span> <em>Neural Computation</em> 33 (4): 853–57. <a href="https://doi.org/10.1162/neco_a_01362">https://doi.org/10.1162/neco_a_01362</a>.
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{xu2025,
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{roc-pr-curve,
   author = {Xu, Xuefeng},
   title = {ROC and {PR} {Curves}},
   date = {2025-07-31},
   url = {https://xuefeng-xu.github.io/blog/roc-pr-curve.html},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-xu2025" class="csl-entry quarto-appendix-citeas" role="listitem">
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-roc-pr-curve" class="csl-entry quarto-appendix-citeas" role="listitem">
 Xu, Xuefeng. 2025. <span>“ROC and PR Curves.”</span> July 31, 2025. <a href="https://xuefeng-xu.github.io/blog/roc-pr-curve.html">https://xuefeng-xu.github.io/blog/roc-pr-curve.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
