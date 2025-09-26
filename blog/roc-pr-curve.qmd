@@ -4,6 +4,8 @@ description: "ROC and PR curves are graphical tools for evaluating classificatio
 date: July 31, 2025
 bibliography: reference.bib
 categories: [Data Science, Python]
+citation:
+  id: roc-pr-curve
 format:
   html:
     code-fold: false
@@ -56,14 +58,16 @@ def count_fp_tp(y_true, y_score):
     tps.append(tp)
     thresholds.append(score)
     return np.asarray(fps), np.asarray(tps), np.asarray(thresholds)
+```
+1. To handle score repetitions, record (FP, TP) counts only when the score changes.
 
+```{python}
 def roc_curve(y_true, y_score):
     fps, tps, thresholds = count_fp_tp(y_true, y_score)
     fpr = fps / sum(y_true == 0)
     tpr = tps / sum(y_true == 1)
     return fpr, tpr, thresholds
 ```
-1. To handle score repetitions, record (FP, TP) counts only when the score changes.
 
 The ROC curve is always monotonically non-decreasing, starting at $(0, 0)$ for the highest threshold and ending at $(1, 1)$ for the lowest threshold. Points are connected using linear interpolation. A random classifier lies along $y=x$, while curves closer to the top-left indicate better performance.
 
@@ -73,7 +77,7 @@ import matplotlib.pyplot as plt
 
 def plot_curve(x, y, curve: str, pos_frac=None, drawstyle="default", ax=None):
     if ax is None:
-        _, ax = plt.subplots()
+        _, ax = plt.subplots(figsize=(3, 3))
 
     name = f"{curve} curve"
     ax.plot(x, y, "x-", c="C0", label=name, drawstyle=drawstyle)
@@ -148,7 +152,7 @@ rocch = convex_hull(zip(fpr, tpr))
 rocch = np.array(rocch)
 fpr_ch, tpr_ch = rocch[:, 0], rocch[:, 1]
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(3, 3))
 ax.plot(fpr_ch, tpr_ch, 'C1-.', label="ROCCH")
 plot_curve(fpr, tpr, "ROC", ax=ax)
 ```
@@ -186,7 +190,6 @@ $$
 $$ {#eq-prec-tpr-fpr}
 
 ```{python}
-#| fig-align: center
 from scipy.interpolate import interp1d
 
 def pr_from_roc(fpr, tpr, neg_to_pos):
@@ -200,11 +203,14 @@ def pr_from_roc(fpr, tpr, neg_to_pos):
         return prec
 
     return prec_func
+```
 
+```{python}
+#| fig-align: center
 neg_to_pos = sum(y_true == 0) / sum(y_true == 1)
 prec_ch_func = pr_from_roc(fpr_ch, tpr_ch, neg_to_pos)
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(3, 3))
 ax.plot(tpr_ch, prec_ch_func(tpr_ch), 'C2:', label="Linear interp ROCCH")
 
 x = np.linspace(0, 1, 100)

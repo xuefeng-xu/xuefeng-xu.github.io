@@ -22,9 +22,11 @@ Email: [xuefeng.xu@warwick.ac.uk](mailto:xuefeng.xu@warwick.ac.uk)
 
 ### Biography
 
-I am a Ph.D. student in the Department of Computer Science at the University of Warwick, supervised by Prof. [Graham Cormode](http://dimacs.rutgers.edu/~graham/). I also work with Prof. [Hakan Ferhatosmanoglu](https://warwick.ac.uk/fac/sci/dcs/people/hakan_ferhatosmanoglu/). My research focuses on Privacy and Security, particularly Differential Privacy and Machine Learning. I hold an M.E. degree from Beihang University and a B.E. degree from Jilin University.
+I am a Ph.D. student in Computer Science at the University of Warwick, supervised by [Graham Cormode](http://dimacs.rutgers.edu/~graham/) and collaborating with [Hakan Ferhatosmanoglu](https://warwick.ac.uk/fac/sci/dcs/people/hakan_ferhatosmanoglu/). My research interests are privacy-preserving algorithms, particularly in the context of privacy-preserving machine learning. I received my M.E. from Beihang University and B.E. from Jilin University.
 
 ### News
 
-- 03/2025: [Online Talk](https://www.youtube.com/live/C0pce6jfcWg?feature=shared&t=35500) at [Flower AI Summit 2025](https://flower.ai/events/flower-ai-summit-2025/)
-- 02/2025: Lighting talk at [Privacy in Machine Learning Meetup](https://www.imperial.ac.uk/events/183182/privacy-in-machine-learning-meetup-imperial/)
+- 09/2025: Volunteer at [VLDB Conference 2025](https://vldb.org/2025/)
+- 08/2025: Poster presentation at [CISPA - ELLIS Summer School 2025](https://cispa.de/summer-school-2025)
+- 03/2025: [Online talk](https://www.youtube.com/live/C0pce6jfcWg?feature=shared&t=35500) at [Flower AI Summit 2025](https://flower.ai/events/flower-ai-summit-2025/)
+- 02/2025: Lightning talk at [Privacy in Machine Learning Meetup](https://www.imperial.ac.uk/events/183182/privacy-in-machine-learning-meetup-imperial/)

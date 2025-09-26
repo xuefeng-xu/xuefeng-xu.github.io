@@ -4,6 +4,8 @@ description: "PCHIP is a cubic interpolation method that preserves monotonicity 
 date: March 13, 2025
 bibliography: reference.bib
 categories: [Statistics]
+citation:
+  id: pchip
 ---
 
 Piecewise Cubic Hermite Interpolating Polynomial (PCHIP) is a cubic spline-based interpolation method designed to preserve monotonicity. See [MATLAB](https://mathworks.com/help/matlab/ref/pchip.html) or [SciPy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.PchipInterpolator.html) for the implementation details.
@@ -215,7 +217,7 @@ cond3 = (
     & (x - ((2 * x + y - 3) ** 2) / (3 * (x + y - 2)) > 0)
 )
 
-fig, ax = plt.subplots(figsize=(4, 4))
+fig, ax = plt.subplots(figsize=(3, 3))
 
 ax.contourf(x, y, cond1, levels=1, colors=["white", "blue"], alpha=1)
 ax.contourf(x, y, cond2, levels=1, colors=["white", "green"], alpha=0.5)

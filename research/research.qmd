@@ -1,8 +1,14 @@
 <ol reversed class="loose_margin">
   <li>
+    Power Transform Revisited: Numerically Stable, and Federated<br>
+    [Xuefeng Xu]{.underline} and Graham Cormode<br>
+    In Submission
+  </li>
+  <li>
     Federated Computation of ROC and PR Curves<br>
     [Xuefeng Xu]{.underline} and Graham Cormode<br>
     In Submission
+  </li>
   <li>
     FedPS: Federated data Preprocessing via aggregated Statistics<br>
     [Code](https://github.com/xuefeng-xu/fedps)

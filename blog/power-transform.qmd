@@ -3,7 +3,9 @@ title: Power Transform
 description: "Box-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability."
 date: April 14, 2025
 bibliography: reference.bib
-categories: [Statistics, Python]
+categories: [Numerical, Python]
+citation:
+  id: power-transform
 format:
   html:
     code-fold: false
@@ -46,7 +48,7 @@ from scipy.special import boxcox
 from scipy.stats import yeojohnson
 import matplotlib.pyplot as plt
 
-def power_plot(x_min, x_max, power):
+def power_plot(x_min, x_max, power, figsize):
     if power == "BC":
         power_func = boxcox
     else:
@@ -55,7 +57,7 @@ def power_plot(x_min, x_max, power):
     eps = 0.01
     x = np.arange(x_min, x_max, eps)
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=figsize)
     line_color = ['dodgerblue', 'limegreen', 'red', 'mediumpurple', 'orange']
     for idx, lmb in enumerate([3, 2, 1, 0, -1]):
         y = power_func(x, lmb)
@@ -98,14 +100,14 @@ def power_plot(x_min, x_max, power):
 #| code-fold: true
 #| label: fig-box-cox
 #| fig-cap: "Box-Cox"
-power_plot(x_min=0, x_max=3, power="BC")
+power_plot(x_min=0, x_max=3, power="BC", figsize=(2.5, 3))
 ```
 :::{.preview-image}
 ```{python}
 #| code-fold: true
 #| label: fig-yeo-johnson
 #| fig-cap: "Yeo-Johnson"
-power_plot(x_min=-2, x_max=2, power="YJ")
+power_plot(x_min=-2, x_max=2, power="YJ", figsize=(3, 3))
 ```
 :::
 Box-Cox and Yeo-Johnson transformations.
@@ -160,7 +162,7 @@ def plot_llf(x, lb, ub, llf):
     ll = np.array([llf(l, x) for l in lmb])
     print(f"llf={ll}")
 
-    fig, ax = plt.subplots(figsize=(4, 4))
+    fig, ax = plt.subplots(figsize=(3, 3))
     ax.plot(lmb, ll)
     ax.set_xlabel(r"$\lambda$")
     ax.set_ylabel(r"$\ln\mathcal{L}(\lambda, x)$")
@@ -334,15 +336,16 @@ This allows us to bound $\lambda$ based on $\min(x)$ and $\max(x)$. For Box-Cox,
 $$
 \begin{align*}
 \max_\lambda \quad & \ln\mathcal{L}_{\text{BC}}(\lambda, x) \\
-\textrm{s.t.} \quad & \text{if } x_{\max}>1, \lambda\le\psi^{-1}_{\text{BC}}(x_{\max},y_{\max}) \\
-& \text{if } x_{\min}<1, \lambda\ge\psi^{-1}_{\text{BC}}(x_{\min},-y_{\max}) \\
+\textrm{s.t.} \quad & \lambda\le\psi^{-1}_{\text{BC}}(x_{\max},y_{\max}) & \text{if } x_{\max}>1 \\
+& \lambda\ge\psi^{-1}_{\text{BC}}(x_{\min},-y_{\max}) & \text{if } x_{\min}<1 \\
 \end{align*}
 $$ {#eq-boxcox-constraint}
 
 The inverse Box−Cox function is given by:
 
 $$
-\psi^{-1}_{\text{BC}}(x,y)=-1/y-W(-x^{-1/y}\ln x/y)/\ln x
+\psi^{-1}_{\text{BC}}(x,y)=
+-\tfrac{1}{y}-\tfrac{1}{\ln x}W\left(-\tfrac{x^{-1/y}\ln x}{y}\right)
 $$ {#eq-boxcox-inverse}
 
 ```{python}
