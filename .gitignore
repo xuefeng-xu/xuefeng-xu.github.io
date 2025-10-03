@@ -4,3 +4,5 @@
 /_extensions/
 /env/
 .DS_Store
+
+**/*.quarto_ipynb

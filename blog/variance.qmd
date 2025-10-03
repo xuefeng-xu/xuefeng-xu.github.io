@@ -1,0 +1,195 @@
+---
+title: How to Compute Variance?
+description: Mathematically equivalent formulas for variance can have very different numerical stability.
+date: October 3, 2025
+bibliography: reference.bib
+categories: [Numerical, Python]
+citation:
+  id: variance
+format:
+  html:
+    code-fold: false
+  ipynb:
+    number-sections: true
+---
+
+Given a dataset $\{x_1, \ldots, x_n\}$, variance measures how much data points deviate from their mean. While the mathematical definition is straightforward, the way we implement variance can have a big impact on numerical stability.
+
+## Textbook Formulas
+
+The most common definition computes the mean first, then the average squared deviation from it:
+
+$$
+\mu = \frac{1}{n} \sum_{i=1}^n x_i,\ \sigma^2 = \frac{1}{n} \sum_{i=1}^n (x_i - \mu)^2.
+$$ {#eq-textbook-var-twopass}
+
+```{python}
+def var_twopass_textbook(x):
+    n, s = 0, 0
+    for xi in x:
+        n += 1
+        s += xi
+
+    mu = s / n
+    sd = 0
+    for xi in x:
+        sd += (xi - mu) ** 2
+    return sd / n
+```
+
+This requires two passes over the data. For [streaming](https://en.wikipedia.org/wiki/Streaming_data) or memory-constrained scenarios, a one-pass formula is often considered:
+
+$$
+\sigma^2 = \frac{1}{n} \sum_{i=1}^n x_i^2 - \left(\frac{1}{n} \sum_{i=1}^n x_i\right)^2.
+$$ {#eq-textbook-var-onepass}
+
+```{python}
+def var_onepass_textbook(x):
+    n, s, sq = 0, 0, 0
+    for xi in x:
+        n += 1
+        s += xi
+        sq += xi ** 2
+    return sq / n - (s / n) ** 2
+```
+
+In exact arithmetic, these two formulas are identical. But in floating-point arithmetic, they can yield very different results.
+
+## Numerical Cancellation
+
+Let’s test both formulas on a simple dataset:
+
+```{python}
+import numpy as np
+
+x = np.array([0., 1., 2.])
+print("Two-pass (Textbook):", var_twopass_textbook(x))
+print("One-pass (Textbook):", var_onepass_textbook(x))
+```
+
+So far, so good. But if we shift all values by a large constant, the one-pass version quickly breaks down due to cancellation errors:
+
+```{python}
+for shift in [1e3, 1e6, 1e9, 1e12]:
+    xt = x + shift
+    print(f"Shift: {shift:.0e}")
+    print(f"Two-pass (Textbook): {var_twopass_textbook(xt)}")
+    print(f"One-pass (Textbook): {var_onepass_textbook(xt)}\n")
+```
+
+```{python}
+#| code-fold: true
+import matplotlib.pyplot as plt
+
+def plot_errors(x, var_func, error_type="absolute"):
+    ref = np.var(x)
+    shifts = [10**i for i in range(0, 20)]
+
+    errors = []
+    for shift in shifts:
+        xt = x + shift
+        var = var_func(xt)
+
+        if error_type == "absolute":
+            errors.append(abs(var - ref))
+        elif error_type == "relative":
+            errors.append(abs(var - ref) / abs(ref))
+
+    fig, ax = plt.subplots(figsize=(3, 3))
+    ax.loglog(shifts, errors, "*-r")
+    ax.set_xlabel("Shift value")
+    ax.set_ylabel(f"{error_type.capitalize()} error")
+    ax.set_title(f"{var_func.__name__}")
+    ax.grid()
+```
+
+::: {#fig-power-transform layout-ncol=2}
+```{python}
+#| label: fig-abs-error
+#| fig-cap: "Absolute error"
+plot_errors(x, var_onepass_textbook, error_type="absolute")
+```
+:::{.preview-image}
+```{python}
+#| label: fig-rel-error
+#| fig-cap: "Relative error"
+plot_errors(x, var_onepass_textbook, error_type="relative")
+```
+:::
+Error plots for the one-pass textbook formula.
+:::
+
+This instability makes the textbook one-pass formula unsuitable for real-world use.
+
+## Floating Point Arithmetic
+
+Why does this happen? Because floating-point numbers can only represent a finite number of digits. Squaring a large number, for example, can lose precision:
+
+```{python}
+1000000001.0 ** 2
+# 1.000000002000000001e+18
+```
+
+Moreover, floating point numbers cannot exactly represent all values, especially very large numbers, leading to rounding errors.
+
+```{python}
+1000000002000000001.0
+```
+
+Most systems use the [IEEE 754 standard](https://en.wikipedia.org/wiki/IEEE_754). In double precision (64-bit), numbers have 53 bits of precision, so integers larger than $2^{53}-1$ (9007199254740991) cannot be represented exactly. For example, adding small increments beyond this threshold reveals precision loss:
+
+```{python}
+print(9007199254740991.0)        # correct
+print(9007199254740991.0 + 1.0)  # still correct
+print(9007199254740991.0 + 2.0)  # wrong
+```
+
+The hex representation makes this clear:
+
+```{python}
+print(hex(9007199254740991))  # exact
+print(hex(9007199254740992))  # exact
+print(hex(9007199254740993))  # last bit lost
+```
+
+Large numbers like:
+
+```{python}
+print(hex(1000000002000000001))
+```
+
+also show lost lower bits, which is exactly what causes variance miscalculations.
+
+## Stable Alternatives
+
+A better one-pass approach is Welford’s algorithm [@Welford1962]. Instead of subtracting large similar terms, it incrementally updates the mean $\mu_k=\sum_{i=1}^k x_i / k$ and the squared deviations $S_k=\sum_{i=1}^k (x_i - \mu_k)^2$ to maintain numerical stability:
+
+$$
+\begin{align*}
+\delta_k &= x_k - \mu_{k-1},\\
+\mu_k &= \mu_{k-1} + \delta_k / k,\\
+S_k &= S_{k-1} + \delta_k (x_k - \mu_k).
+\end{align*}
+$$ {#eq-welford}
+
+```{python}
+def var_onepass_welford(x):
+    n, mu, sd = 0, 0, 0
+    for xi in x:
+        n += 1
+        delta = xi - mu
+        mu += delta / n
+        sd += delta * (xi - mu)
+    return sd / n
+```
+
+Testing again with shifts:
+
+```{python}
+for shift in [1e3, 1e6, 1e9, 1e12]:
+    xt = x + shift
+    print(f"Shift: {shift:.0e}")
+    print(f"One-pass (Welford): {var_onepass_welford(xt)}\n")
+```
+
+Welford’s method remains stable even under extreme shifts. Other methods, such as Chan’s algorithm [@Chan1982], are also numerically stable. Classic studies [@Ling1974; @Chan1983] provide detailed comparisons.

@@ -46,4 +46,5 @@ date-modified: last-modified
 
 ##### Conference Reviewer
 
--   International Conference on Learning Representations (ICLR): 2025
+-   Annual Conference on Artificial Intelligence and Statistics (AISTATS): 2026
+-   International Conference on Learning Representations (ICLR): 2025, 2026
