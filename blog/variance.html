@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Xuefeng Xu">
-<meta name="dcterms.date" content="2025-03-13">
-<meta name="description" content="PCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots.">
+<meta name="dcterms.date" content="2025-10-03">
+<meta name="description" content="Mathematically equivalent formulas for variance can have very different numerical stability.">
 
-<title>Monotone Piecewise Cubic Interpolation – Xuefeng Xu</title>
+<title>How to Compute Variance? – Xuefeng Xu</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -186,25 +186,25 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="Monotone Piecewise Cubic Interpolation – Xuefeng Xu">
-<meta property="og:description" content="PCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots.">
-<meta property="og:image" content="https://xuefeng-xu.github.io/blog/pchip_files/figure-html/fig-monotone-region-output-1.png">
+<meta property="og:title" content="How to Compute Variance? – Xuefeng Xu">
+<meta property="og:description" content="Mathematically equivalent formulas for variance can have very different numerical stability.">
+<meta property="og:image" content="https://xuefeng-xu.github.io/blog/variance_files/figure-html/fig-rel-error-output-1.png">
 <meta property="og:site_name" content="Xuefeng Xu">
-<meta property="og:image:height" content="607">
-<meta property="og:image:width" content="647">
-<meta name="twitter:title" content="Monotone Piecewise Cubic Interpolation – Xuefeng Xu">
-<meta name="twitter:description" content="PCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots.">
-<meta name="twitter:image" content="https://xuefeng-xu.github.io/blog/pchip_files/figure-html/fig-monotone-region-output-1.png">
-<meta name="twitter:image-height" content="607">
-<meta name="twitter:image-width" content="647">
+<meta property="og:image:height" content="605">
+<meta property="og:image:width" content="622">
+<meta name="twitter:title" content="How to Compute Variance? – Xuefeng Xu">
+<meta name="twitter:description" content="Mathematically equivalent formulas for variance can have very different numerical stability.">
+<meta name="twitter:image" content="https://xuefeng-xu.github.io/blog/variance_files/figure-html/fig-rel-error-output-1.png">
+<meta name="twitter:image-height" content="605">
+<meta name="twitter:image-width" content="622">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="citation_title" content="Monotone Piecewise Cubic Interpolation">
+<meta name="citation_title" content="How to Compute Variance?">
 <meta name="citation_author" content="Xuefeng Xu">
-<meta name="citation_publication_date" content="2025-03-13">
-<meta name="citation_cover_date" content="2025-03-13">
+<meta name="citation_publication_date" content="2025-10-03">
+<meta name="citation_cover_date" content="2025-10-03">
 <meta name="citation_year" content="2025">
-<meta name="citation_online_date" content="2025-03-13">
-<meta name="citation_fulltext_html_url" content="https://xuefeng-xu.github.io/blog/pchip.html">
+<meta name="citation_online_date" content="2025-10-03">
+<meta name="citation_fulltext_html_url" content="https://xuefeng-xu.github.io/blog/variance.html">
 <meta name="citation_language" content="en">
 <meta name="citation_reference" content="citation_title=A method for constructing local monotone piecewise cubic interpolants;,citation_author=F. N. Fritsch;,citation_author=J. Butland;,citation_publication_date=1984;,citation_cover_date=1984;,citation_year=1984;,citation_issue=2;,citation_doi=10.1137/0905021;,citation_volume=5;,citation_journal_title=SIAM Journal on Scientific and Statistical Computing;">
 <meta name="citation_reference" content="citation_title=Monotone piecewise cubic interpolation;,citation_author=F. N. Fritsch;,citation_author=R. E. Carlson;,citation_publication_date=1980;,citation_cover_date=1980;,citation_year=1980;,citation_issue=2;,citation_doi=10.1137/0717021;,citation_volume=17;,citation_journal_title=SIAM Journal on Numerical Analysis;">
@@ -461,14 +461,15 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Monotone Piecewise Cubic Interpolation</h1>
+      <h1 class="title">How to Compute Variance?</h1>
                   <div>
         <div class="description">
-          PCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots.
+          Mathematically equivalent formulas for variance can have very different numerical stability.
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Statistics</div>
+                <div class="quarto-category">Numerical</div>
+                <div class="quarto-category">Python</div>
               </div>
                   </div>
   </div>
@@ -486,7 +487,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 13, 2025</p>
+        <p class="date">October 3, 2025</p>
       </div>
     </div>
     
@@ -501,13 +502,12 @@ window.Quarto = {
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#interpolation-function" id="toc-interpolation-function" class="nav-link active" data-scroll-target="#interpolation-function"><span class="header-section-number">1</span> Interpolation Function</a></li>
-  <li><a href="#derivative-computation" id="toc-derivative-computation" class="nav-link" data-scroll-target="#derivative-computation"><span class="header-section-number">2</span> Derivative Computation</a></li>
-  <li><a href="#monotonicity-conditions" id="toc-monotonicity-conditions" class="nav-link" data-scroll-target="#monotonicity-conditions"><span class="header-section-number">3</span> Monotonicity Conditions</a></li>
-  <li><a href="#proof-of-monotonicity" id="toc-proof-of-monotonicity" class="nav-link" data-scroll-target="#proof-of-monotonicity"><span class="header-section-number">4</span> Proof of Monotonicity</a></li>
-  <li><a href="#cubic-hermite-interpolation" id="toc-cubic-hermite-interpolation" class="nav-link" data-scroll-target="#cubic-hermite-interpolation"><span class="header-section-number">5</span> Cubic Hermite Interpolation</a></li>
+  <li><a href="#textbook-formulas" id="toc-textbook-formulas" class="nav-link active" data-scroll-target="#textbook-formulas"><span class="header-section-number">1</span> Textbook Formulas</a></li>
+  <li><a href="#numerical-cancellation" id="toc-numerical-cancellation" class="nav-link" data-scroll-target="#numerical-cancellation"><span class="header-section-number">2</span> Numerical Cancellation</a></li>
+  <li><a href="#floating-point-arithmetic" id="toc-floating-point-arithmetic" class="nav-link" data-scroll-target="#floating-point-arithmetic"><span class="header-section-number">3</span> Floating Point Arithmetic</a></li>
+  <li><a href="#stable-alternatives" id="toc-stable-alternatives" class="nav-link" data-scroll-target="#stable-alternatives"><span class="header-section-number">4</span> Stable Alternatives</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/xuefeng-xu/xuefeng-xu.github.io/blob/master/blog/pchip.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/xuefeng-xu/xuefeng-xu.github.io/blob/master/blog/variance.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="variance.ipynb" download="variance.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -534,255 +534,271 @@ window.Quarto = {
 
 
 
-<p>Piecewise Cubic Hermite Interpolating Polynomial (PCHIP) is a cubic spline-based interpolation method designed to preserve monotonicity. See <a href="https://mathworks.com/help/matlab/ref/pchip.html">MATLAB</a> or <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.PchipInterpolator.html">SciPy</a> for the implementation details.</p>
-<section id="interpolation-function" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="interpolation-function"><span class="header-section-number">1</span> Interpolation Function</h2>
-<p>Given <span class="math inline">n</span> data points <span class="math inline">(x_1,y_1),\dots,(x_n,y_n)</span> with <span class="math inline">x_1&lt;\cdots&lt;x_n</span>, where <span class="math inline">y</span> is monotonic (either <span class="math inline">y_i\le y_{i+1}</span> or <span class="math inline">y_{i+1}\ge y_i</span>), define:</p>
-<p><span id="eq-h-s"><span class="math display">
-h_i=x_{i+1}-x_i,\ s_i=\frac{y_{i+1}-y_i}{h_i}
+<p>Given a dataset <span class="math inline">\{x_1, \ldots, x_n\}</span>, variance measures how much data points deviate from their mean. While the mathematical definition is straightforward, the way we implement variance can have a big impact on numerical stability.</p>
+<section id="textbook-formulas" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="textbook-formulas"><span class="header-section-number">1</span> Textbook Formulas</h2>
+<p>The most common definition computes the mean first, then the average squared deviation from it:</p>
+<p><span id="eq-textbook-var-twopass"><span class="math display">
+\mu = \frac{1}{n} \sum_{i=1}^n x_i,\ \sigma^2 = \frac{1}{n} \sum_{i=1}^n (x_i - \mu)^2.
 \tag{1}</span></span></p>
-<p>For <span class="math inline">x_i&lt;x&lt;x_{i+1}</span>, the interpolation function <span class="math inline">f(x)</span> is a cubic polynomial:</p>
-<p><span id="eq-cubic-poly"><span class="math display">
-f(x)=c_0+c_1(x-x_i)+c_2(x-x_i)^2+c_3(x-x_i)^3
-\tag{2}</span></span></p>
-<p>satisfying:</p>
-<p><span id="eq-cubic-poly-cond"><span class="math display">
-\begin{align*}
-f(x_i)&amp;=y_i, &amp;f(x_{i+1})&amp;=y_{i+1}\\
-f'(x_i)&amp;=d_i, &amp;f'(x_{i+1})&amp;=d_{i+1}
-\end{align*}
-\tag{3}</span></span></p>
-<p>Solving for the coefficients:</p>
-<p><span id="eq-cubic-poly-coef"><span class="math display">
-\begin{align*}
-c_0&amp;=y_i, &amp;c_2&amp;=\frac{3s_i-2d_i-d_{i+1}}{h_i}\\
-c_1&amp;=d_i, &amp;c_3&amp;=\frac{-2s_i+d_i+d_{i+1}}{h_i^2}\\
-\end{align*}
-\tag{4}</span></span></p>
-<p>Thus, computing derivatives <span class="math inline">d_1,\dots,d_n</span> determines <span class="math inline">c_0,c_1,c_2,c_3</span> for each interval.</p>
-</section>
-<section id="derivative-computation" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="derivative-computation"><span class="header-section-number">2</span> Derivative Computation</h2>
-<p>The derivative at <span class="math inline">x_i</span> is computed using local information from three neighboring points <span class="citation" data-cites="Fritsch1984">(<a href="#ref-Fritsch1984" role="doc-biblioref">Fritsch and Butland 1984</a>)</span>:</p>
-<p><span id="eq-d"><span class="math display">
-d_i=G(s_{i-1},s_i,h_{i-1},h_i)=
-\begin{cases}
-\frac{s_{i-1}s_i}{rs_i+(1-r)s_{i-1}} &amp; \mathrm{if~}s_{i-1}s_i&gt;0, \\
-0 &amp; \text{otherwise} &amp;
-\end{cases}
-\tag{5}</span></span></p>
-<p>where the ratio <span class="math inline">r</span> (<span class="math inline">1/3&lt;r&lt;2/3</span>) is given by:</p>
-<p><span id="eq-r"><span class="math display">
-r=\frac{h_{i-1}+2h_i}{3h_{i-1}+3h_i}=\frac{1}{3}\Big(1+\frac{h_i}{h_{i+1}+h_i}\Big)
-\tag{6}</span></span></p>
-<p>If <span class="math inline">s_{i-1}</span> and <span class="math inline">s_i</span> have opposite signs (indicating non-monotonicity) or one is zero, then <span class="math inline">d_i=0</span>. Otherwise, <span class="math inline">d_i</span> is a weighted harmonic mean:</p>
-<p><span id="eq-harmonic-mean"><span class="math display">
-\frac{1}{d_i}=\frac{r}{s_{i-1}}+\frac{1-r}{s_i}
-\tag{7}</span></span></p>
-<p>For endpoints <span class="math inline">x_1</span> and <span class="math inline">x_n</span>, derivatives are computed separately <span class="citation" data-cites="Moler2004">(<a href="#ref-Moler2004" role="doc-biblioref">Moler 2004, chap. 3</a>)</span>:</p>
-<p><span id="eq-d1"><span class="math display">
-d_1=
-\begin{cases}
-0 &amp; \mathrm{if~}\text{sgn}(\hat{d}_1)\neq \text{sgn}(s_1), \\
-3s_1 &amp; \mathrm{if~}\text{sgn}(s_1)\neq \text{sgn}(s_2) \land|\hat{d}_1|&gt;3|s_1|,\\
-\hat{d}_1 &amp; \text{otherwise} &amp;
-\end{cases}
-\tag{8}</span></span></p>
-<p>where:</p>
-<p><span id="eq-hat-d1"><span class="math display">
-\hat{d}_1=\frac{(2h_1+h_2)s_1 - h_1s_2}{{h_1+h_2}}
-\tag{9}</span></span></p>
-<p>A quadratic polynomial <span class="math inline">\hat{f}(x)=\hat{c}_0+\hat{c}_1x+\hat{c}_2x^2</span> is fit through the first three points, and its derivative at <span class="math inline">x_1</span> is computed to obtain <span class="math inline">\hat{d}_1</span>. Additional rules are then applied to preserve monotonicity. Similar rules apply for <span class="math inline">d_n</span>.</p>
-</section>
-<section id="monotonicity-conditions" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="monotonicity-conditions"><span class="header-section-number">3</span> Monotonicity Conditions</h2>
-<p>To ensure monotonicity, define:</p>
-<p><span id="eq-alpha-beta"><span class="math display">
-\alpha_i=\frac{d_i}{s_i},\
-\beta_i=\frac{d_{i+1}}{s_i}
-\tag{10}</span></span></p>
-<div id="lem-monotone-cond" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lemma 1</strong></span> A sufficient condition for monotonicity is <span class="citation" data-cites="Fritsch1980">(<a href="#ref-Fritsch1980" role="doc-biblioref">Fritsch and Carlson 1980</a>)</span>:</p>
-<p><span id="eq-monotone-cond"><span class="math display">
-\alpha_i,\beta_i\ge0
-\land
-\Big(
-\alpha_i,\beta_i\le3
-\lor
-\phi(\alpha_i,\beta_i)\ge0
-\Big)
-\tag{11}</span></span></p>
-<p>where:</p>
-<p><span id="eq-phi-alpha-beta"><span class="math display">
-\phi(\alpha,\beta)=\alpha-\frac{(2\alpha+\beta-3)^2}{3(\alpha+\beta-2)}
-\tag{12}</span></span></p>
+<div id="10d154ba" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> var_twopass_textbook(x):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    n, s <span class="op">=</span> <span class="dv">0</span>, <span class="dv">0</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> xi <span class="kw">in</span> x:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        n <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        s <span class="op">+=</span> xi</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> s <span class="op">/</span> n</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    sd <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> xi <span class="kw">in</span> x:</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        sd <span class="op">+=</span> (xi <span class="op">-</span> mu) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sd <span class="op">/</span> n</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>If <span class="math inline">s_{i-1}s_i&gt;0</span>, then <span class="math inline">\alpha_i&gt;0</span>; otherwise, <span class="math inline">\alpha_i=0</span>. Since the ratio <span class="math inline">r</span> satisfies <span class="math inline">1/3&lt;r&lt;2/3</span>, <span class="math inline">\alpha_i</span> is upper-bounded by 3:</p>
-<p><span id="eq-alpha-ub"><span class="math display">
-\alpha_i
-=\frac{1}{rs_i/s_{i-1}+(1-r)}
-&lt;\frac{1}{1-r}&lt;3
-\tag{13}</span></span></p>
-<p>For endpoint <span class="math inline">\alpha_1</span>, we only need to show the condition of <span class="math inline">\text{sgn}(\hat{d}_1)=\text{sgn}(s_1)=\text{sgn}(s_2)</span>, since other conditions already lie within the region <span class="math inline">[0,3]</span>.</p>
-<p><span id="eq-alpha1-ub"><span class="math display">
-\alpha_1
-=1+\frac{1-s_2/s_1}{1+h_2/h_1}&lt;2
-\tag{14}</span></span></p>
-<p>Similarly, <span class="math inline">\beta_i</span> and endpoint <span class="math inline">\beta_{n-1}</span> all satisfy the monotonicity condition.</p>
+<p>This requires two passes over the data. For <a href="https://en.wikipedia.org/wiki/Streaming_data">streaming</a> or memory-constrained scenarios, a one-pass formula is often considered:</p>
+<p><span id="eq-textbook-var-onepass"><span class="math display">
+\sigma^2 = \frac{1}{n} \sum_{i=1}^n x_i^2 - \left(\frac{1}{n} \sum_{i=1}^n x_i\right)^2.
+\tag{2}</span></span></p>
+<div id="fa415a98" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> var_onepass_textbook(x):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    n, s, sq <span class="op">=</span> <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> xi <span class="kw">in</span> x:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        n <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        s <span class="op">+=</span> xi</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        sq <span class="op">+=</span> xi <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sq <span class="op">/</span> n <span class="op">-</span> (s <span class="op">/</span> n) <span class="op">**</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In exact arithmetic, these two formulas are identical. But in floating-point arithmetic, they can yield very different results.</p>
 </section>
-<section id="proof-of-monotonicity" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="proof-of-monotonicity"><span class="header-section-number">4</span> Proof of Monotonicity</h2>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>To preserve monotonicity, the derivatives <span class="math inline">d_i</span> and <span class="math inline">d_{i+1}</span> must align with the direction of the slope of the interval <span class="math inline">s_i</span>. This is a necessary condition <span class="citation" data-cites="Fritsch1980">(<a href="#ref-Fritsch1980" role="doc-biblioref">Fritsch and Carlson 1980</a>)</span>:</p>
-<p><span id="eq-monotone-cond-alpha-beta"><span class="math display">
-\text{sgn}(d_i)=\text{sgn}(d_{i+1})=\text{sgn}(s_i)
-\Leftrightarrow
-\alpha_i,\beta_i\ge0
-\tag{15}</span></span></p>
-<p>The derivative of <span class="math inline">f(x)</span> is a quadratic polynomial:</p>
-<p><span id="eq-cubic-poly-derivative"><span class="math display">
-f'(x)=c_1+
-2c_2(x-x_i)+
-3c_3(x-x_i)^2
-\tag{16}</span></span></p>
-<p>It has a unique extremum at:</p>
-<p><span id="eq-x-extrem"><span class="math display">
-x^*=x_i+\frac{h_i}{3}\cdot\frac{2\alpha_i+\beta_i-3}{\alpha_i+\beta_i-2}
-\tag{17}</span></span></p>
-<p>and</p>
-<p><span id="eq-y-extrem"><span class="math display">
-f'(x^*)=\phi(\alpha_i,\beta_i)s_i
-\tag{18}</span></span></p>
-<p>There are three conditions to check: 1) <span class="math inline">x^*&lt;x_i</span>; 2) <span class="math inline">x^*&gt;x_{i+1}</span>; 3) <span class="math inline">x_i\le x^*\le x_{i+1}</span>.</p>
-<p>Condition 1) is equivalent to <span id="eq-monotone-cond-1"><span class="math display">
-\alpha_i,\beta_i\ge0
-\land
-\frac{2\alpha_i+\beta_i-3}{\alpha_i+\beta_i-2}&lt;0
-\tag{19}</span></span></p>
-<p>The analysis of Condition 2) and 3) are similar, leading to:</p>
-<p><span id="eq-monotone-cond-2"><span class="math display">
-\alpha_i,\beta_i\ge0
-\land
-\frac{\alpha_i+2\beta_i-3}{\alpha_i+\beta_i-2}&lt;0
-\tag{20}</span></span></p>
-<p>and</p>
-<p><span id="eq-monotone-cond-2"><span class="math display">
-\alpha_i,\beta_i\ge0
-\land
-\frac{2\alpha_i+\beta_i-3}{\alpha_i+\beta_i-2}\ge0
-\land
-\frac{\alpha_i+2\beta_i-3}{\alpha_i+\beta_i-2}\ge0
-\land
-\phi(\alpha_i,\beta_i)\ge0
-\tag{21}</span></span></p>
-<p><a href="#fig-monotone-region" class="quarto-xref">Figure&nbsp;1</a> illustrates these conditions separately: Condition 1) — blue, Condition 2) — green, Condition 3) — red.</p>
-<div class="preview-image">
-<div id="cell-fig-monotone-region" class="cell" data-execution_count="1">
+<section id="numerical-cancellation" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="numerical-cancellation"><span class="header-section-number">2</span> Numerical Cancellation</h2>
+<p>Let’s test both formulas on a simple dataset:</p>
+<div id="cb099256" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="fl">0.</span>, <span class="fl">1.</span>, <span class="fl">2.</span>])</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Two-pass (Textbook):"</span>, var_twopass_textbook(x))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"One-pass (Textbook):"</span>, var_onepass_textbook(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Two-pass (Textbook): 0.6666666666666666
+One-pass (Textbook): 0.6666666666666667</code></pre>
+</div>
+</div>
+<p>So far, so good. But if we shift all values by a large constant, the one-pass version quickly breaks down due to cancellation errors:</p>
+<div id="b494d56c" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> shift <span class="kw">in</span> [<span class="fl">1e3</span>, <span class="fl">1e6</span>, <span class="fl">1e9</span>, <span class="fl">1e12</span>]:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    xt <span class="op">=</span> x <span class="op">+</span> shift</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Shift: </span><span class="sc">{</span>shift<span class="sc">:.0e}</span><span class="ss">"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Two-pass (Textbook): </span><span class="sc">{</span>var_twopass_textbook(xt)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"One-pass (Textbook): </span><span class="sc">{</span>var_onepass_textbook(xt)<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Shift: 1e+03
+Two-pass (Textbook): 0.6666666666666666
+One-pass (Textbook): 0.6666666666278616
+
+Shift: 1e+06
+Two-pass (Textbook): 0.6666666666666666
+One-pass (Textbook): 0.6666259765625
+
+Shift: 1e+09
+Two-pass (Textbook): 0.6666666666666666
+One-pass (Textbook): 0.0
+
+Shift: 1e+12
+Two-pass (Textbook): 0.6666666666666666
+One-pass (Textbook): -134217728.0
+</code></pre>
+</div>
+</div>
+<div id="dbc596fd" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>x_vals <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">1000</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>y_vals <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">1000</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x, y <span class="op">=</span> np.meshgrid(x_vals, y_vals)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>cond1 <span class="op">=</span> (x <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span> (y <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span> ((<span class="dv">2</span> <span class="op">*</span> x <span class="op">+</span> y <span class="op">-</span> <span class="dv">3</span>) <span class="op">/</span> (x <span class="op">+</span> y <span class="op">-</span> <span class="dv">2</span>) <span class="op">&lt;</span> <span class="dv">0</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>cond2 <span class="op">=</span> (x <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span> (y <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span> ((x <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> y <span class="op">-</span> <span class="dv">3</span>) <span class="op">/</span> (x <span class="op">+</span> y <span class="op">-</span> <span class="dv">2</span>) <span class="op">&lt;</span> <span class="dv">0</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>cond3 <span class="op">=</span> (</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    (x <span class="op">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> (y <span class="op">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> ((<span class="dv">2</span> <span class="op">*</span> x <span class="op">+</span> y <span class="op">-</span> <span class="dv">3</span>) <span class="op">/</span> (x <span class="op">+</span> y <span class="op">-</span> <span class="dv">2</span>) <span class="op">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> ((x <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> y <span class="op">-</span> <span class="dv">3</span>) <span class="op">/</span> (x <span class="op">+</span> y <span class="op">-</span> <span class="dv">2</span>) <span class="op">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> (x <span class="op">-</span> ((<span class="dv">2</span> <span class="op">*</span> x <span class="op">+</span> y <span class="op">-</span> <span class="dv">3</span>) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> (<span class="dv">3</span> <span class="op">*</span> (x <span class="op">+</span> y <span class="op">-</span> <span class="dv">2</span>)) <span class="op">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>ax.contourf(x, y, cond1, levels<span class="op">=</span><span class="dv">1</span>, colors<span class="op">=</span>[<span class="st">"white"</span>, <span class="st">"blue"</span>], alpha<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>ax.contourf(x, y, cond2, levels<span class="op">=</span><span class="dv">1</span>, colors<span class="op">=</span>[<span class="st">"white"</span>, <span class="st">"green"</span>], alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>ax.contourf(x, y, cond3, levels<span class="op">=</span><span class="dv">1</span>, colors<span class="op">=</span>[<span class="st">"white"</span>, <span class="st">"red"</span>], alpha<span class="op">=</span><span class="fl">0.25</span>)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"</span><span class="dv">$</span><span class="ch">\a</span><span class="vs">lpha</span><span class="dv">$</span><span class="vs">"</span>)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"</span><span class="dv">$\b</span><span class="vs">eta</span><span class="dv">$</span><span class="vs">"</span>)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>ax.set_xlim([<span class="dv">0</span>, <span class="dv">4</span>])</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>ax.set_ylim([<span class="dv">0</span>, <span class="dv">4</span>])</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_ticks(<span class="bu">list</span>(np.arange(<span class="dv">0</span>, <span class="fl">4.5</span>, <span class="fl">0.5</span>)))</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_ticks(<span class="bu">list</span>(np.arange(<span class="dv">0</span>, <span class="fl">4.5</span>, <span class="fl">0.5</span>)))</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>)</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>ax.tick_params(</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    bottom<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    top<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    left<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    right<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    labelbottom<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    labeltop<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    labelleft<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    labelright<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_errors(x, var_func, error_type<span class="op">=</span><span class="st">"absolute"</span>):</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    ref <span class="op">=</span> np.var(x)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    shifts <span class="op">=</span> [<span class="dv">10</span><span class="op">**</span>i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">20</span>)]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    errors <span class="op">=</span> []</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> shift <span class="kw">in</span> shifts:</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        xt <span class="op">=</span> x <span class="op">+</span> shift</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        var <span class="op">=</span> var_func(xt)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> error_type <span class="op">==</span> <span class="st">"absolute"</span>:</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>            errors.append(<span class="bu">abs</span>(var <span class="op">-</span> ref))</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> error_type <span class="op">==</span> <span class="st">"relative"</span>:</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            errors.append(<span class="bu">abs</span>(var <span class="op">-</span> ref) <span class="op">/</span> <span class="bu">abs</span>(ref))</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    ax.loglog(shifts, errors, <span class="st">"*-r"</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"Shift value"</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="ss">f"</span><span class="sc">{</span>error_type<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss"> error"</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"</span><span class="sc">{</span>var_func<span class="sc">.</span><span class="va">__name__</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    ax.grid()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display">
-<div id="fig-monotone-region" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-monotone-region-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pchip_files/figure-html/fig-monotone-region-output-1.png" width="324" height="304" class="figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-monotone-region-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: The monotonicity region
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot_errors(x, var_onepass_textbook, error_type<span class="op">=</span><span class="st">"absolute"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plot_errors(x, var_onepass_textbook, error_type<span class="op">=</span><span class="st">"relative"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="fig-power-transform" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-power-transform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div id="cell-fig-abs-error" class="cell quarto-layout-cell-subref quarto-layout-cell" data-execution_count="6" data-ref-parent="fig-power-transform" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="cell-output cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-power-transform">
+<div id="fig-abs-error" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-abs-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="variance_files/figure-html/fig-abs-error-output-1.png" data-ref-parent="fig-power-transform" width="312" height="303" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-abs-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Absolute error
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="preview-image quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-power-transform" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="cell-fig-rel-error" class="cell quarto-layout-cell-subref" data-execution_count="7" data-ref-parent="fig-power-transform">
+<div class="cell-output cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-power-transform">
+<div id="fig-rel-error" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-rel-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="variance_files/figure-html/fig-rel-error-output-1.png" data-ref-parent="fig-power-transform" width="311" height="303" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rel-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Relative error
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<p>Finally, simplifying yields the final monotonicity condition (<a href="#lem-monotone-cond" class="quarto-xref">Lemma&nbsp;1</a>).</p>
 </div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-power-transform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Error plots for the one-pass textbook formula.
+</figcaption>
+</figure>
+</div>
+<p>This instability makes the textbook one-pass formula unsuitable for real-world use.</p>
 </section>
-<section id="cubic-hermite-interpolation" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="cubic-hermite-interpolation"><span class="header-section-number">5</span> Cubic Hermite Interpolation</h2>
-<p>Cubic Hermite Interpolation constructs <span class="math inline">f(x)</span> using both function values and derivatives:</p>
-<p><span id="eq-cubic-hermite"><span class="math display">
-f(x)=y_iH_1(x)+y_{i+1}H_2(x)+d_iH_3(x)+d_{i+1}H_4(x)
-\tag{22}</span></span></p>
-<p>where basis functions are:</p>
-<p><span id="eq-cubic-hermite-basis"><span class="math display">
+<section id="floating-point-arithmetic" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="floating-point-arithmetic"><span class="header-section-number">3</span> Floating Point Arithmetic</h2>
+<p>Why does this happen? Because floating-point numbers can only represent a finite number of digits. Squaring a large number, for example, can lose precision:</p>
+<div id="4d868e82" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1000000001.0</span> <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.000000002000000001e+18</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="106">
+<pre><code>1.000000002e+18</code></pre>
+</div>
+</div>
+<p>Moreover, floating point numbers cannot exactly represent all values, especially very large numbers, leading to rounding errors.</p>
+<div id="c6ad5a64" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1000000002000000001.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="107">
+<pre><code>1.000000002e+18</code></pre>
+</div>
+</div>
+<p>Most systems use the <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754 standard</a>. In double precision (64-bit), numbers have 53 bits of precision, so integers larger than <span class="math inline">2^{53}-1</span> (9007199254740991) cannot be represented exactly. For example, adding small increments beyond this threshold reveals precision loss:</p>
+<div id="e123eab7" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="fl">9007199254740991.0</span>)        <span class="co"># correct</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="fl">9007199254740991.0</span> <span class="op">+</span> <span class="fl">1.0</span>)  <span class="co"># still correct</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="fl">9007199254740991.0</span> <span class="op">+</span> <span class="fl">2.0</span>)  <span class="co"># wrong</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>9007199254740991.0
+9007199254740992.0
+9007199254740992.0</code></pre>
+</div>
+</div>
+<p>The hex representation makes this clear:</p>
+<div id="520828e8" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">hex</span>(<span class="dv">9007199254740991</span>))  <span class="co"># exact</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">hex</span>(<span class="dv">9007199254740992</span>))  <span class="co"># exact</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">hex</span>(<span class="dv">9007199254740993</span>))  <span class="co"># last bit lost</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0x1fffffffffffff
+0x20000000000000
+0x20000000000001</code></pre>
+</div>
+</div>
+<p>Large numbers like:</p>
+<div id="a045e913" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">hex</span>(<span class="dv">1000000002000000001</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0xde0b6b41e999401</code></pre>
+</div>
+</div>
+<p>also show lost lower bits, which is exactly what causes variance miscalculations.</p>
+</section>
+<section id="stable-alternatives" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="stable-alternatives"><span class="header-section-number">4</span> Stable Alternatives</h2>
+<p>A better one-pass approach is Welford’s algorithm <span class="citation" data-cites="Welford1962">(<a href="#ref-Welford1962" role="doc-biblioref">Welford 1962</a>)</span>. Instead of subtracting large similar terms, it incrementally updates the mean <span class="math inline">\mu_k=\sum_{i=1}^k x_i / k</span> and the squared deviations <span class="math inline">S_k=\sum_{i=1}^k (x_i - \mu_k)^2</span> to maintain numerical stability:</p>
+<p><span id="eq-welford"><span class="math display">
 \begin{align*}
-H_{1}(x)&amp;=\phi\Big(\frac{x_{i+1}-x}{h_{i}}\Big), &amp;H_{2}(x)&amp;=\phi\Big(\frac{x-x_{i}}{h_{i}}\Big)\\
-H_{3}(x)&amp;=-h_{i}\psi\Big(\frac{x_{i+1}-x}{h_{i}}\Big), &amp;H_{4}(x)&amp;=h_{i}\psi\Big(\frac{x-x_{i}}{h_{i}}\Big)
+\delta_k &amp;= x_k - \mu_{k-1},\\
+\mu_k &amp;= \mu_{k-1} + \delta_k / k,\\
+S_k &amp;= S_{k-1} + \delta_k (x_k - \mu_k).
 \end{align*}
-\tag{23}</span></span></p>
-<p>with:</p>
-<p><span id="eq-phi-psi"><span class="math display">
-\phi(t)=3t^{2}-2t^{3},\  \psi(t)=t^{3}-t^{2}
-\tag{24}</span></span></p>
-<p>This formulation aligns with the cubic polynomial definition above.</p>
+\tag{3}</span></span></p>
+<div id="b3712180" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> var_onepass_welford(x):</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    n, mu, sd <span class="op">=</span> <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> xi <span class="kw">in</span> x:</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>        n <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        delta <span class="op">=</span> xi <span class="op">-</span> mu</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        mu <span class="op">+=</span> delta <span class="op">/</span> n</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        sd <span class="op">+=</span> delta <span class="op">*</span> (xi <span class="op">-</span> mu)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sd <span class="op">/</span> n</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Testing again with shifts:</p>
+<div id="a8ee2dc8" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> shift <span class="kw">in</span> [<span class="fl">1e3</span>, <span class="fl">1e6</span>, <span class="fl">1e9</span>, <span class="fl">1e12</span>]:</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    xt <span class="op">=</span> x <span class="op">+</span> shift</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Shift: </span><span class="sc">{</span>shift<span class="sc">:.0e}</span><span class="ss">"</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"One-pass (Welford): </span><span class="sc">{</span>var_onepass_welford(xt)<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Shift: 1e+03
+One-pass (Welford): 0.6666666666666666
+
+Shift: 1e+06
+One-pass (Welford): 0.6666666666666666
+
+Shift: 1e+09
+One-pass (Welford): 0.6666666666666666
+
+Shift: 1e+12
+One-pass (Welford): 0.6666666666666666
+</code></pre>
+</div>
+</div>
+<p>Welford’s method remains stable even under extreme shifts. Other methods, such as Chan’s algorithm <span class="citation" data-cites="Chan1982">(<a href="#ref-Chan1982" role="doc-biblioref">T. F. Chan, Golub, and LeVeque 1982</a>)</span>, are also numerically stable. Classic studies <span class="citation" data-cites="Ling1974 Chan1983">(<a href="#ref-Ling1974" role="doc-biblioref">Ling 1974</a>; <a href="#ref-Chan1983" role="doc-biblioref">Tony F. Chan, Golub, and Leveque 1983</a>)</span> provide detailed comparisons.</p>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-Fritsch1984" class="csl-entry" role="listitem">
-Fritsch, F. N., and J. Butland. 1984. <span>“A Method for Constructing Local Monotone Piecewise Cubic Interpolants.”</span> <em>SIAM Journal on Scientific and Statistical Computing</em> 5 (2): 300–304. <a href="https://doi.org/10.1137/0905021">https://doi.org/10.1137/0905021</a>.
+<div id="ref-Chan1982" class="csl-entry" role="listitem">
+Chan, T. F., G. H. Golub, and R. J. LeVeque. 1982. <span>“Updating Formulae and a Pairwise Algorithm for Computing Sample Variances.”</span> In <em>COMPSTAT 1982 5th Symposium Held at Toulouse 1982</em>, 30–41. Heidelberg: Physica-Verlag HD. <a href="https://doi.org/10.1007/978-3-642-51461-6_3">https://doi.org/10.1007/978-3-642-51461-6_3</a>.
 </div>
-<div id="ref-Fritsch1980" class="csl-entry" role="listitem">
-Fritsch, F. N., and R. E. Carlson. 1980. <span>“Monotone Piecewise Cubic Interpolation.”</span> <em>SIAM Journal on Numerical Analysis</em> 17 (2): 238–46. <a href="https://doi.org/10.1137/0717021">https://doi.org/10.1137/0717021</a>.
+<div id="ref-Chan1983" class="csl-entry" role="listitem">
+Chan, Tony F., Gene H. Golub, and Randall J. Leveque. 1983. <span>“Algorithms for Computing the Sample Variance: Analysis and Recommendations.”</span> <em>The American Statistician</em> 37 (3): 242–47. <a href="https://doi.org/10.1080/00031305.1983.10483115">https://doi.org/10.1080/00031305.1983.10483115</a>.
 </div>
-<div id="ref-Moler2004" class="csl-entry" role="listitem">
-Moler, Cleve B. 2004. <em>Numerical Computing with Matlab</em>. Society for Industrial; Applied Mathematics. <a href="https://doi.org/10.1137/1.9780898717952.ch3">https://doi.org/10.1137/1.9780898717952.ch3</a>.
+<div id="ref-Ling1974" class="csl-entry" role="listitem">
+Ling, Robert F. 1974. <span>“Comparison of Several Algorithms for Computing Sample Means and Variances.”</span> <em>Journal of the American Statistical Association</em> 69 (348): 859–66. <a href="https://doi.org/10.1080/01621459.1974.10480219">https://doi.org/10.1080/01621459.1974.10480219</a>.
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{pchip,
+<div id="ref-Welford1962" class="csl-entry" role="listitem">
+Welford, B. P. 1962. <span>“Note on a Method for Calculating Corrected Sums of Squares and Products.”</span> <em>Technometrics</em> 4 (3): 419–20. <a href="https://doi.org/10.1080/00401706.1962.10490022">https://doi.org/10.1080/00401706.1962.10490022</a>.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{variance,
   author = {Xu, Xuefeng},
-  title = {Monotone {Piecewise} {Cubic} {Interpolation}},
-  date = {2025-03-13},
-  url = {https://xuefeng-xu.github.io/blog/pchip.html},
+  title = {How to {Compute} {Variance?}},
+  date = {2025-10-03},
+  url = {https://xuefeng-xu.github.io/blog/variance.html},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-pchip" class="csl-entry quarto-appendix-citeas" role="listitem">
-Xu, Xuefeng. 2025. <span>“Monotone Piecewise Cubic
-Interpolation.”</span> March 13, 2025. <a href="https://xuefeng-xu.github.io/blog/pchip.html">https://xuefeng-xu.github.io/blog/pchip.html</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-variance" class="csl-entry quarto-appendix-citeas" role="listitem">
+Xu, Xuefeng. 2025. <span>“How to Compute Variance?”</span> October 3,
+2025. <a href="https://xuefeng-xu.github.io/blog/variance.html">https://xuefeng-xu.github.io/blog/variance.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -1121,4 +1137,4 @@ Interpolation.”</span> March 13, 2025. <a href="https://xuefeng-xu.github.io/b
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/xuefeng-xu/xuefeng-xu.github.io/blob/master/blog/pchip.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/xuefeng-xu/xuefeng-xu.github.io/blob/master/blog/variance.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div></div></footer></body></html>

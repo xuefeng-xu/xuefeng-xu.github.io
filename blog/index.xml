@@ -9,8 +9,18 @@
 <link>https://xuefeng-xu.github.io/blog/</link>
 <atom:link href="https://xuefeng-xu.github.io/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Xuefeng Xu&#39;s Blog</description>
-<generator>quarto-1.7.31</generator>
-<lastBuildDate>Wed, 30 Jul 2025 23:00:00 GMT</lastBuildDate>
+<generator>quarto-1.8.24</generator>
+<lastBuildDate>Thu, 02 Oct 2025 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>How to Compute Variance?</title>
+  <dc:creator>Xuefeng Xu</dc:creator>
+  <link>https://xuefeng-xu.github.io/blog/variance.html</link>
+  <description><![CDATA[ Mathematically equivalent formulas for variance can have very different numerical stability. ]]></description>
+  <category>Numerical</category>
+  <category>Python</category>
+  <guid>https://xuefeng-xu.github.io/blog/variance.html</guid>
+  <pubDate>Thu, 02 Oct 2025 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>ROC and PR Curves</title>
   <dc:creator>Xuefeng Xu</dc:creator>

@@ -2,6 +2,7 @@
   {
     "listing": "/blog/index.html",
     "items": [
+      "/blog/variance.html",
       "/blog/roc-pr-curve.html",
       "/blog/power-transform.html",
       "/blog/pchip.html"

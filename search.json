@@ -46,7 +46,7 @@
     "href": "cv.html#service",
     "title": "Xuefeng Xu",
     "section": "Service",
-    "text": "Service\n\nConference Reviewer\n\nInternational Conference on Learning Representations (ICLR): 2025"
+    "text": "Service\n\nConference Reviewer\n\nAnnual Conference on Artificial Intelligence and Statistics (AISTATS): 2026\nInternational Conference on Learning Representations (ICLR): 2025, 2026"
   },
   {
     "objectID": "blog/roc-pr-curve.html",
@@ -82,6 +82,76 @@
     "title": "ROC and PR Curves",
     "section": "4 PRG Curve",
     "text": "4 PRG Curve\nROC curves benefit from linear interpolation and universal baselines, whereas PR curves lack these properties. To address this, Flach and Kull (2015) proposed the Precision–Recall-Gain (PRG) curve, which transforms Precision and Recall into Gains and plots these Precision Gain and Recall Gain within the unit square:\n\n\\text{PrecG}=\\frac{\\text{Prec}-\\pi}{(1-\\pi)\\text{Prec}},\\quad\n\\text{RecG}=\\frac{\\text{Rec}-\\pi}{(1-\\pi)\\text{Rec}}\n\\tag{4}\nwhere \\pi=\\frac{\\text{P}}{\\text{P}+\\text{N}} is the positive class fraction. Notably, Gains can be negative, and such points are typically omitted from the PRG curve.\n\ndef prg_curve(y_true, y_score):\n    prec, rec, thresholds = pr_curve(y_true, y_score)\n    pos_frac = sum(y_true == 0) / len(y_true)\n\n    # Remove negative gains\n    mask = (rec &gt;= pos_frac) & (prec &gt;= pos_frac)\n    prec = prec[mask]\n    rec = rec[mask]\n\n    prec_gain = (prec - pos_frac) / (1 - pos_frac) / prec\n    rec_gain = (rec - pos_frac) / (1 - pos_frac) / rec\n    return prec_gain, rec_gain, thresholds\n\n\nprec_gain, rec_gain, _ = prg_curve(y_true, y_score)\nplot_curve(rec_gain, prec_gain, \"PRG\")"
+  },
+  {
+    "objectID": "blog/variance.html",
+    "href": "blog/variance.html",
+    "title": "How to Compute Variance?",
+    "section": "",
+    "text": "Given a dataset \\{x_1, \\ldots, x_n\\}, variance measures how much data points deviate from their mean. While the mathematical definition is straightforward, the way we implement variance can have a big impact on numerical stability."
+  },
+  {
+    "objectID": "blog/variance.html#textbook-formulas",
+    "href": "blog/variance.html#textbook-formulas",
+    "title": "How to Compute Variance?",
+    "section": "1 Textbook Formulas",
+    "text": "1 Textbook Formulas\nThe most common definition computes the mean first, then the average squared deviation from it:\n\n\\mu = \\frac{1}{n} \\sum_{i=1}^n x_i,\\ \\sigma^2 = \\frac{1}{n} \\sum_{i=1}^n (x_i - \\mu)^2.\n\\tag{1}\n\ndef var_twopass_textbook(x):\n    n, s = 0, 0\n    for xi in x:\n        n += 1\n        s += xi\n\n    mu = s / n\n    sd = 0\n    for xi in x:\n        sd += (xi - mu) ** 2\n    return sd / n\n\nThis requires two passes over the data. For streaming or memory-constrained scenarios, a one-pass formula is often considered:\n\n\\sigma^2 = \\frac{1}{n} \\sum_{i=1}^n x_i^2 - \\left(\\frac{1}{n} \\sum_{i=1}^n x_i\\right)^2.\n\\tag{2}\n\ndef var_onepass_textbook(x):\n    n, s, sq = 0, 0, 0\n    for xi in x:\n        n += 1\n        s += xi\n        sq += xi ** 2\n    return sq / n - (s / n) ** 2\n\nIn exact arithmetic, these two formulas are identical. But in floating-point arithmetic, they can yield very different results."
+  },
+  {
+    "objectID": "blog/variance.html#numerical-cancellation",
+    "href": "blog/variance.html#numerical-cancellation",
+    "title": "How to Compute Variance?",
+    "section": "2 Numerical Cancellation",
+    "text": "2 Numerical Cancellation\nLet’s test both formulas on a simple dataset:\n\nimport numpy as np\n\nx = np.array([0., 1., 2.])\nprint(\"Two-pass (Textbook):\", var_twopass_textbook(x))\nprint(\"One-pass (Textbook):\", var_onepass_textbook(x))\n\nTwo-pass (Textbook): 0.6666666666666666\nOne-pass (Textbook): 0.6666666666666667\n\n\nSo far, so good. But if we shift all values by a large constant, the one-pass version quickly breaks down due to cancellation errors:\n\nfor shift in [1e3, 1e6, 1e9, 1e12]:\n    xt = x + shift\n    print(f\"Shift: {shift:.0e}\")\n    print(f\"Two-pass (Textbook): {var_twopass_textbook(xt)}\")\n    print(f\"One-pass (Textbook): {var_onepass_textbook(xt)}\\n\")\n\nShift: 1e+03\nTwo-pass (Textbook): 0.6666666666666666\nOne-pass (Textbook): 0.6666666666278616\n\nShift: 1e+06\nTwo-pass (Textbook): 0.6666666666666666\nOne-pass (Textbook): 0.6666259765625\n\nShift: 1e+09\nTwo-pass (Textbook): 0.6666666666666666\nOne-pass (Textbook): 0.0\n\nShift: 1e+12\nTwo-pass (Textbook): 0.6666666666666666\nOne-pass (Textbook): -134217728.0\n\n\n\n\n\nCode\nimport matplotlib.pyplot as plt\n\ndef plot_errors(x, var_func, error_type=\"absolute\"):\n    ref = np.var(x)\n    shifts = [10**i for i in range(0, 20)]\n\n    errors = []\n    for shift in shifts:\n        xt = x + shift\n        var = var_func(xt)\n\n        if error_type == \"absolute\":\n            errors.append(abs(var - ref))\n        elif error_type == \"relative\":\n            errors.append(abs(var - ref) / abs(ref))\n\n    fig, ax = plt.subplots(figsize=(3, 3))\n    ax.loglog(shifts, errors, \"*-r\")\n    ax.set_xlabel(\"Shift value\")\n    ax.set_ylabel(f\"{error_type.capitalize()} error\")\n    ax.set_title(f\"{var_func.__name__}\")\n    ax.grid()\n\n\nplot_errors(x, var_onepass_textbook, error_type=\"absolute\")\nplot_errors(x, var_onepass_textbook, error_type=\"relative\")\n\n\n\n\n\n\n\n\n\n\n\n\n(a) Absolute error\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Relative error\n\n\n\n\n\n\n\n\n\nFigure 1: Error plots for the one-pass textbook formula.\n\n\n\nThis instability makes the textbook one-pass formula unsuitable for real-world use."
+  },
+  {
+    "objectID": "blog/variance.html#floating-point-arithmetic",
+    "href": "blog/variance.html#floating-point-arithmetic",
+    "title": "How to Compute Variance?",
+    "section": "3 Floating Point Arithmetic",
+    "text": "3 Floating Point Arithmetic\nWhy does this happen? Because floating-point numbers can only represent a finite number of digits. Squaring a large number, for example, can lose precision:\n\n1000000001.0 ** 2\n# 1.000000002000000001e+18\n\n1.000000002e+18\n\n\nMoreover, floating point numbers cannot exactly represent all values, especially very large numbers, leading to rounding errors.\n\n1000000002000000001.0\n\n1.000000002e+18\n\n\nMost systems use the IEEE 754 standard. In double precision (64-bit), numbers have 53 bits of precision, so integers larger than 2^{53}-1 (9007199254740991) cannot be represented exactly. For example, adding small increments beyond this threshold reveals precision loss:\n\nprint(9007199254740991.0)        # correct\nprint(9007199254740991.0 + 1.0)  # still correct\nprint(9007199254740991.0 + 2.0)  # wrong\n\n9007199254740991.0\n9007199254740992.0\n9007199254740992.0\n\n\nThe hex representation makes this clear:\n\nprint(hex(9007199254740991))  # exact\nprint(hex(9007199254740992))  # exact\nprint(hex(9007199254740993))  # last bit lost\n\n0x1fffffffffffff\n0x20000000000000\n0x20000000000001\n\n\nLarge numbers like:\n\nprint(hex(1000000002000000001))\n\n0xde0b6b41e999401\n\n\nalso show lost lower bits, which is exactly what causes variance miscalculations."
+  },
+  {
+    "objectID": "blog/variance.html#stable-alternatives",
+    "href": "blog/variance.html#stable-alternatives",
+    "title": "How to Compute Variance?",
+    "section": "4 Stable Alternatives",
+    "text": "4 Stable Alternatives\nA better one-pass approach is Welford’s algorithm (Welford 1962). Instead of subtracting large similar terms, it incrementally updates the mean \\mu_k=\\sum_{i=1}^k x_i / k and the squared deviations S_k=\\sum_{i=1}^k (x_i - \\mu_k)^2 to maintain numerical stability:\n\n\\begin{align*}\n\\delta_k &= x_k - \\mu_{k-1},\\\\\n\\mu_k &= \\mu_{k-1} + \\delta_k / k,\\\\\nS_k &= S_{k-1} + \\delta_k (x_k - \\mu_k).\n\\end{align*}\n\\tag{3}\n\ndef var_onepass_welford(x):\n    n, mu, sd = 0, 0, 0\n    for xi in x:\n        n += 1\n        delta = xi - mu\n        mu += delta / n\n        sd += delta * (xi - mu)\n    return sd / n\n\nTesting again with shifts:\n\nfor shift in [1e3, 1e6, 1e9, 1e12]:\n    xt = x + shift\n    print(f\"Shift: {shift:.0e}\")\n    print(f\"One-pass (Welford): {var_onepass_welford(xt)}\\n\")\n\nShift: 1e+03\nOne-pass (Welford): 0.6666666666666666\n\nShift: 1e+06\nOne-pass (Welford): 0.6666666666666666\n\nShift: 1e+09\nOne-pass (Welford): 0.6666666666666666\n\nShift: 1e+12\nOne-pass (Welford): 0.6666666666666666\n\n\n\nWelford’s method remains stable even under extreme shifts. Other methods, such as Chan’s algorithm (T. F. Chan, Golub, and LeVeque 1982), are also numerically stable. Classic studies (Ling 1974; Tony F. Chan, Golub, and Leveque 1983) provide detailed comparisons."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Xuefeng Xu 许雪峰",
+    "section": "",
+    "text": "Email: xuefeng.xu@warwick.ac.uk\n \n  \n   \n  \n    \n     GitHub\n  \n  \n      Google Scholar\n  \n\n\n\n\nBiography\nI am a Ph.D. student in Computer Science at the University of Warwick, supervised by Graham Cormode and collaborating with Hakan Ferhatosmanoglu. My research interests are privacy-preserving algorithms, particularly in the context of privacy-preserving machine learning. I received my M.E. from Beihang University and B.E. from Jilin University.\n\n\nNews\n\n09/2025: Volunteer at VLDB Conference 2025\n08/2025: Poster presentation at CISPA - ELLIS Summer School 2025\n03/2025: Online talk at Flower AI Summit 2025\n02/2025: Lightning talk at Privacy in Machine Learning Meetup"
+  },
+  {
+    "objectID": "misc/resource.html",
+    "href": "misc/resource.html",
+    "title": "Study Resources",
+    "section": "",
+    "text": "Books\n\nIntroduction to Linear Algebra\nAlgorithms\nNumerical Recipes: The Art of Scientific Computing\nPattern Recognition and Machine Learning\nThe Elements of Statistical Learning\nProbabilistic Machine Learning\nFoundations of Machine Learning\nThe Algorithmic Foundations of Differential Privacy\nThe Complexity of Differential Privacy\nIntroduction to Modern Cryptography\nEffective Python\n\n\n\nCourses\n\nMIT 18.06 Linear Algebra\nCoursera Algorithms Part 1 and Part 2\nStanford CS229 Machine Learning\nCoursera Deep Learning Specialization\nCoursera Cryptography\nMIT The Missing Semester of Your CS Education"
+  },
+  {
+    "objectID": "research/index.html",
+    "href": "research/index.html",
+    "title": "Xuefeng Xu",
+    "section": "",
+    "text": "Power Transform Revisited: Numerically Stable, and Federated Xuefeng Xu and Graham Cormode In Submission\n\n\nFederated Computation of ROC and PR Curves Xuefeng Xu and Graham Cormode In Submission\n\n\nFedPS: Federated data Preprocessing via aggregated Statistics Code\n\n\nDeep Learning Algorithms Design and Implementation Based on Differential Privacy Xuefeng Xu, Yanqing Yao, and Lei Cheng International Conference on Machine Learning for Cyber Security, 2020"
+  },
+  {
+    "objectID": "research/research.html",
+    "href": "research/research.html",
+    "title": "Xuefeng Xu",
+    "section": "",
+    "text": "Power Transform Revisited: Numerically Stable, and Federated Xuefeng Xu and Graham Cormode In Submission\n\n\nFederated Computation of ROC and PR Curves Xuefeng Xu and Graham Cormode In Submission\n\n\nFedPS: Federated data Preprocessing via aggregated Statistics Code\n\n\nDeep Learning Algorithms Design and Implementation Based on Differential Privacy Xuefeng Xu, Yanqing Yao, and Lei Cheng International Conference on Machine Learning for Cyber Security, 2020"
+  },
+  {
+    "objectID": "misc/index.html",
+    "href": "misc/index.html",
+    "title": "Xuefeng Xu",
+    "section": "",
+    "text": "Stop PP10043 !\nStudy Resources"
   },
   {
     "objectID": "blog/pchip.html",
@@ -126,46 +196,11 @@
     "text": "5 Cubic Hermite Interpolation\nCubic Hermite Interpolation constructs f(x) using both function values and derivatives:\n\nf(x)=y_iH_1(x)+y_{i+1}H_2(x)+d_iH_3(x)+d_{i+1}H_4(x)\n\\tag{22}\nwhere basis functions are:\n\n\\begin{align*}\nH_{1}(x)&=\\phi\\Big(\\frac{x_{i+1}-x}{h_{i}}\\Big), &H_{2}(x)&=\\phi\\Big(\\frac{x-x_{i}}{h_{i}}\\Big)\\\\\nH_{3}(x)&=-h_{i}\\psi\\Big(\\frac{x_{i+1}-x}{h_{i}}\\Big), &H_{4}(x)&=h_{i}\\psi\\Big(\\frac{x-x_{i}}{h_{i}}\\Big)\n\\end{align*}\n\\tag{23}\nwith:\n\n\\phi(t)=3t^{2}-2t^{3},\\  \\psi(t)=t^{3}-t^{2}\n\\tag{24}\nThis formulation aligns with the cubic polynomial definition above."
   },
   {
-    "objectID": "misc/index.html",
-    "href": "misc/index.html",
-    "title": "Xuefeng Xu",
-    "section": "",
-    "text": "Stop PP10043 !\nStudy Resources"
-  },
-  {
-    "objectID": "research/research.html",
-    "href": "research/research.html",
-    "title": "Xuefeng Xu",
-    "section": "",
-    "text": "Power Transform Revisited: Numerically Stable, and Federated Xuefeng Xu and Graham Cormode In Submission\n\n\nFederated Computation of ROC and PR Curves Xuefeng Xu and Graham Cormode In Submission\n\n\nFedPS: Federated data Preprocessing via aggregated Statistics Code\n\n\nDeep Learning Algorithms Design and Implementation Based on Differential Privacy Xuefeng Xu, Yanqing Yao, and Lei Cheng International Conference on Machine Learning for Cyber Security, 2020"
-  },
-  {
-    "objectID": "research/index.html",
-    "href": "research/index.html",
-    "title": "Xuefeng Xu",
-    "section": "",
-    "text": "Power Transform Revisited: Numerically Stable, and Federated Xuefeng Xu and Graham Cormode In Submission\n\n\nFederated Computation of ROC and PR Curves Xuefeng Xu and Graham Cormode In Submission\n\n\nFedPS: Federated data Preprocessing via aggregated Statistics Code\n\n\nDeep Learning Algorithms Design and Implementation Based on Differential Privacy Xuefeng Xu, Yanqing Yao, and Lei Cheng International Conference on Machine Learning for Cyber Security, 2020"
-  },
-  {
-    "objectID": "misc/resource.html",
-    "href": "misc/resource.html",
-    "title": "Study Resources",
-    "section": "",
-    "text": "Books\n\nIntroduction to Linear Algebra\nAlgorithms\nNumerical Recipes: The Art of Scientific Computing\nPattern Recognition and Machine Learning\nThe Elements of Statistical Learning\nProbabilistic Machine Learning\nFoundations of Machine Learning\nThe Algorithmic Foundations of Differential Privacy\nThe Complexity of Differential Privacy\nIntroduction to Modern Cryptography\nEffective Python\n\n\n\nCourses\n\nMIT 18.06 Linear Algebra\nCoursera Algorithms Part 1 and Part 2\nStanford CS229 Machine Learning\nCoursera Deep Learning Specialization\nCoursera Cryptography\nMIT The Missing Semester of Your CS Education"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Xuefeng Xu 许雪峰",
-    "section": "",
-    "text": "Email: xuefeng.xu@warwick.ac.uk\n \n  \n   \n  \n    \n     GitHub\n  \n  \n      Google Scholar\n  \n\n\n\n\nBiography\nI am a Ph.D. student in Computer Science at the University of Warwick, supervised by Graham Cormode and collaborating with Hakan Ferhatosmanoglu. My research interests are privacy-preserving algorithms, particularly in the context of privacy-preserving machine learning. I received my M.E. from Beihang University and B.E. from Jilin University.\n\n\nNews\n\n09/2025: Volunteer at VLDB Conference 2025\n08/2025: Poster presentation at CISPA - ELLIS Summer School 2025\n03/2025: Online talk at Flower AI Summit 2025\n02/2025: Lightning talk at Privacy in Machine Learning Meetup"
-  },
-  {
     "objectID": "blog/index.html",
     "href": "blog/index.html",
     "title": "Xuefeng Xu",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nROC and PR Curves\n\n\n\nData Science\n\nPython\n\n\n\nROC and PR curves are graphical tools for evaluating classification models, highlighting trade-offs in model performance.\n\n\n\n\n\nJul 31, 2025\n\n8 min\n\n\n\n\n\n\n\n\n\n\n\nPower Transform\n\n\n\nNumerical\n\nPython\n\n\n\nBox-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability.\n\n\n\n\n\nApr 14, 2025\n\n11 min\n\n\n\n\n\n\n\n\n\n\n\nMonotone Piecewise Cubic Interpolation\n\n\n\nStatistics\n\n\n\nPCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots.\n\n\n\n\n\nMar 13, 2025\n\n3 min\n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nHow to Compute Variance?\n\n\n\nNumerical\n\nPython\n\n\n\nMathematically equivalent formulas for variance can have very different numerical stability.\n\n\n\n\n\nOct 3, 2025\n\n5 min\n\n\n\n\n\n\n\n\n\n\n\nROC and PR Curves\n\n\n\nData Science\n\nPython\n\n\n\nROC and PR curves are graphical tools for evaluating classification models, highlighting trade-offs in model performance.\n\n\n\n\n\nJul 31, 2025\n\n8 min\n\n\n\n\n\n\n\n\n\n\n\nPower Transform\n\n\n\nNumerical\n\nPython\n\n\n\nBox-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability.\n\n\n\n\n\nApr 14, 2025\n\n11 min\n\n\n\n\n\n\n\n\n\n\n\nMonotone Piecewise Cubic Interpolation\n\n\n\nStatistics\n\n\n\nPCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots.\n\n\n\n\n\nMar 13, 2025\n\n3 min\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/power-transform.html",
@@ -186,7 +221,7 @@
     "href": "blog/power-transform.html#numerical-instabilities",
     "title": "Power Transform",
     "section": "2 Numerical Instabilities",
-    "text": "2 Numerical Instabilities\nBecause both transformations involve exponentiation, they are susceptible to numerical overflow. This problem has been observed by (Marchand et al. 2022) and discussed in Scikit-learn’s GitHub Issue. Below is an example illustrating the problem using a naive implementation of Equation 3:\n\ndef boxcox_llf_naive(lmb, x):\n    n = len(x)\n    logx = np.log(x)\n    logvar = np.log(np.var(boxcox(x, lmb)))\n    return (lmb - 1) * np.sum(logx) - n/2 * logvar\n\n\nx = np.array([10, 10, 10, 9.9])\nprint(max_llf(x, llf=boxcox_llf_naive))\n\n156.48528753755807\n\n\nAlthough this returns a \\lambda value, it produces overflow warnings. A useful diagnostic is to visualize the log-likelihood curve:\n\n\nCode\ndef plot_llf(x, lb, ub, llf):\n    np.set_printoptions(precision=3)\n    lmb = np.linspace(lb, ub, 20)\n    ll = np.array([llf(l, x) for l in lmb])\n    print(f\"llf={ll}\")\n\n    fig, ax = plt.subplots(figsize=(3, 3))\n    ax.plot(lmb, ll)\n    ax.set_xlabel(r\"$\\lambda$\")\n    ax.set_ylabel(r\"$\\ln\\mathcal{L}(\\lambda, x)$\")\n    plt.show()\n\n\n\nplot_llf(x, lb=150, ub=200, llf=boxcox_llf_naive)\n\nllf=[13.684 13.697 13.711   -inf   -inf   -inf   -inf   -inf   -inf   -inf\n   -inf   -inf   -inf   -inf   -inf   -inf   -inf   -inf   -inf   -inf]\n\n\n\n\n\n\n\n\n\nUnfortunately, due to overflow (np.inf values), the log-likelihood curve cannot be visualized in the specified range, suggesting the returned \\lambda is not optimal."
+    "text": "2 Numerical Instabilities\nBecause both transformations involve exponentiation, they are susceptible to numerical overflow. This problem has been observed by (Marchand et al. 2022) and discussed in Scikit-learn’s GitHub Issue. Below is an example illustrating the problem using a naive implementation of Equation 3:\n\ndef boxcox_llf_naive(lmb, x):\n    n = len(x)\n    logx = np.log(x)\n    logvar = np.log(np.var(boxcox(x, lmb)))\n    return (lmb - 1) * np.sum(logx) - n/2 * logvar\n\n\nx = np.array([10, 10, 10, 9.9])\nprint(max_llf(x, llf=boxcox_llf_naive))\n\n156.48528753755807\n\n\n/opt/miniconda3/lib/python3.12/site-packages/numpy/_core/_methods.py:194: RuntimeWarning:\n\noverflow encountered in multiply\n\n/opt/miniconda3/lib/python3.12/site-packages/numpy/_core/_methods.py:205: RuntimeWarning:\n\noverflow encountered in reduce\n\n\n\nAlthough this returns a \\lambda value, it produces overflow warnings. A useful diagnostic is to visualize the log-likelihood curve:\n\n\nCode\ndef plot_llf(x, lb, ub, llf):\n    np.set_printoptions(precision=3)\n    lmb = np.linspace(lb, ub, 20)\n    ll = np.array([llf(l, x) for l in lmb])\n    print(f\"llf={ll}\")\n\n    fig, ax = plt.subplots(figsize=(3, 3))\n    ax.plot(lmb, ll)\n    ax.set_xlabel(r\"$\\lambda$\")\n    ax.set_ylabel(r\"$\\ln\\mathcal{L}(\\lambda, x)$\")\n    plt.show()\n\n\n\nplot_llf(x, lb=150, ub=200, llf=boxcox_llf_naive)\n\nllf=[13.684 13.697 13.711   -inf   -inf   -inf   -inf   -inf   -inf   -inf\n   -inf   -inf   -inf   -inf   -inf   -inf   -inf   -inf   -inf   -inf]\n\n\n\n\n\n\n\n\n\nUnfortunately, due to overflow (np.inf values), the log-likelihood curve cannot be visualized in the specified range, suggesting the returned \\lambda is not optimal."
   },
   {
     "objectID": "blog/power-transform.html#existing-solutions",
