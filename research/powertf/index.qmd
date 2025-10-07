@@ -1,0 +1,200 @@
+---
+title: "Power Transform Revisited:<br> Numerically Stable, and Federated"
+aliases:
+  - ../../powertf.html
+toc: false
+open-graph:
+  description: "Numerically stable power transforms with an extension to federated learning."
+about:
+  id: heading
+  template: jolla
+  links:
+    - text: Paper
+      icon: file-earmark-pdf-fill
+      url: "https://arxiv.org/abs/2510.04995"
+    - text: Code
+      icon: github
+      url: "https://github.com/xuefeng-xu/powertf"
+---
+
+:::{#heading}
+:::{.center}
+
+##### Xuefeng Xu and Graham Cormode
+
+##### University of Warwick
+
+##### In Submission
+
+:::
+:::
+
+##### **TL;DR**: {{< meta open-graph.description >}}
+
+## Introduction
+
+[Power transforms](https://en.wikipedia.org/wiki/Power_transform) are widely used parametric methods in statistics and machine learning to make data more Gaussian-like. However, standard implementations suffer from numerical instabilities that can cause incorrect parameter estimates or even runtime failures.
+
+We provide a systematic analysis of these issues and propose effective remedies. We further extend our approach to the [federated learning](https://en.wikipedia.org/wiki/Federated_learning) setting, tackling both numerical stability and distributed computation. Finally, we validate our methods on real-world datasets.
+
+## Challenge 1: Catastrophic Cancellation
+
+Two common transforms are [Box–Cox](https://en.wikipedia.org/wiki/Power_transform#Box–Cox_transformation) and [Yeo–Johnson](https://en.wikipedia.org/wiki/Power_transform#Yeo–Johnson_transformation). For Box–Cox, with parameter $\lambda$, the transform is:
+
+$$
+\psi(\lambda, x) =
+\begin{cases}
+\frac{x^\lambda-1}{\lambda} & \text{if } \lambda\neq0,\\
+\ln x & \text{if } \lambda=0.
+\end{cases}
+$$ {#eq-psi}
+
+Given data $X = \{x_1,\dots,x_n\}$, the optimal $\lambda^*$ minimizes the negative log-likelihood (NLL):
+
+$$
+\text{NLL} = (1-\lambda) \sum_{i=1}^n \ln x_i
++ \frac{n}{2} \ln \text{Var}[\psi(\lambda, x)].
+$$ {#eq-nll}
+
+The variance term is especially prone to cancellation. Consider three mathematically equivalent forms:
+
+1. Keep the constant term:
+$$
+\ln \text{Var}[\psi(\lambda, x)] = \ln \text{Var}[(x^\lambda - 1) / \lambda]
+$$ {#eq-var-keepconst}
+2. Remove the constant term:
+$$
+\ln \text{Var}[\psi(\lambda, x)] = \ln \text{Var}(x^\lambda / \lambda)
+$$ {#eq-var-removeconst}
+3. Factor out $\lambda$:
+$$
+\ln \text{Var}[\psi(\lambda, x)] = \ln \text{Var}(x^\lambda) - 2\ln |\lambda|
+$$ {#eq-var-lmbdaout}
+
+As shown in @fig-nll-formula, different forms yield very different numerical behavior. Removing the constant term and factoring out $\lambda$ produces smooth NLL curves, while the other forms lead to spikes and discontinuities.
+
+::: {#fig-nll-formula layout-ncol=2}
+
+![@eq-var-keepconst vs. @eq-var-removeconst](img/formula-const.svg){fig-align="center"}
+
+![@eq-var-removeconst vs. @eq-var-lmbdaout](img/formula-lmb.svg){fig-align="center"}
+
+NLL computed under different variance formulas.
+:::
+
+#### *Takeaway 1: Equivalent formulas can behave differently, careful analysis is essential.*
+
+## Challenge 2: Numerical Overflow
+
+Variance terms are also prone to overflow. We construct adversarial datasets that trigger overflow across floating-point precisions for Box-Cox:
+
++----------+---------------------------+-------------+---------------+------------------------+
+| Overflow | Adversarial data          | $\lambda^*$ | Extreme value | Max Value (Precision)  |
++:========:+:=========================:+:===========:+:=============:+:======================:+
+| Negative | [0.1, 0.1, 0.1, 0.101]    | -361.15     | -3.87e+358    |                        |
++----------+---------------------------+-------------+---------------+ 1.80e+308 (Double)     |
+| Positive | [10, 10, 10, 9.9]         | 357.55      | 9.96e+354     |                        |
++----------+---------------------------+-------------+---------------+------------------------+
+| Negative | [0.1, 0.1, 0.1, 0.10001]  | -35936.9    | -2.30e+35932  |                        |
++----------+---------------------------+-------------+---------------+ 1.19e+4932 (Quadruple) |
+| Positive | [10, 10, 10, 9.999]       | 35933.3     | 5.85e+35928   |                        |
++----------+---------------------------+-------------+---------------+------------------------+
+| Negative | [0.1, 0.1, 0.1, 0.100001] | -359353.0   | -2.74e+359347 |                        |
++----------+---------------------------+-------------+---------------+ 1.61e+78913 (Octuple)  |
+| Positive | [10, 10, 10, 9.9999]      | 359349.0    | 6.99e+359343  |                        |
++----------+---------------------------+-------------+---------------+------------------------+
+
+: Adversarial datasets inducing overflow {#tbl-advdata .striped .hover}
+
+
+Such issues also appear in real-world dataset. @fig-hist shows the histograms of skewed and  large-value features in the [Ecoli](https://archive.ics.uci.edu/dataset/39/ecoli) and [House](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/data) datasets.
+
+::: {#fig-hist layout-ncol=2}
+
+![](img/hist-ecoli-lip.svg){fig-align="center"}
+
+![](img/hist-house-YrSold.svg){fig-align="center"}
+
+Histograms of skewed and large-valued features.
+:::
+
+To avoid overflow, we use [log-domain computation](/blog/power-transform.qmd) for the variance. @fig-nll-log-linear compares NLL curves: linear-domain breaks down, while log-domain remains continuous and stable.
+
+::: {#fig-nll-log-linear layout-ncol=2}
+
+![](img/nll-yj-ecoli-lip.svg){fig-align="center"}
+
+![](img/nll-bc-house-YrSold.svg){fig-align="center"}
+
+NLL computed in log-domain vs. linear-domain.
+:::
+
+#### *Takeaway 2: Use log-domain computation when handling extreme values.*
+
+## Challenge 3: Federated Aggregation
+
+In federated learning, we want to estimate a global $\lambda^*$ across distributed clients. This requires stable computation of global NLL under communication constraints.
+
+A naive one-pass method has clients send $(n, \sum x, \sum x^2)$, and the server computes:
+
+$$
+\frac{1}{n} \sum_{i=1}^n x_i^2 - \frac{1}{n^2} \left(\sum_{i=1}^n x_i\right)^2
+$$ {#eq-var-naive}
+
+[The @eq-var-naive is unstable](/blog/variance.qmd). Instead, we adopt the pairwise algorithm: clients send $(n, \bar{x}, s)$ with mean $\bar{x}$ and sum of squared deviations $s=\sum(x-\bar{x})^2$. The server merges them in a tree structure (@fig-tree-queue):
+
+::: {#fig-tree-queue}
+
+![](img/tree-queue.svg)
+
+Tree-style pairwise aggregation.
+:::
+
+The merging formulas are:
+
+$$
+n^{(AB)} = n^{(A)} + n^{(B)},
+$$ {#eq-var-pairwise-n}
+$$
+\bar{x}^{(AB)} = \bar{x}^{(A)} + (\bar{x}^{(B)} - \bar{x}^{(A)}) \cdot \frac{n^{(B)}}{n^{(AB)}},
+$$ {#eq-var-pairwise-xbar}
+$$
+s^{(AB)} = s^{(A)} + s^{(B)} +(\bar{x}^{(B)} - \bar{x}^{(A)})^2 \cdot \frac{n^{(A)}n^{(B)}}{n^{(AB)}}.
+$$ {#eq-var-pairwise-s}
+
+@fig-fednll-pairwise shows that naive formulas produce spiky curves, while pairwise aggregation yields smooth ones.
+
+::: {#fig-fednll-pairwise layout-ncol=2}
+
+![](img/fednll-bc-house-YrSold.svg){fig-align="center"}
+
+![](img/fednll-yj-house-YrSold.svg){fig-align="center"}
+
+NLL in federated setting: naive vs. pairwise.
+:::
+
+#### *Takeaway 3: Avoid textbook one-pass variance formula in numerical computing.*
+
+## Open Source Contributions
+
+Our methods have been integrated into [SciPy](https://www.scipy.org/) and [Scikit-learn](https://scikit-learn.org/):
+
+- [scipy.stats.boxcox_llf](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.boxcox_llf.html)
+- [scipy.stats.boxcox_normmax](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.boxcox_normmax.html)
+- [scipy.special.boxcox](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.boxcox.html) and [scipy.special.boxcox1p](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.boxcox1p.html)
+- [scipy.special.inv_boxcox](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.inv_boxcox.html) and [scipy.special.inv_boxcox1p](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.inv_boxcox1p.html)
+- [sklearn.preprocessing.PowerTransformer](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PowerTransformer.html)
+
+## Citation
+
+```bibtex
+@misc{Xu2025powertf,
+  title={Power Transform Revisited: Numerically Stable, and Federated},
+  author={Xuefeng Xu and Graham Cormode},
+  year={2025},
+  eprint={2510.04995},
+  archivePrefix={arXiv},
+  primaryClass={cs.LG},
+  url={https://arxiv.org/abs/2510.04995},
+}
+```

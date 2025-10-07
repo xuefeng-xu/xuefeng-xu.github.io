@@ -1,11 +1,11 @@
 <ol reversed class="loose_margin">
   <li>
-    Power Transform Revisited: Numerically Stable, and Federated<br>
+    [Power Transform Revisited: Numerically Stable, and Federated](/research/powertf/index.qmd)<br>
     [Xuefeng Xu]{.underline} and Graham Cormode<br>
     In Submission
   </li>
   <li>
-    Federated Computation of ROC and PR Curves<br>
+    [Federated Computation of ROC and PR Curves](/research/fedcurve/index.qmd)<br>
     [Xuefeng Xu]{.underline} and Graham Cormode<br>
     In Submission
   </li>

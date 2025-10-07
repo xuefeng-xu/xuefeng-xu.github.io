@@ -1,0 +1,168 @@
+---
+title: Federated Computation of ROC and PR Curves
+aliases:
+  - ../../fedcurve.html
+toc: false
+open-graph:
+  description: "A privacy-preserving method to approximate ROC and PR curves in federated learning with provable error guarantees."
+about:
+  id: heading
+  template: jolla
+  links:
+    - text: Paper
+      icon: file-earmark-pdf-fill
+      url: "https://arxiv.org/abs/2510.04979"
+    - text: Code
+      icon: github
+      url: "https://github.com/xuefeng-xu/fedcurve"
+---
+
+:::{#heading}
+:::{.center}
+
+##### Xuefeng Xu and Graham Cormode
+
+##### University of Warwick
+
+##### In Submission
+
+:::
+:::
+
+##### **TL;DR**: {{< meta open-graph.description >}}
+
+## Introduction
+
+[Federated Learning](https://en.wikipedia.org/wiki/Federated_learning) allows multiple clients to collaboratively train models without sharing raw data. However, evaluation is often limited to aggregate simple metrics such as accuracy or loss, which provide an incomplete picture of model performance.
+
+We propose a method to approximate [Receiver Operating Characteristic (ROC) and Precision-Recall (PR) curves](/blog/roc-pr-curve.qmd) in federated settings, without accessing raw client data. Our approach supports both [Secure Aggregation](https://eprint.iacr.org/2017/281) and [Differential Privacy](https://en.wikipedia.org/wiki/Differential_privacy), providing provable error guarantees and low communication cost.
+
+## Methods Overview
+
+Our method has two steps: (1) each client sends local histograms of prediction scores for both classes to the server, which aggregates them to estimate quantiles; (2) the server uses these quantiles to approximate the empirical cumulative distribution functions (ECDF) and reconstructs ROC and PR curves.
+
+### Quantiles Estimation via Histograms
+
+To estimate quantiles, each client builds a hierarchical histogram (@fig-hist) by recursively dividing the score range into equal-width bins and counting examples in each. The server aggregates these histograms and computes global quantiles based on the combined bin counts and boundaries.
+
+::: {#fig-hist}
+
+![](img/hier-hist.svg)
+
+Hierarchical histogram structure.
+:::
+
+To ensure client's privacy, we consider two mechanisms:
+
+- Secure Aggregation: The server sees only the total, not individual bins from clients.
+- Differential Privacy: Clients add independent noise to each bin before sending.
+
+### Curve Approximation via Quantiles
+
+Let $\Phi^+(s)$ and $\Phi^-(s)$ be the ECDFs of prediction score distributions for positive and negative examples. We estimate $Q$ evenly spaced quantiles ($Q=6$ in @fig-ecdf), and apply [monotone piecewise cubic polynomial interpolation (PCHIP)](/blog/pchip.qmd) to approximate the full ECDFs.
+
+::: {#fig-ecdf layout-ncol=2}
+
+![](img/ecdf-neg.svg){fig-align="center"}
+
+![](img/ecdf-pos.svg){fig-align="center"}
+
+ECDFs reconstructed from $Q$ quantiles for both classes.
+:::
+
+For the ROC curve, we then compute:
+
+$$
+\begin{equation*}
+T(s)=1-\Phi^+(s),
+\end{equation*}
+$$ {#eq-tpr}
+
+$$
+\begin{equation*}
+F(s)=1-\Phi^-(s),
+\end{equation*}
+$$ {#eq-fpr}
+
+where $T(s)$ and $F(s)$ denote the true positive rate (TPR) and false positive rate (FPR).
+
+For the PR curve, recall is equivalent to TPR, and precision is computed by:
+
+$$
+\begin{equation*}
+P(s)=\frac{T(s)n^+}{T(s)n^+ + F(s)n^-}
+\end{equation*}
+$$ {#eq-precision}
+
+Here, $n^+$ and $n^-$ are the number of positive and negative examples. @fig-curve shows the resulting approximated ROC and PR curves.
+
+::: {#fig-curve layout-ncol=2}
+
+:::{.preview-image}
+![](img/approx-roc.svg){fig-align="center"}
+:::
+
+![](img/approx-pr.svg){fig-align="center"}
+
+ROC and PR curves approximated from ECDFs.
+:::
+
+## Theoretical Guarantees
+
+To quantify approximation quality, we define the **Area Error (AE)** as:
+
+::: {#def-area-error}
+
+AE is the integral of the absolute difference between the true and estimated curves:
+$$
+\begin{equation*}
+\text{AE}_\text{ROC} = \int_0^1 |T(f) - \hat{T}(f)| df,
+\end{equation*}
+$$ {#eq-area-error-roc}
+
+$$
+\begin{equation*}
+\text{AE}_\text{PR} = \int_0^1 |P(t) - \hat{P}(t)| dt.
+\end{equation*}
+$$ {#eq-area-error-pr}
+
+:::
+
+Assuming Lipschitz continuity of score distributions, we bound the AE as follows:
+
+::: {#thm-area-error-sa}
+
+Let $Q$ be the number of quantiles used. Then:
+
+- Under Secure Aggregation: $\text{AE}_\text{ROC}\le O(1/Q)$ and $\text{AE}_\text{PR}\le\tilde{O}(1/Q)$.
+- Under $\varepsilon$-Differential Privacy: $\text{AE}\le\tilde{O}(\frac{1}{Q} + \frac{1}{n\varepsilon})$, where $n$ is the number of examples.
+:::
+
+## Empirical Evaluation
+
+We evaluate the method using the [Adult dataset](https://archive.ics.uci.edu/dataset/2/adult) and [XGBoost classifier](https://xgboost.readthedocs.io/), We test both Secure Aggregation (SA) and Distributed Differential Privacy (DDP), varying $Q$ from 4 to 1024 and $\varepsilon\in\{0.1,0.3,1\}$.
+
+::: {#fig-error layout-ncol=2}
+
+![](img/error-roc.svg){fig-align="center"}
+
+![](img/error-pr.svg){fig-align="center"}
+
+Area Error of ROC and PR curves vs. number of quantiles.
+:::
+
+As $Q$ increases, Area Error decreases. PR curves generally show slightly higher error than ROC curves. Under DP, error plateaus due to noise, and grows as $\varepsilon$ decreases (stronger privacy).
+
+## Citation
+
+```bibtex
+@misc{Xu2025fedcurve,
+  title={Federated Computation of ROC and PR Curves},
+  author={Xuefeng Xu and Graham Cormode},
+  year={2025},
+  eprint={2510.04979},
+  archivePrefix={arXiv},
+  primaryClass={cs.LG},
+  url={https://arxiv.org/abs/2510.04979},
+}
+```
