@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Misc – Xuefeng Xu</title>
+<title>Federated Computation of ROC and PR Curves – Xuefeng Xu</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,32 +20,66 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../img/goose.png" rel="icon" type="image/png">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-058708546a78a340caf62ac2437e8aa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-7d380d7a4a9913dd95cc60c99177187d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-058708546a78a340caf62ac2437e8aa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../img/goose.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-058708546a78a340caf62ac2437e8aa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-7d380d7a4a9913dd95cc60c99177187d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-058708546a78a340caf62ac2437e8aa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -83,15 +117,62 @@ gtag('js', new Date());
 gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
 </script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
 
-<link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="Misc">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Federated Computation of ROC and PR Curves – Xuefeng Xu">
+<meta property="og:description" content="A privacy-preserving method to approximate ROC and PR curves in federated learning with provable error guarantees.">
+<meta property="og:image" content="https://xuefeng-xu.github.io/research/fedcurve/img/hier-hist.svg">
 <meta property="og:site_name" content="Xuefeng Xu">
-<meta name="twitter:title" content="Misc">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Federated Computation of ROC and PR Curves – Xuefeng Xu">
+<meta name="twitter:description" content="Xuefeng Xu’s Homepage">
+<meta name="twitter:image" content="https://xuefeng-xu.github.io/research/fedcurve/img/hier-hist.svg">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -269,9 +350,9 @@ gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Xuefeng Xu</span>
     </a>
   </div>
@@ -282,33 +363,33 @@ gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../research/index.html"> 
+    <a class="nav-link" href="../../research/index.html"> 
 <span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../teach/index.html"> 
+    <a class="nav-link" href="../../teach/index.html"> 
 <span class="menu-text">Teaching</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../blog/index.html"> 
+    <a class="nav-link" href="../../blog/index.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../cv.html"> 
+    <a class="nav-link" href="../../cv.html"> 
 <span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../misc/index.html" aria-current="page"> 
+    <a class="nav-link" href="../../misc/index.html"> 
 <span class="menu-text">Misc.</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="../blog/index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../blog/index.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -323,26 +404,221 @@ gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-    </div>
+    
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
 
 
 
 
 
+<div class="quarto-about-jolla">
+ <header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Federated Computation of ROC and PR Curves</h1>
+</div>
+<div class="quarto-title-meta">
+  </div>
+</header><div id="heading">
+<div class="center">
+<section id="xuefeng-xu-and-graham-cormode" class="level5">
+<h5 data-anchor-id="xuefeng-xu-and-graham-cormode">Xuefeng Xu and Graham Cormode</h5>
+</section>
+<section id="university-of-warwick" class="level5">
+<h5 data-anchor-id="university-of-warwick">University of Warwick</h5>
+</section>
+<section id="in-submission" class="level5">
+<h5 data-anchor-id="in-submission">In Submission</h5>
+</section>
+</div>
+</div> 
+  <hr class="about-sep">
+   <div class="about-links">
+  <a href="https://arxiv.org/abs/2510.04979" class="about-link" rel="" target="">
+    <i class="bi bi-file-earmark-pdf-fill"></i>
+     <span class="about-link-text">Paper</span>
+  </a>
+  <a href="https://github.com/xuefeng-xu/fedcurve" class="about-link" rel="" target="">
+    <i class="bi bi-github"></i>
+     <span class="about-link-text">Code</span>
+  </a>
+</div>
+</div>
+
+<section id="tldr" class="level5">
+<h5 data-anchor-id="tldr"><strong>TL;DR</strong>: A privacy-preserving method to approximate ROC and PR curves in federated learning with provable error guarantees.</h5>
+</section>
+<section id="introduction" class="level2">
+<h2 data-anchor-id="introduction">Introduction</h2>
+<p><a href="https://en.wikipedia.org/wiki/Federated_learning">Federated Learning</a> allows multiple clients to collaboratively train models without sharing raw data. However, evaluation is often limited to aggregate simple metrics such as accuracy or loss, which provide an incomplete picture of model performance.</p>
+<p>We propose a method to approximate <a href="../../blog/roc-pr-curve.html">Receiver Operating Characteristic (ROC) and Precision-Recall (PR) curves</a> in federated settings, without accessing raw client data. Our approach supports both <a href="https://eprint.iacr.org/2017/281">Secure Aggregation</a> and <a href="https://en.wikipedia.org/wiki/Differential_privacy">Differential Privacy</a>, providing provable error guarantees and low communication cost.</p>
+</section>
+<section id="methods-overview" class="level2">
+<h2 data-anchor-id="methods-overview">Methods Overview</h2>
+<p>Our method has two steps: (1) each client sends local histograms of prediction scores for both classes to the server, which aggregates them to estimate quantiles; (2) the server uses these quantiles to approximate the empirical cumulative distribution functions (ECDF) and reconstructs ROC and PR curves.</p>
+<section id="quantiles-estimation-via-histograms" class="level3">
+<h3 data-anchor-id="quantiles-estimation-via-histograms">Quantiles Estimation via Histograms</h3>
+<p>To estimate quantiles, each client builds a hierarchical histogram (<a href="#fig-hist" class="quarto-xref">Figure&nbsp;1</a>) by recursively dividing the score range into equal-width bins and counting examples in each. The server aggregates these histograms and computes global quantiles based on the combined bin counts and boundaries.</p>
+<div id="fig-hist" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/hier-hist.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Hierarchical histogram structure.
+</figcaption>
+</figure>
+</div>
+<p>To ensure client’s privacy, we consider two mechanisms:</p>
 <ul>
-<li>Stop <a href="https://www.federalregister.gov/documents/2020/06/04/2020-12217/suspension-of-entry-as-nonimmigrants-of-certain-students-and-researchers-from-the-peoples-republic">PP10043</a> !</li>
-<li><a href="../misc/resource.html">Study Resources</a></li>
+<li>Secure Aggregation: The server sees only the total, not individual bins from clients.</li>
+<li>Differential Privacy: Clients add independent noise to each bin before sending.</li>
 </ul>
+</section>
+<section id="curve-approximation-via-quantiles" class="level3">
+<h3 data-anchor-id="curve-approximation-via-quantiles">Curve Approximation via Quantiles</h3>
+<p>Let <span class="math inline">\Phi^+(s)</span> and <span class="math inline">\Phi^-(s)</span> be the ECDFs of prediction score distributions for positive and negative examples. We estimate <span class="math inline">Q</span> evenly spaced quantiles (<span class="math inline">Q=6</span> in <a href="#fig-ecdf" class="quarto-xref">Figure&nbsp;2</a>), and apply <a href="../../blog/pchip.html">monotone piecewise cubic polynomial interpolation (PCHIP)</a> to approximate the full ECDFs.</p>
+<div id="fig-ecdf" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ecdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/ecdf-neg.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/ecdf-pos.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ecdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: ECDFs reconstructed from <span class="math inline">Q</span> quantiles for both classes.
+</figcaption>
+</figure>
+</div>
+<p>For the ROC curve, we then compute:</p>
+<p><span id="eq-tpr"><span class="math display">
+\begin{equation*}
+T(s)=1-\Phi^+(s),
+\end{equation*}
+\tag{1}</span></span></p>
+<p><span id="eq-fpr"><span class="math display">
+\begin{equation*}
+F(s)=1-\Phi^-(s),
+\end{equation*}
+\tag{2}</span></span></p>
+<p>where <span class="math inline">T(s)</span> and <span class="math inline">F(s)</span> denote the true positive rate (TPR) and false positive rate (FPR).</p>
+<p>For the PR curve, recall is equivalent to TPR, and precision is computed by:</p>
+<p><span id="eq-precision"><span class="math display">
+\begin{equation*}
+P(s)=\frac{T(s)n^+}{T(s)n^+ + F(s)n^-}
+\end{equation*}
+\tag{3}</span></span></p>
+<p>Here, <span class="math inline">n^+</span> and <span class="math inline">n^-</span> are the number of positive and negative examples. <a href="#fig-curve" class="quarto-xref">Figure&nbsp;3</a> shows the resulting approximated ROC and PR curves.</p>
+<div id="fig-curve" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-curve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="preview-image quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/approx-roc.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/approx-pr.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-curve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: ROC and PR curves approximated from ECDFs.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="theoretical-guarantees" class="level2">
+<h2 data-anchor-id="theoretical-guarantees">Theoretical Guarantees</h2>
+<p>To quantify approximation quality, we define the <strong>Area Error (AE)</strong> as:</p>
+<div id="def-area-error" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1</strong></span> AE is the integral of the absolute difference between the true and estimated curves: <span id="eq-area-error-roc"><span class="math display">
+\begin{equation*}
+\text{AE}_\text{ROC} = \int_0^1 |T(f) - \hat{T}(f)| df,
+\end{equation*}
+\tag{4}</span></span></p>
+<p><span id="eq-area-error-pr"><span class="math display">
+\begin{equation*}
+\text{AE}_\text{PR} = \int_0^1 |P(t) - \hat{P}(t)| dt.
+\end{equation*}
+\tag{5}</span></span></p>
+</div>
+<p>Assuming Lipschitz continuity of score distributions, we bound the AE as follows:</p>
+<div id="thm-area-error-sa" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1</strong></span> Let <span class="math inline">Q</span> be the number of quantiles used. Then:</p>
+<ul>
+<li>Under Secure Aggregation: <span class="math inline">\text{AE}_\text{ROC}\le O(1/Q)</span> and <span class="math inline">\text{AE}_\text{PR}\le\tilde{O}(1/Q)</span>.</li>
+<li>Under <span class="math inline">\varepsilon</span>-Differential Privacy: <span class="math inline">\text{AE}\le\tilde{O}(\frac{1}{Q} + \frac{1}{n\varepsilon})</span>, where <span class="math inline">n</span> is the number of examples.</li>
+</ul>
+</div>
+</section>
+<section id="empirical-evaluation" class="level2">
+<h2 data-anchor-id="empirical-evaluation">Empirical Evaluation</h2>
+<p>We evaluate the method using the <a href="https://archive.ics.uci.edu/dataset/2/adult">Adult dataset</a> and <a href="https://xgboost.readthedocs.io/">XGBoost classifier</a>, We test both Secure Aggregation (SA) and Distributed Differential Privacy (DDP), varying <span class="math inline">Q</span> from 4 to 1024 and <span class="math inline">\varepsilon\in\{0.1,0.3,1\}</span>.</p>
+<div id="fig-error" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/error-roc.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/error-pr.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Area Error of ROC and PR curves vs.&nbsp;number of quantiles.
+</figcaption>
+</figure>
+</div>
+<p>As <span class="math inline">Q</span> increases, Area Error decreases. PR curves generally show slightly higher error than ROC curves. Under DP, error plateaus due to noise, and grows as <span class="math inline">\varepsilon</span> decreases (stronger privacy).</p>
+</section>
+<section id="citation" class="level2">
+<h2 data-anchor-id="citation">Citation</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bibtex code-with-copy"><code class="sourceCode bibtex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">@misc</span>{<span class="ot">Xu2025fedcurve</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">title</span>={Federated Computation of ROC and PR Curves},</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">author</span>={Xuefeng Xu and Graham Cormode},</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">year</span>={2025},</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">eprint</span>={2510.04979},</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">archivePrefix</span>={arXiv},</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">primaryClass</span>={cs.LG},</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">url</span>={https://arxiv.org/abs/2510.04979},</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -360,13 +636,6 @@ gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
       window.document.body.appendChild(a);
     }
     setColorSchemeToggle(hasAlternateSentinel())
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     
@@ -650,4 +919,4 @@ gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/xuefeng-xu/xuefeng-xu.github.io/blob/master/misc/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/xuefeng-xu/xuefeng-xu.github.io/blob/master/research/fedcurve/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div></div></footer></body></html>

@@ -14,3 +14,7 @@ a:hover {
 body {
   text-align: justify
 }
+
+.center {
+    text-align: center;
+}

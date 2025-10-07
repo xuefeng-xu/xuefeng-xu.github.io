@@ -133,6 +133,55 @@
     "text": "Books\n\nIntroduction to Linear Algebra\nAlgorithms\nNumerical Recipes: The Art of Scientific Computing\nPattern Recognition and Machine Learning\nThe Elements of Statistical Learning\nProbabilistic Machine Learning\nFoundations of Machine Learning\nThe Algorithmic Foundations of Differential Privacy\nThe Complexity of Differential Privacy\nIntroduction to Modern Cryptography\nEffective Python\n\n\n\nCourses\n\nMIT 18.06 Linear Algebra\nCoursera Algorithms Part 1 and Part 2\nStanford CS229 Machine Learning\nCoursera Deep Learning Specialization\nCoursera Cryptography\nMIT The Missing Semester of Your CS Education"
   },
   {
+    "objectID": "research/powertf/index.html",
+    "href": "research/powertf/index.html",
+    "title": "Power Transform Revisited: Numerically Stable, and Federated",
+    "section": "",
+    "text": "Paper\n  \n  \n    \n     Code"
+  },
+  {
+    "objectID": "research/powertf/index.html#introduction",
+    "href": "research/powertf/index.html#introduction",
+    "title": "Power Transform Revisited: Numerically Stable, and Federated",
+    "section": "Introduction",
+    "text": "Introduction\nPower transforms are widely used parametric methods in statistics and machine learning to make data more Gaussian-like. However, standard implementations suffer from numerical instabilities that can cause incorrect parameter estimates or even runtime failures.\nWe provide a systematic analysis of these issues and propose effective remedies. We further extend our approach to the federated learning setting, tackling both numerical stability and distributed computation. Finally, we validate our methods on real-world datasets."
+  },
+  {
+    "objectID": "research/powertf/index.html#challenge-1-catastrophic-cancellation",
+    "href": "research/powertf/index.html#challenge-1-catastrophic-cancellation",
+    "title": "Power Transform Revisited: Numerically Stable, and Federated",
+    "section": "Challenge 1: Catastrophic Cancellation",
+    "text": "Challenge 1: Catastrophic Cancellation\nTwo common transforms are Box–Cox and Yeo–Johnson. For Box–Cox, with parameter \\lambda, the transform is:\n\n\\psi(\\lambda, x) =\n\\begin{cases}\n\\frac{x^\\lambda-1}{\\lambda} & \\text{if } \\lambda\\neq0,\\\\\n\\ln x & \\text{if } \\lambda=0.\n\\end{cases}\n\\tag{1}\nGiven data X = \\{x_1,\\dots,x_n\\}, the optimal \\lambda^* minimizes the negative log-likelihood (NLL):\n\n\\text{NLL} = (1-\\lambda) \\sum_{i=1}^n \\ln x_i\n+ \\frac{n}{2} \\ln \\text{Var}[\\psi(\\lambda, x)].\n\\tag{2}\nThe variance term is especially prone to cancellation. Consider three mathematically equivalent forms:\n\nKeep the constant term: \n\\ln \\text{Var}[\\psi(\\lambda, x)] = \\ln \\text{Var}[(x^\\lambda - 1) / \\lambda]\n\\tag{3}\nRemove the constant term: \n\\ln \\text{Var}[\\psi(\\lambda, x)] = \\ln \\text{Var}(x^\\lambda / \\lambda)\n\\tag{4}\nFactor out \\lambda: \n\\ln \\text{Var}[\\psi(\\lambda, x)] = \\ln \\text{Var}(x^\\lambda) - 2\\ln |\\lambda|\n\\tag{5}\n\nAs shown in Figure 1, different forms yield very different numerical behavior. Removing the constant term and factoring out \\lambda produces smooth NLL curves, while the other forms lead to spikes and discontinuities.\n\n\n\n\n\n\n\n\nEquation 3 vs. Equation 4\n\n\n\n\n\n\n\nEquation 4 vs. Equation 5\n\n\n\n\n\n\nFigure 1: NLL computed under different variance formulas.\n\n\n\n\nTakeaway 1: Equivalent formulas can behave differently, careful analysis is essential."
+  },
+  {
+    "objectID": "research/powertf/index.html#challenge-2-numerical-overflow",
+    "href": "research/powertf/index.html#challenge-2-numerical-overflow",
+    "title": "Power Transform Revisited: Numerically Stable, and Federated",
+    "section": "Challenge 2: Numerical Overflow",
+    "text": "Challenge 2: Numerical Overflow\nVariance terms are also prone to overflow. We construct adversarial datasets that trigger overflow across floating-point precisions for Box-Cox:\n\n\n\nTable 1: Adversarial datasets inducing overflow\n\n\n\n\n\n\n\n\n\n\n\n\nOverflow\nAdversarial data\n\\lambda^*\nExtreme value\nMax Value (Precision)\n\n\n\n\nNegative\n[0.1, 0.1, 0.1, 0.101]\n-361.15\n-3.87e+358\n1.80e+308 (Double)\n\n\nPositive\n[10, 10, 10, 9.9]\n357.55\n9.96e+354\n\n\nNegative\n[0.1, 0.1, 0.1, 0.10001]\n-35936.9\n-2.30e+35932\n1.19e+4932 (Quadruple)\n\n\nPositive\n[10, 10, 10, 9.999]\n35933.3\n5.85e+35928\n\n\nNegative\n[0.1, 0.1, 0.1, 0.100001]\n-359353.0\n-2.74e+359347\n1.61e+78913 (Octuple)\n\n\nPositive\n[10, 10, 10, 9.9999]\n359349.0\n6.99e+359343\n\n\n\n\n\n\nSuch issues also appear in real-world dataset. Figure 2 shows the histograms of skewed and large-value features in the Ecoli and House datasets.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Histograms of skewed and large-valued features.\n\n\n\nTo avoid overflow, we use log-domain computation for the variance. Figure 3 compares NLL curves: linear-domain breaks down, while log-domain remains continuous and stable.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: NLL computed in log-domain vs. linear-domain.\n\n\n\n\nTakeaway 2: Use log-domain computation when handling extreme values."
+  },
+  {
+    "objectID": "research/powertf/index.html#challenge-3-federated-aggregation",
+    "href": "research/powertf/index.html#challenge-3-federated-aggregation",
+    "title": "Power Transform Revisited: Numerically Stable, and Federated",
+    "section": "Challenge 3: Federated Aggregation",
+    "text": "Challenge 3: Federated Aggregation\nIn federated learning, we want to estimate a global \\lambda^* across distributed clients. This requires stable computation of global NLL under communication constraints.\nA naive one-pass method has clients send (n, \\sum x, \\sum x^2), and the server computes:\n\n\\frac{1}{n} \\sum_{i=1}^n x_i^2 - \\frac{1}{n^2} \\left(\\sum_{i=1}^n x_i\\right)^2\n\\tag{6}\nThe Equation 6 is unstable. Instead, we adopt the pairwise algorithm: clients send (n, \\bar{x}, s) with mean \\bar{x} and sum of squared deviations s=\\sum(x-\\bar{x})^2. The server merges them in a tree structure (Figure 4):\n\n\n\n\n\n\nFigure 4: Tree-style pairwise aggregation.\n\n\n\nThe merging formulas are:\n\nn^{(AB)} = n^{(A)} + n^{(B)},\n\\tag{7} \n\\bar{x}^{(AB)} = \\bar{x}^{(A)} + (\\bar{x}^{(B)} - \\bar{x}^{(A)}) \\cdot \\frac{n^{(B)}}{n^{(AB)}},\n\\tag{8} \ns^{(AB)} = s^{(A)} + s^{(B)} +(\\bar{x}^{(B)} - \\bar{x}^{(A)})^2 \\cdot \\frac{n^{(A)}n^{(B)}}{n^{(AB)}}.\n\\tag{9}\nFigure 5 shows that naive formulas produce spiky curves, while pairwise aggregation yields smooth ones.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 5: NLL in federated setting: naive vs. pairwise.\n\n\n\n\nTakeaway 3: Avoid textbook one-pass variance formula in numerical computing."
+  },
+  {
+    "objectID": "research/powertf/index.html#open-source-contributions",
+    "href": "research/powertf/index.html#open-source-contributions",
+    "title": "Power Transform Revisited: Numerically Stable, and Federated",
+    "section": "Open Source Contributions",
+    "text": "Open Source Contributions\nOur methods have been integrated into SciPy and Scikit-learn:\n\nscipy.stats.boxcox_llf\nscipy.stats.boxcox_normmax\nscipy.special.boxcox and scipy.special.boxcox1p\nscipy.special.inv_boxcox and scipy.special.inv_boxcox1p\nsklearn.preprocessing.PowerTransformer"
+  },
+  {
+    "objectID": "research/powertf/index.html#citation",
+    "href": "research/powertf/index.html#citation",
+    "title": "Power Transform Revisited: Numerically Stable, and Federated",
+    "section": "Citation",
+    "text": "Citation\n@misc{Xu2025powertf,\n  title={Power Transform Revisited: Numerically Stable, and Federated},\n  author={Xuefeng Xu and Graham Cormode},\n  year={2025},\n  eprint={2510.04995},\n  archivePrefix={arXiv},\n  primaryClass={cs.LG},\n  url={https://arxiv.org/abs/2510.04995},\n}"
+  },
+  {
     "objectID": "research/index.html",
     "href": "research/index.html",
     "title": "Xuefeng Xu",
@@ -145,6 +194,48 @@
     "title": "Xuefeng Xu",
     "section": "",
     "text": "Power Transform Revisited: Numerically Stable, and Federated Xuefeng Xu and Graham Cormode In Submission\n\n\nFederated Computation of ROC and PR Curves Xuefeng Xu and Graham Cormode In Submission\n\n\nFedPS: Federated data Preprocessing via aggregated Statistics Code\n\n\nDeep Learning Algorithms Design and Implementation Based on Differential Privacy Xuefeng Xu, Yanqing Yao, and Lei Cheng International Conference on Machine Learning for Cyber Security, 2020"
+  },
+  {
+    "objectID": "research/fedcurve/index.html",
+    "href": "research/fedcurve/index.html",
+    "title": "Federated Computation of ROC and PR Curves",
+    "section": "",
+    "text": "Paper\n  \n  \n    \n     Code"
+  },
+  {
+    "objectID": "research/fedcurve/index.html#introduction",
+    "href": "research/fedcurve/index.html#introduction",
+    "title": "Federated Computation of ROC and PR Curves",
+    "section": "Introduction",
+    "text": "Introduction\nFederated Learning allows multiple clients to collaboratively train models without sharing raw data. However, evaluation is often limited to aggregate simple metrics such as accuracy or loss, which provide an incomplete picture of model performance.\nWe propose a method to approximate Receiver Operating Characteristic (ROC) and Precision-Recall (PR) curves in federated settings, without accessing raw client data. Our approach supports both Secure Aggregation and Differential Privacy, providing provable error guarantees and low communication cost."
+  },
+  {
+    "objectID": "research/fedcurve/index.html#methods-overview",
+    "href": "research/fedcurve/index.html#methods-overview",
+    "title": "Federated Computation of ROC and PR Curves",
+    "section": "Methods Overview",
+    "text": "Methods Overview\nOur method has two steps: (1) each client sends local histograms of prediction scores for both classes to the server, which aggregates them to estimate quantiles; (2) the server uses these quantiles to approximate the empirical cumulative distribution functions (ECDF) and reconstructs ROC and PR curves.\n\nQuantiles Estimation via Histograms\nTo estimate quantiles, each client builds a hierarchical histogram (Figure 1) by recursively dividing the score range into equal-width bins and counting examples in each. The server aggregates these histograms and computes global quantiles based on the combined bin counts and boundaries.\n\n\n\n\n\n\nFigure 1: Hierarchical histogram structure.\n\n\n\nTo ensure client’s privacy, we consider two mechanisms:\n\nSecure Aggregation: The server sees only the total, not individual bins from clients.\nDifferential Privacy: Clients add independent noise to each bin before sending.\n\n\n\nCurve Approximation via Quantiles\nLet \\Phi^+(s) and \\Phi^-(s) be the ECDFs of prediction score distributions for positive and negative examples. We estimate Q evenly spaced quantiles (Q=6 in Figure 2), and apply monotone piecewise cubic polynomial interpolation (PCHIP) to approximate the full ECDFs.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: ECDFs reconstructed from Q quantiles for both classes.\n\n\n\nFor the ROC curve, we then compute:\n\n\\begin{equation*}\nT(s)=1-\\Phi^+(s),\n\\end{equation*}\n\\tag{1}\n\n\\begin{equation*}\nF(s)=1-\\Phi^-(s),\n\\end{equation*}\n\\tag{2}\nwhere T(s) and F(s) denote the true positive rate (TPR) and false positive rate (FPR).\nFor the PR curve, recall is equivalent to TPR, and precision is computed by:\n\n\\begin{equation*}\nP(s)=\\frac{T(s)n^+}{T(s)n^+ + F(s)n^-}\n\\end{equation*}\n\\tag{3}\nHere, n^+ and n^- are the number of positive and negative examples. Figure 3 shows the resulting approximated ROC and PR curves.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: ROC and PR curves approximated from ECDFs."
+  },
+  {
+    "objectID": "research/fedcurve/index.html#theoretical-guarantees",
+    "href": "research/fedcurve/index.html#theoretical-guarantees",
+    "title": "Federated Computation of ROC and PR Curves",
+    "section": "Theoretical Guarantees",
+    "text": "Theoretical Guarantees\nTo quantify approximation quality, we define the Area Error (AE) as:\n\nDefinition 1 AE is the integral of the absolute difference between the true and estimated curves: \n\\begin{equation*}\n\\text{AE}_\\text{ROC} = \\int_0^1 |T(f) - \\hat{T}(f)| df,\n\\end{equation*}\n\\tag{4}\n\n\\begin{equation*}\n\\text{AE}_\\text{PR} = \\int_0^1 |P(t) - \\hat{P}(t)| dt.\n\\end{equation*}\n\\tag{5}\n\nAssuming Lipschitz continuity of score distributions, we bound the AE as follows:\n\nTheorem 1 Let Q be the number of quantiles used. Then:\n\nUnder Secure Aggregation: \\text{AE}_\\text{ROC}\\le O(1/Q) and \\text{AE}_\\text{PR}\\le\\tilde{O}(1/Q).\nUnder \\varepsilon-Differential Privacy: \\text{AE}\\le\\tilde{O}(\\frac{1}{Q} + \\frac{1}{n\\varepsilon}), where n is the number of examples."
+  },
+  {
+    "objectID": "research/fedcurve/index.html#empirical-evaluation",
+    "href": "research/fedcurve/index.html#empirical-evaluation",
+    "title": "Federated Computation of ROC and PR Curves",
+    "section": "Empirical Evaluation",
+    "text": "Empirical Evaluation\nWe evaluate the method using the Adult dataset and XGBoost classifier, We test both Secure Aggregation (SA) and Distributed Differential Privacy (DDP), varying Q from 4 to 1024 and \\varepsilon\\in\\{0.1,0.3,1\\}.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: Area Error of ROC and PR curves vs. number of quantiles.\n\n\n\nAs Q increases, Area Error decreases. PR curves generally show slightly higher error than ROC curves. Under DP, error plateaus due to noise, and grows as \\varepsilon decreases (stronger privacy)."
+  },
+  {
+    "objectID": "research/fedcurve/index.html#citation",
+    "href": "research/fedcurve/index.html#citation",
+    "title": "Federated Computation of ROC and PR Curves",
+    "section": "Citation",
+    "text": "Citation\n@misc{Xu2025fedcurve,\n  title={Federated Computation of ROC and PR Curves},\n  author={Xuefeng Xu and Graham Cormode},\n  year={2025},\n  eprint={2510.04979},\n  archivePrefix={arXiv},\n  primaryClass={cs.LG},\n  url={https://arxiv.org/abs/2510.04979},\n}"
   },
   {
     "objectID": "misc/index.html",
