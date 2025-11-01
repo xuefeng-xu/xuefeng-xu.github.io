@@ -1,6 +1,6 @@
 ---
 title: Power Transform
-description: "Box-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability."
+description: "Parametric methods that normalize data but require careful handling to avoid numerical instability."
 date: April 14, 2025
 bibliography: reference.bib
 categories: [Numerical, Python]
@@ -170,6 +170,7 @@ def plot_llf(x, lb, ub, llf):
 ```
 
 ```{python}
+#| label: fig-bc-llf-naive
 #| fig-align: center
 plot_llf(x, lb=150, ub=200, llf=boxcox_llf_naive)
 ```
@@ -186,6 +187,7 @@ print(max_llf(x_dm, llf=boxcox_llf_naive))
 ```
 
 ```{python}
+#| label: fig-bc-llf-MASS
 #| fig-align: center
 plot_llf(x_dm, lb=330, ub=385, llf=boxcox_llf_naive)
 ```
@@ -266,6 +268,7 @@ print(max_llf(x, llf=boxcox_llf))
 ```
 
 ```{python}
+#| label: fig-bc-llf-logspace
 #| fig-align: center
 plot_llf(x, lb=330, ub=385, llf=boxcox_llf)
 ```

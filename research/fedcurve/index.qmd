@@ -1,10 +1,10 @@
 ---
 title: Federated Computation of ROC and PR Curves
 aliases:
-  - ../../fedcurve.html
+  - /fedcurve.html
 toc: false
 open-graph:
-  description: "A privacy-preserving method to approximate ROC and PR curves in federated learning with provable error guarantees."
+  description: "Privacy-preserving ROC/PR curve approximation for federated learning."
 about:
   id: heading
   template: jolla
@@ -99,7 +99,7 @@ Here, $n^+$ and $n^-$ are the number of positive and negative examples. @fig-cur
 ::: {#fig-curve layout-ncol=2}
 
 :::{.preview-image}
-![](img/approx-roc.svg){fig-align="center"}
+![](img/approx-roc.svg){.preview-image fig-align="center"}
 :::
 
 ![](img/approx-pr.svg){fig-align="center"}

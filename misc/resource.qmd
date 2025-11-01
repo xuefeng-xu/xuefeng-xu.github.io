@@ -5,6 +5,7 @@ title: Study Resources
 ### Books
 
 -   [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/ila6/indexila6.html)
+-   [Introduction to Probability for Computing](https://www.cs.cmu.edu/~harchol/Probability/book.html)
 -   [Algorithms](https://algs4.cs.princeton.edu)
 -   [Numerical Recipes: The Art of Scientific Computing](https://numerical.recipes/book.html)
 -   [Pattern Recognition and Machine Learning](https://www.microsoft.com/en-us/research/people/cmbishop/prml-book/)

@@ -1,6 +1,6 @@
 ---
 title: Monotone Piecewise Cubic Interpolation
-description: "PCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots."
+description: "Shape-preserving interpolation method that preserves monotonicity and avoids overshoots."
 date: March 13, 2025
 bibliography: reference.bib
 categories: [Statistics]
@@ -10,9 +10,75 @@ citation:
 
 Piecewise Cubic Hermite Interpolating Polynomial (PCHIP) is a cubic spline-based interpolation method designed to preserve monotonicity. See [MATLAB](https://mathworks.com/help/matlab/ref/pchip.html) or [SciPy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.PchipInterpolator.html) for the implementation details.
 
+## PCHIP Example
+
+Given $n$ data points $(x_1,y_1),\dots,(x_n,y_n)$ with $x_1<\cdots<x_n$, where $y$ is monotonic (either $y_i\le y_{i+1}$ or $y_{i+1}\ge y_i$). The easiest interpolation method which preserves monotonicity is linear interpolation. However, it is not smooth. Polynomial interpolation is smooth but may introduce overshoots, violating monotonicity.
+
+```{python}
+def plot_interp(interp_func, x, y):
+    grid_x = np.linspace(min(x), max(x), 100)
+    grid_y = interp_func(grid_x)
+
+    fig, ax = plt.subplots(figsize=(3, 3))
+    ax.plot(grid_x, grid_y)
+    ax.scatter(x, y, color='C1', zorder=2)
+
+    ax.set_xlabel(r"$x$")
+    ax.set_ylabel(r"$y$")
+```
+::: {#fig-linear-cubic layout-ncol=2}
+```{python}
+#| label: fig-linear
+#| fig-cap: "Linear"
+import numpy as np
+from scipy.interpolate import interp1d
+import matplotlib.pyplot as plt
+
+x = [-3, -2, -1, 0, 1, 2, 3]
+y = [-2, -2, -2, 0, 2, 2, 2]
+
+linear_interp = interp1d(x, y, kind="linear")
+plot_interp(linear_interp, x, y)
+```
+```{python}
+#| label: fig-cubic
+#| fig-cap: "Cubic"
+cubic_interp = interp1d(x, y, kind="cubic")
+plot_interp(cubic_interp, x, y)
+```
+
+Linear Interpolation vs. Cubic Interpolation
+:::
+
+One of the most effective interpolation methods that preserves monotonicity while maintaining smoothness is PCHIP. Some people also refer to it as shape-preserving cubic interpolation. The following figures illustrate PCHIP interpolation, where it also appliable to non-monotonic data points.
+
+::: {#fig-linear-cubic layout-ncol=2}
+```{python}
+#| label: fig-pchip-monotone
+#| fig-cap: "PCHIP on Monotone Data"
+from scipy.interpolate import PchipInterpolator
+
+x = [-3, -2, -1, 0, 1, 2, 3]
+y = [-2, -2, -2, 0, 2, 2, 2]
+
+pchip_interp = PchipInterpolator(x, y)
+plot_interp(pchip_interp, x, y)
+```
+```{python}
+#| label: fig-pchip-nonmonotone
+#| fig-cap: "PCHIP on Non-Monotone Data"
+x = [-3, -2, -1, 0, 1, 2, 3]
+y = [-2, -1, -1.5, 0, 1, 0.5, 2]
+
+pchip_interp = PchipInterpolator(x, y)
+plot_interp(pchip_interp, x, y)
+```
+PCHIP Interpolation on Monotone and Non-Monotone Data
+:::
+
 ## Interpolation Function
 
-Given $n$ data points $(x_1,y_1),\dots,(x_n,y_n)$ with $x_1<\cdots<x_n$, where $y$ is monotonic (either $y_i\le y_{i+1}$ or $y_{i+1}\ge y_i$), define:
+How to ensure cubic interpolation preserves monotonicity? Let's define some notations first. For each interval $[x_i,x_{i+1}]$ ($i=1,\dots,n-1$), define the step size $h_i$ and slope $s_i$ as:
 
 $$
 h_i=x_{i+1}-x_i,\ s_i=\frac{y_{i+1}-y_i}{h_i}
@@ -44,9 +110,9 @@ $$ {#eq-cubic-poly-coef}
 
 Thus, computing derivatives $d_1,\dots,d_n$ determines $c_0,c_1,c_2,c_3$ for each interval.
 
-## Derivative Computation
+## Derivative Formula
 
-The derivative at $x_i$ is computed using local information from three neighboring points [@Fritsch1984]:
+The derivative $d_i$ is computed using local information from three neighboring points $\{(x_{i-1},y_{i-1}),(x_i,y_i),(x_{i+1},y_{i+1})\}$. Replaceing with the slopes $s_{i-1}$ and $s_i$, and step sizes $h_{i-1}$ and $h_i$, the formula is [@Fritsch1984]:
 
 $$
 d_i=G(s_{i-1},s_i,h_{i-1},h_i)=
@@ -59,7 +125,7 @@ $$ {#eq-d}
 where the ratio $r$ ($1/3<r<2/3$) is given by:
 
 $$
-r=\frac{h_{i-1}+2h_i}{3h_{i-1}+3h_i}=\frac{1}{3}\Big(1+\frac{h_i}{h_{i+1}+h_i}\Big)
+r=\frac{h_{i-1}+2h_i}{3h_{i-1}+3h_i}=\frac{1}{3}\left(1+\frac{h_i}{h_{i+1}+h_i}\right)
 $$ {#eq-r}
 
 If $s_{i-1}$ and $s_i$ have opposite signs (indicating non-monotonicity) or one is zero, then $d_i=0$. Otherwise, $d_i$ is a weighted harmonic mean:
@@ -68,7 +134,7 @@ $$
 \frac{1}{d_i}=\frac{r}{s_{i-1}}+\frac{1-r}{s_i}
 $$ {#eq-harmonic-mean}
 
-For endpoints $x_1$ and $x_n$, derivatives are computed separately [@Moler2004, chap. 3]:
+For derivatives $d_1$ and $d_n$, they are computed separately [@Moler2004, chap. 3]. For $d_1$:
 
 $$
 d_1=
@@ -85,11 +151,11 @@ $$
 \hat{d}_1=\frac{(2h_1+h_2)s_1 - h_1s_2}{{h_1+h_2}}
 $$ {#eq-hat-d1}
 
-A quadratic polynomial $\hat{f}(x)=\hat{c}_0+\hat{c}_1x+\hat{c}_2x^2$ is fit through the first three points, and its derivative at $x_1$ is computed to obtain $\hat{d}_1$. Additional rules are then applied to preserve monotonicity. Similar rules apply for $d_n$.
+A quadratic polynomial $\hat{f}(x)=\hat{c}_0+\hat{c}_1x+\hat{c}_2x^2$ is fit through the first three points, and $\hat{d}_1=\hat{f}'(x_1)$. Additional rules are then added to preserve monotonicity. Similar procedures apply for $d_n$.
 
 ## Monotonicity Conditions
 
-To ensure monotonicity, define:
+To ensure monotonicity, the derivatives $d_i$ must satisfy certain conditions. Define:
 
 $$
 \alpha_i=\frac{d_i}{s_i},\
@@ -102,11 +168,11 @@ A sufficient condition for monotonicity is [@Fritsch1980]:
 $$
 \alpha_i,\beta_i\ge0
 \land
-\Big(
+\left(
 \alpha_i,\beta_i\le3
 \lor
 \phi(\alpha_i,\beta_i)\ge0
-\Big)
+\right)
 $$ {#eq-monotone-cond}
 
 where:
@@ -116,6 +182,7 @@ $$
 $$ {#eq-phi-alpha-beta}
 :::
 
+To verify @eq-d and @eq-d1 satisfy the monotonicity condition, we analyze them separately.
 If $s_{i-1}s_i>0$, then $\alpha_i>0$; otherwise, $\alpha_i=0$. Since the ratio $r$ satisfies $1/3<r<2/3$, $\alpha_i$ is upper-bounded by 3:
 
 $$
@@ -164,16 +231,16 @@ $$
 f'(x^*)=\phi(\alpha_i,\beta_i)s_i
 $$ {#eq-y-extrem}
 
-There are three conditions to check: 1) $x^*<x_i$; 2) $x^*>x_{i+1}$; 3) $x_i\le x^*\le x_{i+1}$.
+There are three conditions to check: (i) $x^*<x_i$; (ii) $x^*>x_{i+1}$; (iii) $x_i\le x^*\le x_{i+1}$.
 
-Condition 1) is equivalent to
+Condition (i) is equivalent to
 $$
 \alpha_i,\beta_i\ge0
 \land
 \frac{2\alpha_i+\beta_i-3}{\alpha_i+\beta_i-2}<0
 $$ {#eq-monotone-cond-1}
 
-The analysis of Condition 2) and 3) are similar, leading to:
+The analysis of Condition (ii) and (iii) are similar, leading to:
 
 $$
 \alpha_i,\beta_i\ge0
@@ -193,7 +260,7 @@ $$
 \phi(\alpha_i,\beta_i)\ge0
 $$ {#eq-monotone-cond-2}
 
-@fig-monotone-region illustrates these conditions separately: Condition 1) — blue, Condition 2) — green, Condition 3) — red.
+@fig-monotone-region illustrates these conditions: Condition (i) — blue, Condition (ii) — green, Condition (iii) — red.
 
 :::{.preview-image}
 ```{python}
@@ -246,28 +313,3 @@ plt.show()
 :::
 Finally, simplifying yields the final monotonicity condition (@lem-monotone-cond).
 :::
-
-## Cubic Hermite Interpolation
-
-Cubic Hermite Interpolation constructs $f(x)$ using both function values and derivatives:
-
-$$
-f(x)=y_iH_1(x)+y_{i+1}H_2(x)+d_iH_3(x)+d_{i+1}H_4(x)
-$$ {#eq-cubic-hermite}
-
-where basis functions are:
-
-$$
-\begin{align*}
-H_{1}(x)&=\phi\Big(\frac{x_{i+1}-x}{h_{i}}\Big), &H_{2}(x)&=\phi\Big(\frac{x-x_{i}}{h_{i}}\Big)\\
-H_{3}(x)&=-h_{i}\psi\Big(\frac{x_{i+1}-x}{h_{i}}\Big), &H_{4}(x)&=h_{i}\psi\Big(\frac{x-x_{i}}{h_{i}}\Big)
-\end{align*}
-$$ {#eq-cubic-hermite-basis}
-
-with:
-
-$$
-\phi(t)=3t^{2}-2t^{3},\  \psi(t)=t^{3}-t^{2}
-$$ {#eq-phi-psi}
-
-This formulation aligns with the cubic polynomial definition above.

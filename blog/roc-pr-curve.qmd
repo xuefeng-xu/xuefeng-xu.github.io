@@ -1,6 +1,6 @@
 ---
 title: ROC and PR Curves
-description: "ROC and PR curves are graphical tools for evaluating classification models, highlighting trade-offs in model performance."
+description: "Graphical tools for evaluating classification models, highlighting trade-offs in model performance."
 date: July 31, 2025
 bibliography: reference.bib
 categories: [Data Science, Python]
@@ -12,7 +12,7 @@ format:
   ipynb:
     number-sections: true
 ---
-Receiver Operating Characteristic (ROC) and Precision–Recall (PR) curves are essential for evaluating classification models. They visualize trade-offs between True Positive Rate (TPR) and False Positive Rate (FPR) (ROC) or Precision and Recall (PR), offering deeper insights than single scalar metrics.
+Receiver Operating Characteristic (ROC) and Precision–Recall (PR) curves are tools for evaluating classification models. They visualize trade-offs between True Positive Rate (TPR) and False Positive Rate (FPR) (ROC) or Precision and Recall (PR), offering deeper insights than single scalar metrics.
 
 ## ROC Curve
 
@@ -32,7 +32,7 @@ $$
 \text{TPR}=\text{TP}/\text{P},\quad \text{FPR}=\text{FP}/\text{N}
 $$ {#eq-tpr-fpr}
 
-A simple algorithm constructs the ROC curve: 1) Sort predictions in descending score order. 2) Sweep thresholds across scores, updating TP and FP counts [@Fawcett2006].
+A simple algorithm constructs the ROC curve: (i) Sort predictions in descending score order. (ii) Sweep thresholds across scores, updating TP and FP counts [@Fawcett2006].
 
 ```{python}
 import numpy as np
@@ -112,6 +112,7 @@ def plot_curve(x, y, curve: str, pos_frac=None, drawstyle="default", ax=None):
 ```
 
 ```{python}
+#| label: fig-roc
 #| fig-align: center
 y_true = np.array([1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0])
 y_score = np.array([
@@ -146,6 +147,7 @@ def convex_hull(points):
 
 :::{.preview-image}
 ```{python}
+#| label: fig-rocch
 #| fig-align: center
 rocch = convex_hull(zip(fpr, tpr))
 
@@ -206,6 +208,7 @@ def pr_from_roc(fpr, tpr, neg_to_pos):
 ```
 
 ```{python}
+#| label: fig-pr-interp
 #| fig-align: center
 neg_to_pos = sum(y_true == 0) / sum(y_true == 1)
 prec_ch_func = pr_from_roc(fpr_ch, tpr_ch, neg_to_pos)
@@ -230,6 +233,7 @@ ax.legend(loc="lower left")
 The converted ROCCH dominates the PR space but is clearly non-linear, lying beneath its own linear interpolation (dotted line). This confirms that PR curves cannot be linearly interpolated. Scikit-learn’s [PrecisionRecallDisplay](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.PrecisionRecallDisplay.html) instead uses step-wise interpolation, consistent with [average_precision_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html). This ensures that the area under the PR curve equals the average precision.
 
 ```{python}
+#| label: fig-pr-sklearn
 #| fig-align: center
 pos_frac = sum(y_true == 1) / len(y_true)
 plot_curve(recall, precision, "PR", pos_frac, drawstyle="steps-post")
@@ -262,6 +266,7 @@ def prg_curve(y_true, y_score):
 ```
 
 ```{python}
+#| label: fig-prg
 #| fig-align: center
 prec_gain, rec_gain, _ = prg_curve(y_true, y_score)
 plot_curve(rec_gain, prec_gain, "PRG")

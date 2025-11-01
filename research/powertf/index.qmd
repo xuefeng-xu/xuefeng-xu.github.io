@@ -1,7 +1,7 @@
 ---
 title: "Power Transform Revisited:<br> Numerically Stable, and Federated"
 aliases:
-  - ../../powertf.html
+  - /powertf.html
 toc: false
 open-graph:
   description: "Numerically stable power transforms with an extension to federated learning."
@@ -145,7 +145,7 @@ $$ {#eq-var-naive}
 
 ::: {#fig-tree-queue}
 
-![](img/tree-queue.svg)
+![](img/tree-queue.svg){.preview-image}
 
 Tree-style pairwise aggregation.
 :::
