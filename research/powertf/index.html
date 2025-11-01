@@ -164,11 +164,11 @@ window.Quarto = {
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Power Transform Revisited: Numerically Stable, and Federated – Xuefeng Xu">
 <meta property="og:description" content="Numerically stable power transforms with an extension to federated learning.">
-<meta property="og:image" content="https://xuefeng-xu.github.io/research/powertf/img/formula-const.svg">
+<meta property="og:image" content="https://xuefeng-xu.github.io/research/powertf/img/tree-queue.svg">
 <meta property="og:site_name" content="Xuefeng Xu">
 <meta name="twitter:title" content="Power Transform Revisited: Numerically Stable, and Federated – Xuefeng Xu">
 <meta name="twitter:description" content="Xuefeng Xu’s Homepage">
-<meta name="twitter:image" content="https://xuefeng-xu.github.io/research/powertf/img/formula-const.svg">
+<meta name="twitter:image" content="https://xuefeng-xu.github.io/research/powertf/img/tree-queue.svg">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -648,10 +648,10 @@ Figure&nbsp;3: NLL computed in log-domain vs.&nbsp;linear-domain.
 \frac{1}{n} \sum_{i=1}^n x_i^2 - \frac{1}{n^2} \left(\sum_{i=1}^n x_i\right)^2
 \tag{6}</span></span></p>
 <p><a href="../../blog/variance.html">The <span class="quarto-xref">Equation&nbsp;6</span> is unstable</a>. Instead, we adopt the pairwise algorithm: clients send <span class="math inline">(n, \bar{x}, s)</span> with mean <span class="math inline">\bar{x}</span> and sum of squared deviations <span class="math inline">s=\sum(x-\bar{x})^2</span>. The server merges them in a tree structure (<a href="#fig-tree-queue" class="quarto-xref">Figure&nbsp;4</a>):</p>
-<div id="fig-tree-queue" class="quarto-float quarto-figure quarto-figure-center">
+<div id="fig-tree-queue" class="preview-image quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-tree-queue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="img/tree-queue.svg" class="img-fluid figure-img">
+<img src="img/tree-queue.svg" class="preview-image img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tree-queue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: Tree-style pairwise aggregation.

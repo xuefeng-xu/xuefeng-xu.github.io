@@ -8,7 +8,7 @@
 
 <meta name="author" content="Xuefeng Xu">
 <meta name="dcterms.date" content="2025-07-31">
-<meta name="description" content="ROC and PR curves are graphical tools for evaluating classification models, highlighting trade-offs in model performance.">
+<meta name="description" content="Graphical tools for evaluating classification models, highlighting trade-offs in model performance.">
 
 <title>ROC and PR Curves – Xuefeng Xu</title>
 <style>
@@ -187,14 +187,14 @@ window.Quarto = {
 
 <link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="ROC and PR Curves – Xuefeng Xu">
-<meta property="og:description" content="ROC and PR curves are graphical tools for evaluating classification models, highlighting trade-offs in model performance.">
-<meta property="og:image" content="https://xuefeng-xu.github.io/blog/roc-pr-curve_files/figure-html/cell-7-output-1.png">
+<meta property="og:description" content="Graphical tools for evaluating classification models, highlighting trade-offs in model performance.">
+<meta property="og:image" content="https://xuefeng-xu.github.io/blog/roc-pr-curve_files/figure-html/fig-rocch-output-1.png">
 <meta property="og:site_name" content="Xuefeng Xu">
 <meta property="og:image:height" content="603">
 <meta property="og:image:width" content="604">
 <meta name="twitter:title" content="ROC and PR Curves – Xuefeng Xu">
-<meta name="twitter:description" content="ROC and PR curves are graphical tools for evaluating classification models, highlighting trade-offs in model performance.">
-<meta name="twitter:image" content="https://xuefeng-xu.github.io/blog/roc-pr-curve_files/figure-html/cell-7-output-1.png">
+<meta name="twitter:description" content="Graphical tools for evaluating classification models, highlighting trade-offs in model performance.">
+<meta name="twitter:image" content="https://xuefeng-xu.github.io/blog/roc-pr-curve_files/figure-html/fig-rocch-output-1.png">
 <meta name="twitter:image-height" content="603">
 <meta name="twitter:image-width" content="604">
 <meta name="twitter:card" content="summary_large_image">
@@ -464,7 +464,7 @@ window.Quarto = {
       <h1 class="title">ROC and PR Curves</h1>
                   <div>
         <div class="description">
-          ROC and PR curves are graphical tools for evaluating classification models, highlighting trade-offs in model performance.
+          Graphical tools for evaluating classification models, highlighting trade-offs in model performance.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -534,7 +534,7 @@ window.Quarto = {
 
 
 
-<p>Receiver Operating Characteristic (ROC) and Precision–Recall (PR) curves are essential for evaluating classification models. They visualize trade-offs between True Positive Rate (TPR) and False Positive Rate (FPR) (ROC) or Precision and Recall (PR), offering deeper insights than single scalar metrics.</p>
+<p>Receiver Operating Characteristic (ROC) and Precision–Recall (PR) curves are tools for evaluating classification models. They visualize trade-offs between True Positive Rate (TPR) and False Positive Rate (FPR) (ROC) or Precision and Recall (PR), offering deeper insights than single scalar metrics.</p>
 <section id="roc-curve" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="roc-curve"><span class="header-section-number">1</span> ROC Curve</h2>
 <p>For binary classification, with Positive (P) and Negative (N) classes, predictions are based on model scores thresholded to produce labels. Performance is summarized using a confusion matrix (<a href="#tbl-confusion-matrix" class="quarto-xref">Table&nbsp;1</a>), counting True Positives (TP), False Positives (FP), True Negatives (TN), and False Negatives (FN).</p>
@@ -581,8 +581,8 @@ Table&nbsp;1: The Confusion Matrix
 <p><span id="eq-tpr-fpr"><span class="math display">
 \text{TPR}=\text{TP}/\text{P},\quad \text{FPR}=\text{FP}/\text{N}
 \tag{1}</span></span></p>
-<p>A simple algorithm constructs the ROC curve: 1) Sort predictions in descending score order. 2) Sweep thresholds across scores, updating TP and FP counts <span class="citation" data-cites="Fawcett2006">(<a href="#ref-Fawcett2006" role="doc-biblioref">Fawcett 2006</a>)</span>.</p>
-<div id="3087d91e" class="cell" data-execution_count="1">
+<p>A simple algorithm constructs the ROC curve: (i) Sort predictions in descending score order. (ii) Sweep thresholds across scores, updating TP and FP counts <span class="citation" data-cites="Fawcett2006">(<a href="#ref-Fawcett2006" role="doc-biblioref">Fawcett 2006</a>)</span>.</p>
+<div id="6eb2fa8c" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_fp_tp(y_true, y_score):</span>
@@ -615,7 +615,7 @@ Table&nbsp;1: The Confusion Matrix
 </dl>
 </div>
 </div>
-<div id="6508372a" class="cell" data-execution_count="2">
+<div id="83791931" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> roc_curve(y_true, y_score):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    fps, tps, thresholds <span class="op">=</span> count_fp_tp(y_true, y_score)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    fpr <span class="op">=</span> fps <span class="op">/</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">0</span>)</span>
@@ -623,7 +623,7 @@ Table&nbsp;1: The Confusion Matrix
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fpr, tpr, thresholds</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The ROC curve is always monotonically non-decreasing, starting at <span class="math inline">(0, 0)</span> for the highest threshold and ending at <span class="math inline">(1, 1)</span> for the lowest threshold. Points are connected using linear interpolation. A random classifier lies along <span class="math inline">y=x</span>, while curves closer to the top-left indicate better performance.</p>
-<div id="b5328d16" class="cell" data-execution_count="3">
+<div id="06c40769" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -664,7 +664,7 @@ Table&nbsp;1: The Confusion Matrix
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"Unknown curve type: </span><span class="sc">{</span>curve<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="61a649ed" class="cell" data-execution_count="4">
+<div id="cell-fig-roc" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>])</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>y_score <span class="op">=</span> np.array([</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fl">.9</span>, <span class="fl">.8</span>, <span class="fl">.7</span>, <span class="fl">.6</span>, <span class="fl">.55</span>, <span class="fl">.54</span>, <span class="fl">.53</span>, <span class="fl">.52</span>, <span class="fl">.51</span>, <span class="fl">.505</span>,</span>
@@ -674,9 +674,14 @@ Table&nbsp;1: The Confusion Matrix
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>fpr, tpr, _ <span class="op">=</span> roc_curve(y_true, y_score)</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plot_curve(fpr, tpr, <span class="st">"ROC"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="roc-pr-curve_files/figure-html/cell-5-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="302" height="302"></p>
+<div id="fig-roc" class="quarto-float quarto-figure quarto-figure-center anchored" height="302" data-fig-align="center" width="302">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-roc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="roc-pr-curve_files/figure-html/fig-roc-output-1.png" id="fig-roc" class="quarto-figure quarto-figure-center anchored figure-img" width="302" height="302">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-roc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
 </figure>
 </div>
 </div>
@@ -685,7 +690,7 @@ Table&nbsp;1: The Confusion Matrix
 <section id="roc-convex-hull" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="roc-convex-hull"><span class="header-section-number">2</span> ROC Convex Hull</h2>
 <p>The ROC <a href="https://en.wikipedia.org/wiki/Convex_hull">Convex Hull</a> (ROCCH) highlights potentially optimal performance of a classifier (or a set of classifiers) by connecting upper boundary points <span class="citation" data-cites="Provost2001">(<a href="#ref-Provost2001" role="doc-biblioref">Provost and Fawcett 2001</a>)</span>. It can be computed via algorithms like the <a href="https://en.wikibooks.org/wiki/Algorithm_Implementation/Geometry/Convex_hull/Monotone_chain#Python">Monotone chain algorithm</a>.</p>
-<div id="12e44dfd" class="cell" data-execution_count="5">
+<div id="34e0cb2a" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convex_hull(points):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    points <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(points))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -702,7 +707,7 @@ Table&nbsp;1: The Confusion Matrix
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> upper</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="preview-image">
-<div id="9db494ad" class="cell" data-execution_count="6">
+<div id="cell-fig-rocch" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rocch <span class="op">=</span> convex_hull(<span class="bu">zip</span>(fpr, tpr))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>rocch <span class="op">=</span> np.array(rocch)</span>
@@ -712,9 +717,14 @@ Table&nbsp;1: The Confusion Matrix
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>ax.plot(fpr_ch, tpr_ch, <span class="st">'C1-.'</span>, label<span class="op">=</span><span class="st">"ROCCH"</span>)</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plot_curve(fpr, tpr, <span class="st">"ROC"</span>, ax<span class="op">=</span>ax)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="roc-pr-curve_files/figure-html/cell-7-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="302" height="302"></p>
+<div id="fig-rocch" class="quarto-float quarto-figure quarto-figure-center anchored" height="302" data-fig-align="center" width="302">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rocch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="roc-pr-curve_files/figure-html/fig-rocch-output-1.png" id="fig-rocch" class="quarto-figure quarto-figure-center anchored figure-img" width="302" height="302">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-rocch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2
+</figcaption>
 </figure>
 </div>
 </div>
@@ -728,7 +738,7 @@ Table&nbsp;1: The Confusion Matrix
 \text{Prec}=\frac{\text{TP}}{\text{TP}+\text{FP}}
 \tag{2}</span></span></p>
 <p>PR curves start at <span class="math inline">(0, 1)</span> and end at <span class="math inline">(1, \frac{\text{P}}{\text{P}+\text{N}})</span>, where the endpoint reflects the proportion of positive samples. Because Precision depends on both TP and FP, the PR curve is non-monotonic and can decrease as Recall increases. Moreover, it is highly influenced by class imbalance <span class="citation" data-cites="Williams2021">(<a href="#ref-Williams2021" role="doc-biblioref">Williams 2021</a>)</span>. For a random classifier, the PR curve is a horizontal line at <span class="math inline">y = \frac{\text{P}}{\text{P}+\text{N}}</span>, whereas curves closer to the top-right indicate stronger performance.</p>
-<div id="4f30a799" class="cell" data-execution_count="7">
+<div id="530df709" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pr_curve(y_true, y_score):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    fps, tps, thresholds <span class="op">=</span> count_fp_tp(y_true, y_score)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -745,7 +755,7 @@ Table&nbsp;1: The Confusion Matrix
 \text{Prec}=\frac{\text{P}\cdot\text{TPR}}{\text{P}\cdot\text{TPR}+\text{N}\cdot\text{FPR}}
 =\frac{1}{1+\frac{\text{N}}{\text{P}}\cdot\frac{\text{FPR}}{\text{TPR}}}
 \tag{3}</span></span></p>
-<div id="23a3e27a" class="cell" data-execution_count="8">
+<div id="13468f83" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.interpolate <span class="im">import</span> interp1d</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pr_from_roc(fpr, tpr, neg_to_pos):</span>
@@ -760,7 +770,7 @@ Table&nbsp;1: The Confusion Matrix
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> prec_func</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="85d2b107" class="cell" data-execution_count="9">
+<div id="cell-fig-pr-interp" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>neg_to_pos <span class="op">=</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">1</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>prec_ch_func <span class="op">=</span> pr_from_roc(fpr_ch, tpr_ch, neg_to_pos)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -780,21 +790,31 @@ Table&nbsp;1: The Confusion Matrix
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Precision"</span>)</span>
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">"lower left"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="roc-pr-curve_files/figure-html/cell-10-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="302" height="284"></p>
+<div id="fig-pr-interp" class="quarto-float quarto-figure quarto-figure-center anchored" height="284" data-fig-align="center" width="302">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pr-interp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="roc-pr-curve_files/figure-html/fig-pr-interp-output-1.png" id="fig-pr-interp" class="quarto-figure quarto-figure-center anchored figure-img" width="302" height="284">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-pr-interp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>The converted ROCCH dominates the PR space but is clearly non-linear, lying beneath its own linear interpolation (dotted line). This confirms that PR curves cannot be linearly interpolated. Scikit-learn’s <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.PrecisionRecallDisplay.html">PrecisionRecallDisplay</a> instead uses step-wise interpolation, consistent with <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html">average_precision_score</a>. This ensures that the area under the PR curve equals the average precision.</p>
-<div id="2549a881" class="cell" data-execution_count="10">
+<div id="cell-fig-pr-sklearn" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pos_frac <span class="op">=</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">1</span>) <span class="op">/</span> <span class="bu">len</span>(y_true)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plot_curve(recall, precision, <span class="st">"PR"</span>, pos_frac, drawstyle<span class="op">=</span><span class="st">"steps-post"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="roc-pr-curve_files/figure-html/cell-11-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="302" height="302"></p>
+<div id="fig-pr-sklearn" class="quarto-float quarto-figure quarto-figure-center anchored" height="302" data-fig-align="center" width="302">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pr-sklearn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="roc-pr-curve_files/figure-html/fig-pr-sklearn-output-1.png" id="fig-pr-sklearn" class="quarto-figure quarto-figure-center anchored figure-img" width="302" height="302">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-pr-sklearn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4
+</figcaption>
 </figure>
 </div>
 </div>
@@ -808,7 +828,7 @@ Table&nbsp;1: The Confusion Matrix
 \text{RecG}=\frac{\text{Rec}-\pi}{(1-\pi)\text{Rec}}
 \tag{4}</span></span></p>
 <p>where <span class="math inline">\pi=\frac{\text{P}}{\text{P}+\text{N}}</span> is the positive class fraction. Notably, Gains can be negative, and such points are typically omitted from the PRG curve.</p>
-<div id="8d4d41e9" class="cell" data-execution_count="11">
+<div id="1e73837e" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prg_curve(y_true, y_score):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    prec, rec, thresholds <span class="op">=</span> pr_curve(y_true, y_score)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    pos_frac <span class="op">=</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_true)</span>
@@ -822,13 +842,18 @@ Table&nbsp;1: The Confusion Matrix
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    rec_gain <span class="op">=</span> (rec <span class="op">-</span> pos_frac) <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> pos_frac) <span class="op">/</span> rec</span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> prec_gain, rec_gain, thresholds</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="619e4d3c" class="cell" data-execution_count="12">
+<div id="cell-fig-prg" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>prec_gain, rec_gain, _ <span class="op">=</span> prg_curve(y_true, y_score)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plot_curve(rec_gain, prec_gain, <span class="st">"PRG"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="roc-pr-curve_files/figure-html/cell-13-output-1.png" class="quarto-figure quarto-figure-center figure-img" width="302" height="302"></p>
+<div id="fig-prg" class="quarto-float quarto-figure quarto-figure-center anchored" height="302" data-fig-align="center" width="302">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="roc-pr-curve_files/figure-html/fig-prg-output-1.png" id="fig-prg" class="quarto-figure quarto-figure-center anchored figure-img" width="302" height="302">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-prg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5
+</figcaption>
 </figure>
 </div>
 </div>

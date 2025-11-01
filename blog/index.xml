@@ -25,7 +25,7 @@
   <title>ROC and PR Curves</title>
   <dc:creator>Xuefeng Xu</dc:creator>
   <link>https://xuefeng-xu.github.io/blog/roc-pr-curve.html</link>
-  <description><![CDATA[ ROC and PR curves are graphical tools for evaluating classification models, highlighting trade-offs in model performance. ]]></description>
+  <description><![CDATA[ Graphical tools for evaluating classification models, highlighting trade-offs in model performance. ]]></description>
   <category>Data Science</category>
   <category>Python</category>
   <guid>https://xuefeng-xu.github.io/blog/roc-pr-curve.html</guid>
@@ -35,7 +35,7 @@
   <title>Power Transform</title>
   <dc:creator>Xuefeng Xu</dc:creator>
   <link>https://xuefeng-xu.github.io/blog/power-transform.html</link>
-  <description><![CDATA[ Box-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability. ]]></description>
+  <description><![CDATA[ Parametric methods that normalize data but require careful handling to avoid numerical instability. ]]></description>
   <category>Numerical</category>
   <category>Python</category>
   <guid>https://xuefeng-xu.github.io/blog/power-transform.html</guid>
@@ -45,7 +45,7 @@
   <title>Monotone Piecewise Cubic Interpolation</title>
   <dc:creator>Xuefeng Xu</dc:creator>
   <link>https://xuefeng-xu.github.io/blog/pchip.html</link>
-  <description><![CDATA[ PCHIP is a cubic interpolation method that preserves monotonicity by computing shape-preserving derivatives to avoid overshoots. ]]></description>
+  <description><![CDATA[ Shape-preserving interpolation method that preserves monotonicity and avoids overshoots. ]]></description>
   <category>Statistics</category>
   <guid>https://xuefeng-xu.github.io/blog/pchip.html</guid>
   <pubDate>Thu, 13 Mar 2025 00:00:00 GMT</pubDate>

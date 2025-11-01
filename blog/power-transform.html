@@ -8,7 +8,7 @@
 
 <meta name="author" content="Xuefeng Xu">
 <meta name="dcterms.date" content="2025-04-14">
-<meta name="description" content="Box-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability.">
+<meta name="description" content="Parametric methods that normalize data but require careful handling to avoid numerical instability.">
 
 <title>Power Transform – Xuefeng Xu</title>
 <style>
@@ -187,13 +187,13 @@ window.Quarto = {
 
 <link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="Power Transform – Xuefeng Xu">
-<meta property="og:description" content="Box-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability.">
+<meta property="og:description" content="Parametric methods that normalize data but require careful handling to avoid numerical instability.">
 <meta property="og:image" content="https://xuefeng-xu.github.io/blog/power-transform_files/figure-html/fig-yeo-johnson-output-1.png">
 <meta property="og:site_name" content="Xuefeng Xu">
 <meta property="og:image:height" content="573">
 <meta property="og:image:width" content="591">
 <meta name="twitter:title" content="Power Transform – Xuefeng Xu">
-<meta name="twitter:description" content="Box-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability.">
+<meta name="twitter:description" content="Parametric methods that normalize data but require careful handling to avoid numerical instability.">
 <meta name="twitter:image" content="https://xuefeng-xu.github.io/blog/power-transform_files/figure-html/fig-yeo-johnson-output-1.png">
 <meta name="twitter:image-height" content="573">
 <meta name="twitter:image-width" content="591">
@@ -464,7 +464,7 @@ window.Quarto = {
       <h1 class="title">Power Transform</h1>
                   <div>
         <div class="description">
-          Box-Cox and Yeo-Johnson are power transformations that normalize data but require careful handling to avoid numerical instability.
+          Parametric methods that normalize data but require careful handling to avoid numerical instability.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -557,7 +557,7 @@ window.Quarto = {
 \end{cases}
 \tag{2}</span></span></p>
 <p><a href="#fig-power-transform" class="quarto-xref">Figure&nbsp;1</a> visualizes these transformations across various <span class="math inline">\lambda</span> values.</p>
-<div id="52a80639" class="cell" data-execution_count="1">
+<div id="fac019eb" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -666,7 +666,7 @@ Figure&nbsp;1: Box-Cox and Yeo-Johnson transformations.
 \ln\mathcal{L}_{\text{YJ}}(\lambda, x)=(\lambda-1) \sum_i^n \text{sgn} (x_i) \ln(|x_i|+1) - \frac{n}{2}\ln\sigma^2_{\psi_{\text{YJ}}}
 \tag{4}</span></span></p>
 <p>Here, <span class="math inline">\sigma^2_\psi</span> represents the variance of the transformed data, <span class="math inline">\text{Var}[\psi(\lambda,x)]</span>. These log-likelihood functions are concave <span class="citation" data-cites="Kouider1995 Marchand2022">(<a href="#ref-Kouider1995" role="doc-biblioref">Kouider and Chen 1995</a>; <a href="#ref-Marchand2022" role="doc-biblioref">Marchand et al. 2022</a>)</span>, which guarantees a unique maximum. Brent’s method <span class="citation" data-cites="Brent2013">(<a href="#ref-Brent2013" role="doc-biblioref">Brent 2013</a>)</span> is commonly employed for optimization.</p>
-<div id="083b4489" class="cell" data-execution_count="4">
+<div id="443ba316" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> brent</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> max_llf(x, llf):</span>
@@ -678,57 +678,52 @@ Figure&nbsp;1: Box-Cox and Yeo-Johnson transformations.
 <section id="numerical-instabilities" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="numerical-instabilities"><span class="header-section-number">2</span> Numerical Instabilities</h2>
 <p>Because both transformations involve exponentiation, they are susceptible to numerical overflow. This problem has been observed by <span class="citation" data-cites="Marchand2022">(<a href="#ref-Marchand2022" role="doc-biblioref">Marchand et al. 2022</a>)</span> and discussed in <a href="https://github.com/scikit-learn/scikit-learn/issues/23319">Scikit-learn’s GitHub Issue</a>. Below is an example illustrating the problem using a naive implementation of <a href="#eq-box-cox-llf" class="quarto-xref">Equation&nbsp;3</a>:</p>
-<div id="0d8b1b7e" class="cell" data-execution_count="5">
+<div id="f794810b" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_llf_naive(lmb, x):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    logx <span class="op">=</span> np.log(x)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    logvar <span class="op">=</span> np.log(np.var(boxcox(x, lmb)))</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (lmb <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> np.<span class="bu">sum</span>(logx) <span class="op">-</span> n<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> logvar</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="a920bf48" class="cell" data-execution_count="6">
+<div id="e72461c6" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="fl">9.9</span>])</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(max_llf(x, llf<span class="op">=</span>boxcox_llf_naive))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>156.48528753755807</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/opt/miniconda3/lib/python3.12/site-packages/numpy/_core/_methods.py:194: RuntimeWarning:
-
-overflow encountered in multiply
-
-/opt/miniconda3/lib/python3.12/site-packages/numpy/_core/_methods.py:205: RuntimeWarning:
-
-overflow encountered in reduce
-</code></pre>
-</div>
 </div>
 <p>Although this returns a <span class="math inline">\lambda</span> value, it produces overflow warnings. A useful diagnostic is to visualize the log-likelihood curve:</p>
-<div id="63dcce29" class="cell" data-execution_count="7">
+<div id="6d656d1d" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_llf(x, lb, ub, llf):</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    np.set_printoptions(precision<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    lmb <span class="op">=</span> np.linspace(lb, ub, <span class="dv">20</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    ll <span class="op">=</span> np.array([llf(l, x) <span class="cf">for</span> l <span class="kw">in</span> lmb])</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"llf=</span><span class="sc">{</span>ll<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    ax.plot(lmb, ll)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">lambda</span><span class="dv">$</span><span class="vs">"</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">ln</span><span class="dv">\m</span><span class="vs">athcal{L}</span><span class="kw">(</span><span class="er">\</span><span class="vs">lambda, x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_llf(x, lb, ub, llf):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    np.set_printoptions(precision<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    lmb <span class="op">=</span> np.linspace(lb, ub, <span class="dv">20</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    ll <span class="op">=</span> np.array([llf(l, x) <span class="cf">for</span> l <span class="kw">in</span> lmb])</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"llf=</span><span class="sc">{</span>ll<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    ax.plot(lmb, ll)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">lambda</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">ln</span><span class="dv">\m</span><span class="vs">athcal{L}</span><span class="kw">(</span><span class="er">\</span><span class="vs">lambda, x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="727ce72c" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_llf(x, lb<span class="op">=</span><span class="dv">150</span>, ub<span class="op">=</span><span class="dv">200</span>, llf<span class="op">=</span>boxcox_llf_naive)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="cell-fig-bc-llf-naive" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot_llf(x, lb<span class="op">=</span><span class="dv">150</span>, ub<span class="op">=</span><span class="dv">200</span>, llf<span class="op">=</span>boxcox_llf_naive)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>llf=[13.684 13.697 13.711   -inf   -inf   -inf   -inf   -inf   -inf   -inf
    -inf   -inf   -inf   -inf   -inf   -inf   -inf   -inf   -inf   -inf]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="power-transform_files/figure-html/cell-9-output-2.png" class="quarto-figure quarto-figure-center figure-img" width="318" height="282"></p>
+<div id="fig-bc-llf-naive" class="quarto-float quarto-figure quarto-figure-center anchored" width="318" data-fig-align="center" height="282">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bc-llf-naive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="power-transform_files/figure-html/fig-bc-llf-naive-output-2.png" id="fig-bc-llf-naive" class="quarto-figure quarto-figure-center anchored figure-img" width="318" height="282">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bc-llf-naive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2
+</figcaption>
 </figure>
 </div>
 </div>
@@ -738,23 +733,28 @@ overflow encountered in reduce
 <section id="existing-solutions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="existing-solutions"><span class="header-section-number">3</span> Existing Solutions</h2>
 <p>The MASS package in R <span class="citation" data-cites="Venables2002">(<a href="#ref-Venables2002" role="doc-biblioref">Venables and Ripley 2002</a>)</span> proposes a simple yet effective trick: divide the data by its mean. This rescales the data and avoids numerical instability without affecting the optimization outcome.</p>
-<div id="1fbd2ba8" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x_dm <span class="op">=</span> x <span class="op">/</span> np.mean(x)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(max_llf(x_dm, llf<span class="op">=</span>boxcox_llf_naive))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="702f339b" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>x_dm <span class="op">=</span> x <span class="op">/</span> np.mean(x)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(max_llf(x_dm, llf<span class="op">=</span>boxcox_llf_naive))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>357.55141884289054</code></pre>
 </div>
 </div>
-<div id="fdd46f04" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plot_llf(x_dm, lb<span class="op">=</span><span class="dv">330</span>, ub<span class="op">=</span><span class="dv">385</span>, llf<span class="op">=</span>boxcox_llf_naive)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="cell-fig-bc-llf-MASS" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_llf(x_dm, lb<span class="op">=</span><span class="dv">330</span>, ub<span class="op">=</span><span class="dv">385</span>, llf<span class="op">=</span>boxcox_llf_naive)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>llf=[23.376 23.377 23.378 23.38  23.381 23.381 23.382 23.383 23.383 23.383
  23.383 23.383 23.383 23.382 23.382 23.381 23.38  23.379 23.377 23.376]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="power-transform_files/figure-html/cell-11-output-2.png" class="quarto-figure quarto-figure-center figure-img" width="318" height="282"></p>
+<div id="fig-bc-llf-mass" class="quarto-float quarto-figure quarto-figure-center anchored" width="318" data-fig-align="center" height="282">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bc-llf-mass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="power-transform_files/figure-html/fig-bc-llf-mass-output-2.png" id="fig-bc-llf-mass" class="quarto-figure quarto-figure-center anchored figure-img" width="318" height="282">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bc-llf-mass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3
+</figcaption>
 </figure>
 </div>
 </div>
@@ -793,105 +793,110 @@ overflow encountered in reduce
 <section id="log-space-computation" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="log-space-computation"><span class="header-section-number">4</span> Log-Space Computation</h2>
 <p>To address numerical instability for both transformations, log-space computation <span class="citation" data-cites="Haberland2023">(<a href="#ref-Haberland2023" role="doc-biblioref">Haberland 2023</a>)</span> is effective. It uses the <a href="https://en.wikipedia.org/wiki/LogSumExp">Log-Sum-Exp trick</a> to compute statistics in log space:</p>
-<div id="d1c33456" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> logsumexp</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_mean(logx):</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute log of mean of x from log(x)</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> logsumexp(logx) <span class="op">-</span> np.log(<span class="bu">len</span>(logx))</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_var(logx):</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute log of variance of x from log(x)</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    logmean <span class="op">=</span> log_mean(logx)</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    pij <span class="op">=</span> np.full_like(logx, np.pi <span class="op">*</span> <span class="ot">1j</span>, dtype<span class="op">=</span>np.complex128)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    logxmu <span class="op">=</span> logsumexp([logx, logmean <span class="op">+</span> pij], axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.real(logsumexp(<span class="dv">2</span> <span class="op">*</span> logxmu)) <span class="op">-</span> np.log(<span class="bu">len</span>(logx))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="c1031551" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> logsumexp</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_mean(logx):</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute log of mean of x from log(x)</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> logsumexp(logx) <span class="op">-</span> np.log(<span class="bu">len</span>(logx))</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_var(logx):</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute log of variance of x from log(x)</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    logmean <span class="op">=</span> log_mean(logx)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    pij <span class="op">=</span> np.full_like(logx, np.pi <span class="op">*</span> <span class="ot">1j</span>, dtype<span class="op">=</span>np.complex128)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    logxmu <span class="op">=</span> logsumexp([logx, logmean <span class="op">+</span> pij], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.real(logsumexp(<span class="dv">2</span> <span class="op">*</span> logxmu)) <span class="op">-</span> np.log(<span class="bu">len</span>(logx))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This allows direct computation of <span class="math inline">\ln\sigma^2_\psi</span> from <span class="math inline">\ln x</span>. Plugging in <a href="#eq-boxcox-log-var" class="quarto-xref">Equation&nbsp;5</a>, we can compute the log-likelihood in the log-space.</p>
-<div id="c8725a48" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_llf(lmb, x):</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    logx <span class="op">=</span> np.log(x)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> lmb <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        logvar <span class="op">=</span> np.log(np.var(logx))</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        logvar <span class="op">=</span> log_var(lmb <span class="op">*</span> logx) <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.log(<span class="bu">abs</span>(lmb))</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (lmb <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> np.<span class="bu">sum</span>(logx) <span class="op">-</span> n<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> logvar</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="687ed373" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_llf(lmb, x):</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    logx <span class="op">=</span> np.log(x)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> lmb <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        logvar <span class="op">=</span> np.log(np.var(logx))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        logvar <span class="op">=</span> log_var(lmb <span class="op">*</span> logx) <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.log(<span class="bu">abs</span>(lmb))</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (lmb <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> np.<span class="bu">sum</span>(logx) <span class="op">-</span> n<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> logvar</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This version avoids overflow and reliably returns the optimal <span class="math inline">\lambda</span>.</p>
-<div id="f51334a6" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(max_llf(x, llf<span class="op">=</span>boxcox_llf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="c4f67c3a" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(max_llf(x, llf<span class="op">=</span>boxcox_llf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>357.55141245531865</code></pre>
 </div>
 </div>
-<div id="f1be3755" class="cell" data-execution_count="14">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plot_llf(x, lb<span class="op">=</span><span class="dv">330</span>, ub<span class="op">=</span><span class="dv">385</span>, llf<span class="op">=</span>boxcox_llf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="cell-fig-bc-llf-logspace" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plot_llf(x, lb<span class="op">=</span><span class="dv">330</span>, ub<span class="op">=</span><span class="dv">385</span>, llf<span class="op">=</span>boxcox_llf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>llf=[14.175 14.177 14.178 14.179 14.18  14.181 14.182 14.182 14.183 14.183
  14.183 14.183 14.182 14.182 14.181 14.18  14.179 14.178 14.177 14.176]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="power-transform_files/figure-html/cell-15-output-2.png" class="quarto-figure quarto-figure-center figure-img" width="318" height="282"></p>
+<div id="fig-bc-llf-logspace" class="quarto-float quarto-figure quarto-figure-center anchored" width="318" data-fig-align="center" height="282">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bc-llf-logspace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="power-transform_files/figure-html/fig-bc-llf-logspace-output-2.png" id="fig-bc-llf-logspace" class="quarto-figure quarto-figure-center anchored figure-img" width="318" height="282">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bc-llf-logspace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>The same principle extends to Yeo-Johnson, even for mixed-sign inputs.</p>
-<div id="895ed109" class="cell" data-execution_count="15">
+<div id="7edda08b" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_var_yeojohnson(x, lmb):</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.<span class="bu">all</span>(x <span class="op">&gt;=</span> <span class="dv">0</span>):</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(lmb) <span class="op">&lt;</span> np.spacing(<span class="fl">1.0</span>):</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> np.log(np.var(np.log1p(x)))</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> log_var(lmb <span class="op">*</span> np.log1p(x)) <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.log(<span class="bu">abs</span>(lmb))</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> np.<span class="bu">all</span>(x <span class="op">&lt;</span> <span class="dv">0</span>):</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(lmb <span class="op">-</span> <span class="dv">2</span>) <span class="op">&lt;</span> np.spacing(<span class="fl">1.0</span>):</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> np.log(np.var(np.log1p(<span class="op">-</span>x)))</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> log_var((<span class="dv">2</span> <span class="op">-</span> lmb) <span class="op">*</span> np.log1p(<span class="op">-</span>x)) <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.log(<span class="bu">abs</span>(<span class="dv">2</span> <span class="op">-</span> lmb))</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:  <span class="co"># mixed positive and negtive data</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        logyj <span class="op">=</span> np.zeros_like(x, dtype<span class="op">=</span>np.complex128)</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        pos <span class="op">=</span> x <span class="op">&gt;=</span> <span class="dv">0</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># when x &gt;= 0</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(lmb) <span class="op">&lt;</span> np.spacing(<span class="fl">1.0</span>):</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>            logyj[pos] <span class="op">=</span> np.log(np.log1p(x[pos]) <span class="op">+</span> <span class="ot">0j</span>)</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:  <span class="co"># lmbda != 0</span></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>            logm1_pos <span class="op">=</span> np.full_like(x[pos], np.pi <span class="op">*</span> <span class="ot">1j</span>, dtype<span class="op">=</span>np.complex128)</span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>            logyj[pos] <span class="op">=</span> logsumexp(</span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>                [lmb <span class="op">*</span> np.log1p(x[pos]), logm1_pos], axis<span class="op">=</span><span class="dv">0</span></span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>            ) <span class="op">-</span> np.log(lmb <span class="op">+</span> <span class="ot">0j</span>)</span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>        <span class="co"># when x &lt; 0</span></span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(lmb <span class="op">-</span> <span class="dv">2</span>) <span class="op">&lt;</span> np.spacing(<span class="fl">1.0</span>):</span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>            logyj[<span class="op">~</span>pos] <span class="op">=</span> np.log(<span class="op">-</span>np.log1p(<span class="op">-</span>x[<span class="op">~</span>pos]) <span class="op">+</span> <span class="ot">0j</span>)</span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:  <span class="co"># lmbda != 2</span></span>
-<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>            logm1_neg <span class="op">=</span> np.full_like(x[<span class="op">~</span>pos], np.pi <span class="op">*</span> <span class="ot">1j</span>, dtype<span class="op">=</span>np.complex128)</span>
-<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>            logyj[<span class="op">~</span>pos] <span class="op">=</span> logsumexp(</span>
-<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>                [(<span class="dv">2</span> <span class="op">-</span> lmb) <span class="op">*</span> np.log1p(<span class="op">-</span>x[<span class="op">~</span>pos]), logm1_neg], axis<span class="op">=</span><span class="dv">0</span></span>
-<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>            ) <span class="op">-</span> np.log(lmb <span class="op">-</span> <span class="dv">2</span> <span class="op">+</span> <span class="ot">0j</span>)</span>
-<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> log_var(logyj)</span>
-<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> yeojohnson_llf(lmb, x):</span>
-<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
-<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>    llf <span class="op">=</span> (lmb <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> np.<span class="bu">sum</span>(np.sign(x) <span class="op">*</span> np.log1p(np.<span class="bu">abs</span>(x)))</span>
-<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>    llf <span class="op">+=</span> <span class="op">-</span>n <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> log_var_yeojohnson(x, lmb)</span>
-<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> llf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_var_yeojohnson(x, lmb):</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.<span class="bu">all</span>(x <span class="op">&gt;=</span> <span class="dv">0</span>):</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(lmb) <span class="op">&lt;</span> np.spacing(<span class="fl">1.0</span>):</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> np.log(np.var(np.log1p(x)))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> log_var(lmb <span class="op">*</span> np.log1p(x)) <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.log(<span class="bu">abs</span>(lmb))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> np.<span class="bu">all</span>(x <span class="op">&lt;</span> <span class="dv">0</span>):</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(lmb <span class="op">-</span> <span class="dv">2</span>) <span class="op">&lt;</span> np.spacing(<span class="fl">1.0</span>):</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> np.log(np.var(np.log1p(<span class="op">-</span>x)))</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> log_var((<span class="dv">2</span> <span class="op">-</span> lmb) <span class="op">*</span> np.log1p(<span class="op">-</span>x)) <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.log(<span class="bu">abs</span>(<span class="dv">2</span> <span class="op">-</span> lmb))</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:  <span class="co"># mixed positive and negtive data</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>        logyj <span class="op">=</span> np.zeros_like(x, dtype<span class="op">=</span>np.complex128)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        pos <span class="op">=</span> x <span class="op">&gt;=</span> <span class="dv">0</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># when x &gt;= 0</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(lmb) <span class="op">&lt;</span> np.spacing(<span class="fl">1.0</span>):</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>            logyj[pos] <span class="op">=</span> np.log(np.log1p(x[pos]) <span class="op">+</span> <span class="ot">0j</span>)</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:  <span class="co"># lmbda != 0</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>            logm1_pos <span class="op">=</span> np.full_like(x[pos], np.pi <span class="op">*</span> <span class="ot">1j</span>, dtype<span class="op">=</span>np.complex128)</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>            logyj[pos] <span class="op">=</span> logsumexp(</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>                [lmb <span class="op">*</span> np.log1p(x[pos]), logm1_pos], axis<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>            ) <span class="op">-</span> np.log(lmb <span class="op">+</span> <span class="ot">0j</span>)</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>        <span class="co"># when x &lt; 0</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(lmb <span class="op">-</span> <span class="dv">2</span>) <span class="op">&lt;</span> np.spacing(<span class="fl">1.0</span>):</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>            logyj[<span class="op">~</span>pos] <span class="op">=</span> np.log(<span class="op">-</span>np.log1p(<span class="op">-</span>x[<span class="op">~</span>pos]) <span class="op">+</span> <span class="ot">0j</span>)</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:  <span class="co"># lmbda != 2</span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>            logm1_neg <span class="op">=</span> np.full_like(x[<span class="op">~</span>pos], np.pi <span class="op">*</span> <span class="ot">1j</span>, dtype<span class="op">=</span>np.complex128)</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>            logyj[<span class="op">~</span>pos] <span class="op">=</span> logsumexp(</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>                [(<span class="dv">2</span> <span class="op">-</span> lmb) <span class="op">*</span> np.log1p(<span class="op">-</span>x[<span class="op">~</span>pos]), logm1_neg], axis<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>            ) <span class="op">-</span> np.log(lmb <span class="op">-</span> <span class="dv">2</span> <span class="op">+</span> <span class="ot">0j</span>)</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> log_var(logyj)</span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> yeojohnson_llf(lmb, x):</span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>    llf <span class="op">=</span> (lmb <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> np.<span class="bu">sum</span>(np.sign(x) <span class="op">*</span> np.log1p(np.<span class="bu">abs</span>(x)))</span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>    llf <span class="op">+=</span> <span class="op">-</span>n <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> log_var_yeojohnson(x, lmb)</span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> llf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
 <section id="constrained-optimization" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="constrained-optimization"><span class="header-section-number">5</span> Constrained Optimization</h2>
 <p>Even with log-space computation, applying the transformation using a large absolute value of <span class="math inline">\lambda</span> can result in overflow:</p>
-<div id="535e848f" class="cell" data-execution_count="16">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>lmax <span class="op">=</span> max_llf(x, llf<span class="op">=</span>boxcox_llf)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(boxcox(x, lmax))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="5c1a72f2" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>lmax <span class="op">=</span> max_llf(x, llf<span class="op">=</span>boxcox_llf)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(boxcox(x, lmax))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[inf inf inf inf]</code></pre>
 </div>
@@ -913,42 +918,42 @@ overflow encountered in reduce
 \psi^{-1}_{\text{BC}}(x,y)=
 -\tfrac{1}{y}-\tfrac{1}{\ln x}W\left(-\tfrac{x^{-1/y}\ln x}{y}\right)
 \tag{9}</span></span></p>
-<div id="9aa06974" class="cell" data-execution_count="17">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> lambertw</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_inv_lmbda(x, y):</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    num <span class="op">=</span> lambertw(<span class="op">-</span>(x <span class="op">**</span> (<span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y)) <span class="op">*</span> np.log(x) <span class="op">/</span> y, k<span class="op">=-</span><span class="dv">1</span>)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y <span class="op">-</span> np.real(num <span class="op">/</span> np.log(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="6651927a" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> lambertw</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_inv_lmbda(x, y):</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    num <span class="op">=</span> lambertw(<span class="op">-</span>(x <span class="op">**</span> (<span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y)) <span class="op">*</span> np.log(x) <span class="op">/</span> y, k<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y <span class="op">-</span> np.real(num <span class="op">/</span> np.log(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="f49ee94d" class="cell" data-execution_count="18">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_constranined_lmax(lmax, x, ymax):</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x &gt; 1, boxcox(x) &gt; 0; x &lt; 1, boxcox(x) &lt; 0</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    xmin, xmax <span class="op">=</span> <span class="bu">min</span>(x), <span class="bu">max</span>(x)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> xmin <span class="op">&gt;=</span> <span class="dv">1</span>:</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmax</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> xmax <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmin</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:  <span class="co"># xmin &lt; 1 &lt; xmax</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        indicator <span class="op">=</span> boxcox(xmax, lmax) <span class="op">&gt;</span> <span class="bu">abs</span>(boxcox(xmin, lmax))</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmax <span class="cf">if</span> indicator <span class="cf">else</span> xmin</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">abs</span>(boxcox(x_treme, lmax)) <span class="op">&gt;</span> ymax:</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        lmax <span class="op">=</span> boxcox_inv_lmbda(x_treme, ymax <span class="op">*</span> np.sign(x_treme <span class="op">-</span> <span class="dv">1</span>))</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lmax</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="d0aa5dc0" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_constranined_lmax(lmax, x, ymax):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x &gt; 1, boxcox(x) &gt; 0; x &lt; 1, boxcox(x) &lt; 0</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    xmin, xmax <span class="op">=</span> <span class="bu">min</span>(x), <span class="bu">max</span>(x)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> xmin <span class="op">&gt;=</span> <span class="dv">1</span>:</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmax</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> xmax <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmin</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:  <span class="co"># xmin &lt; 1 &lt; xmax</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        indicator <span class="op">=</span> boxcox(xmax, lmax) <span class="op">&gt;</span> <span class="bu">abs</span>(boxcox(xmin, lmax))</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmax <span class="cf">if</span> indicator <span class="cf">else</span> xmin</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">abs</span>(boxcox(x_treme, lmax)) <span class="op">&gt;</span> ymax:</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>        lmax <span class="op">=</span> boxcox_inv_lmbda(x_treme, ymax <span class="op">*</span> np.sign(x_treme <span class="op">-</span> <span class="dv">1</span>))</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lmax</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This method can be verified by testing different values for <span class="math inline">y_{\max}</span>:</p>
-<div id="79f90f33" class="cell" data-execution_count="19">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> verify_boxcox_constranined_lmax(x):</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    np.set_printoptions(precision<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    lmax <span class="op">=</span> max_llf(x, llf<span class="op">=</span>boxcox_llf)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ymax <span class="kw">in</span> [<span class="fl">1e300</span>, <span class="fl">1e100</span>, <span class="fl">1e30</span>, <span class="fl">1e10</span>]:</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        l <span class="op">=</span> boxcox_constranined_lmax(lmax, x, ymax)</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(boxcox(x, l))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="9d4b243e" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> verify_boxcox_constranined_lmax(x):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    np.set_printoptions(precision<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    lmax <span class="op">=</span> max_llf(x, llf<span class="op">=</span>boxcox_llf)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ymax <span class="kw">in</span> [<span class="fl">1e300</span>, <span class="fl">1e100</span>, <span class="fl">1e30</span>, <span class="fl">1e10</span>]:</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        l <span class="op">=</span> boxcox_constranined_lmax(lmax, x, ymax)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(boxcox(x, l))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="60eb994b" class="cell" data-execution_count="20">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Positive overflow</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="fl">9.9</span>])</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>verify_boxcox_constranined_lmax(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="6f89fa93" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Positive overflow</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="fl">9.9</span>])</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>verify_boxcox_constranined_lmax(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1.000e+300 1.000e+300 1.000e+300 4.783e+298]
 [1.000e+100 1.000e+100 1.000e+100 3.587e+099]
@@ -956,10 +961,10 @@ overflow encountered in reduce
 [1.00e+10 1.00e+10 1.00e+10 8.95e+09]</code></pre>
 </div>
 </div>
-<div id="c65dfcd7" class="cell" data-execution_count="21">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative overflow</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.101</span>])</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>verify_boxcox_constranined_lmax(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="8206aec8" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative overflow</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.101</span>])</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>verify_boxcox_constranined_lmax(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[-1.00e+300 -1.00e+300 -1.00e+300 -4.93e+298]
 [-1.000e+100 -1.000e+100 -1.000e+100 -3.624e+099]
@@ -968,33 +973,33 @@ overflow encountered in reduce
 </div>
 </div>
 <p>The constrained optimization approach can also be extended to Yeo-Johnson, ensures overflow-free transformations even for extreme values.</p>
-<div id="75b27605" class="cell" data-execution_count="22">
+<div id="192af4e2" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> yeojohnson_inv_lmbda(x, y):</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x <span class="op">&gt;=</span> <span class="dv">0</span>:</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>        num <span class="op">=</span> lambertw(<span class="op">-</span>((x <span class="op">+</span> <span class="dv">1</span>) <span class="op">**</span> (<span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y) <span class="op">*</span> np.log1p(x)) <span class="op">/</span> y, k<span class="op">=-</span><span class="dv">1</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y <span class="op">+</span> np.real(<span class="op">-</span>num <span class="op">/</span> np.log1p(x))</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        num <span class="op">=</span> lambertw(((<span class="dv">1</span> <span class="op">-</span> x) <span class="op">**</span> (<span class="dv">1</span> <span class="op">/</span> y) <span class="op">*</span> np.log1p(<span class="op">-</span>x)) <span class="op">/</span> y, k<span class="op">=-</span><span class="dv">1</span>)</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y <span class="op">+</span> <span class="dv">2</span> <span class="op">+</span> np.real(num <span class="op">/</span> np.log1p(<span class="op">-</span>x))</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> yeojohnson_constranined_lmax(lmax, x, ymax):</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x &gt; 0, yeojohnson(x) &gt; 0; x &lt; 0, yeojohnson(x) &lt; 0</span></span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    xmin, xmax <span class="op">=</span> <span class="bu">min</span>(x), <span class="bu">max</span>(x)</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> xmin <span class="op">&gt;=</span> <span class="dv">0</span>:</span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmax</span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> xmax <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmin</span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:  <span class="co"># xmin &lt; 0 &lt; xmax</span></span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> np.errstate(over<span class="op">=</span><span class="st">"ignore"</span>):</span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>            indicator <span class="op">=</span> yeojohnson(xmax, lmax) <span class="op">&gt;</span> <span class="bu">abs</span>(yeojohnson(xmin, lmax))</span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmax <span class="cf">if</span> indicator <span class="cf">else</span> xmin</span>
-<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> np.errstate(over<span class="op">=</span><span class="st">"ignore"</span>):</span>
-<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(yeojohnson(x_treme, lmax)) <span class="op">&gt;</span> ymax:</span>
-<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>            lmax <span class="op">=</span> yeojohnson_inv_lmbda(x_treme, ymax <span class="op">*</span> np.sign(x_treme))</span>
-<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lmax</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> yeojohnson_inv_lmbda(x, y):</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x <span class="op">&gt;=</span> <span class="dv">0</span>:</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>        num <span class="op">=</span> lambertw(<span class="op">-</span>((x <span class="op">+</span> <span class="dv">1</span>) <span class="op">**</span> (<span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y) <span class="op">*</span> np.log1p(x)) <span class="op">/</span> y, k<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y <span class="op">+</span> np.real(<span class="op">-</span>num <span class="op">/</span> np.log1p(x))</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        num <span class="op">=</span> lambertw(((<span class="dv">1</span> <span class="op">-</span> x) <span class="op">**</span> (<span class="dv">1</span> <span class="op">/</span> y) <span class="op">*</span> np.log1p(<span class="op">-</span>x)) <span class="op">/</span> y, k<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y <span class="op">+</span> <span class="dv">2</span> <span class="op">+</span> np.real(num <span class="op">/</span> np.log1p(<span class="op">-</span>x))</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> yeojohnson_constranined_lmax(lmax, x, ymax):</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x &gt; 0, yeojohnson(x) &gt; 0; x &lt; 0, yeojohnson(x) &lt; 0</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    xmin, xmax <span class="op">=</span> <span class="bu">min</span>(x), <span class="bu">max</span>(x)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> xmin <span class="op">&gt;=</span> <span class="dv">0</span>:</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmax</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> xmax <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmin</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:  <span class="co"># xmin &lt; 0 &lt; xmax</span></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> np.errstate(over<span class="op">=</span><span class="st">"ignore"</span>):</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>            indicator <span class="op">=</span> yeojohnson(xmax, lmax) <span class="op">&gt;</span> <span class="bu">abs</span>(yeojohnson(xmin, lmax))</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>        x_treme <span class="op">=</span> xmax <span class="cf">if</span> indicator <span class="cf">else</span> xmin</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> np.errstate(over<span class="op">=</span><span class="st">"ignore"</span>):</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(yeojohnson(x_treme, lmax)) <span class="op">&gt;</span> ymax:</span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>            lmax <span class="op">=</span> yeojohnson_inv_lmbda(x_treme, ymax <span class="op">*</span> np.sign(x_treme))</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lmax</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 
