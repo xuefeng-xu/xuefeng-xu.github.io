@@ -171,6 +171,7 @@ def plot_llf(x, lb, ub, llf):
 
 ```{python}
 #| label: fig-bc-llf-naive
+#| fig-cap: "Naive log-likelihood computation."
 #| fig-align: center
 plot_llf(x, lb=150, ub=200, llf=boxcox_llf_naive)
 ```
@@ -188,6 +189,7 @@ print(max_llf(x_dm, llf=boxcox_llf_naive))
 
 ```{python}
 #| label: fig-bc-llf-MASS
+#| fig-cap: "Log-likelihood after mean division."
 #| fig-align: center
 plot_llf(x_dm, lb=330, ub=385, llf=boxcox_llf_naive)
 ```
@@ -229,9 +231,9 @@ $$ {#eq-boxcox-llf-mass}
 
 The additive constant $n\ln c$ does not affect the maximizer of $\lambda$. However, this trick does not apply to Yeo-Johnson, where scaling alters the optimal parameter (see @eq-yeo-johnson-llf).
 
-## Log-Space Computation
+## Log-Domain Computation
 
-To address numerical instability for both transformations, log-space computation [@Haberland2023] is effective. It uses the [Log-Sum-Exp trick](https://en.wikipedia.org/wiki/LogSumExp) to compute statistics in log space:
+To address numerical instability for both transformations, log-domain computation [@Haberland2023] is effective. It uses the [Log-Sum-Exp trick](https://en.wikipedia.org/wiki/LogSumExp) to compute statistics in log domain:
 
 ```{python}
 from scipy.special import logsumexp
@@ -248,7 +250,7 @@ def log_var(logx):
     return np.real(logsumexp(2 * logxmu)) - np.log(len(logx))
 ```
 
-This allows direct computation of $\ln\sigma^2_\psi$ from $\ln x$. Plugging in @eq-boxcox-log-var, we can compute the log-likelihood in the log-space.
+This allows direct computation of $\ln\sigma^2_\psi$ from $\ln x$. Plugging in @eq-boxcox-log-var, we can compute the log-likelihood in the log-domain.
 
 ```{python}
 def boxcox_llf(lmb, x):
@@ -268,7 +270,8 @@ print(max_llf(x, llf=boxcox_llf))
 ```
 
 ```{python}
-#| label: fig-bc-llf-logspace
+#| label: fig-bc-llf-logdomain
+#| fig-cap: "Log-likelihood using log-domain computation."
 #| fig-align: center
 plot_llf(x, lb=330, ub=385, llf=boxcox_llf)
 ```
@@ -321,7 +324,7 @@ def yeojohnson_llf(lmb, x):
 
 ## Constrained Optimization
 
-Even with log-space computation, applying the transformation using a large absolute value of $\lambda$ can result in overflow:
+Even with log-domain computation, applying the transformation using a large absolute value of $\lambda$ can result in overflow:
 
 ```{python}
 lmax = max_llf(x, llf=boxcox_llf)

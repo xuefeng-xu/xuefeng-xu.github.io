@@ -113,6 +113,7 @@ def plot_curve(x, y, curve: str, pos_frac=None, drawstyle="default", ax=None):
 
 ```{python}
 #| label: fig-roc
+#| fig-cap: "ROC curve."
 #| fig-align: center
 y_true = np.array([1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0])
 y_score = np.array([
@@ -148,6 +149,7 @@ def convex_hull(points):
 :::{.preview-image}
 ```{python}
 #| label: fig-rocch
+#| fig-cap: "ROC Convex Hull (ROCCH)."
 #| fig-align: center
 rocch = convex_hull(zip(fpr, tpr))
 
@@ -209,6 +211,7 @@ def pr_from_roc(fpr, tpr, neg_to_pos):
 
 ```{python}
 #| label: fig-pr-interp
+#| fig-cap: "PR space conversion of ROCCH."
 #| fig-align: center
 neg_to_pos = sum(y_true == 0) / sum(y_true == 1)
 prec_ch_func = pr_from_roc(fpr_ch, tpr_ch, neg_to_pos)
@@ -234,6 +237,7 @@ The converted ROCCH dominates the PR space but is clearly non-linear, lying bene
 
 ```{python}
 #| label: fig-pr-sklearn
+#| fig-cap: "PR curve (Scikit-learn)."
 #| fig-align: center
 pos_frac = sum(y_true == 1) / len(y_true)
 plot_curve(recall, precision, "PR", pos_frac, drawstyle="steps-post")
@@ -267,6 +271,7 @@ def prg_curve(y_true, y_score):
 
 ```{python}
 #| label: fig-prg
+#| fig-cap: "PRG curve."
 #| fig-align: center
 prec_gain, rec_gain, _ = prg_curve(y_true, y_score)
 plot_curve(rec_gain, prec_gain, "PRG")
