@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -96,14 +96,15 @@ div.csl-indent {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-058708546a78a340caf62ac2437e8aa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-7d380d7a4a9913dd95cc60c99177187d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-058708546a78a340caf62ac2437e8aa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-f93c2b1f3f0577f377aefa4848a86a36.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-0d4a9d19931feb4fee1ddab4b2489000.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-f93c2b1f3f0577f377aefa4848a86a36.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -406,8 +407,6 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Xuefeng Xu</span>
     </a>
@@ -538,13 +537,13 @@ window.Quarto = {
 <section id="roc-curve" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="roc-curve"><span class="header-section-number">1</span> ROC Curve</h2>
 <p>For binary classification, with Positive (P) and Negative (N) classes, predictions are based on model scores thresholded to produce labels. Performance is summarized using a confusion matrix (<a href="#tbl-confusion-matrix" class="quarto-xref">Table&nbsp;1</a>), counting True Positives (TP), False Positives (FP), True Negatives (TN), and False Negatives (FN).</p>
-<div id="tbl-confusion-matrix" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="tbl-confusion-matrix" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-confusion-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1: The Confusion Matrix
 </figcaption>
 <div aria-describedby="tbl-confusion-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="caption-top table">
+<table class="table-striped table-hover caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: center;">Total=P+N</th>
@@ -579,10 +578,13 @@ Table&nbsp;1: The Confusion Matrix
 </div>
 <p>The ROC curve plots TPR vs.&nbsp;FPR, where:</p>
 <p><span id="eq-tpr-fpr"><span class="math display">
-\text{TPR}=\text{TP}/\text{P},\quad \text{FPR}=\text{FP}/\text{N}
+\begin{align}
+\text{TPR}&amp;=\text{TP}/\text{P}, \\
+\text{FPR}&amp;=\text{FP}/\text{N}.
+\end{align}
 \tag{1}</span></span></p>
 <p>A simple algorithm constructs the ROC curve: (i) Sort predictions in descending score order. (ii) Sweep thresholds across scores, updating TP and FP counts <span class="citation" data-cites="Fawcett2006">(<a href="#ref-Fawcett2006" role="doc-biblioref">Fawcett 2006</a>)</span>.</p>
-<div id="476848aa" class="cell" data-execution_count="1">
+<div id="f79956cf" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_fp_tp(y_true, y_score):</span>
@@ -615,7 +617,7 @@ Table&nbsp;1: The Confusion Matrix
 </dl>
 </div>
 </div>
-<div id="3eb7b63e" class="cell" data-execution_count="2">
+<div id="16600999" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> roc_curve(y_true, y_score):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    fps, tps, thresholds <span class="op">=</span> count_fp_tp(y_true, y_score)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    fpr <span class="op">=</span> fps <span class="op">/</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">0</span>)</span>
@@ -623,7 +625,7 @@ Table&nbsp;1: The Confusion Matrix
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fpr, tpr, thresholds</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The ROC curve is always monotonically non-decreasing, starting at <span class="math inline">(0, 0)</span> for the highest threshold and ending at <span class="math inline">(1, 1)</span> for the lowest threshold. Points are connected using linear interpolation. A random classifier lies along <span class="math inline">y=x</span>, while curves closer to the top-left indicate better performance.</p>
-<div id="84696aa8" class="cell" data-execution_count="3">
+<div id="46a35935" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -690,7 +692,7 @@ Figure&nbsp;1: ROC curve.
 <section id="roc-convex-hull" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="roc-convex-hull"><span class="header-section-number">2</span> ROC Convex Hull</h2>
 <p>The ROC <a href="https://en.wikipedia.org/wiki/Convex_hull">Convex Hull</a> (ROCCH) highlights potentially optimal performance of a classifier (or a set of classifiers) by connecting upper boundary points <span class="citation" data-cites="Provost2001">(<a href="#ref-Provost2001" role="doc-biblioref">Provost and Fawcett 2001</a>)</span>. It can be computed via algorithms like the <a href="https://en.wikibooks.org/wiki/Algorithm_Implementation/Geometry/Convex_hull/Monotone_chain#Python">Monotone chain algorithm</a>.</p>
-<div id="a44e4741" class="cell" data-execution_count="5">
+<div id="a7fce21d" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convex_hull(points):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    points <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(points))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -738,7 +740,7 @@ Figure&nbsp;2: ROC Convex Hull (ROCCH).
 \text{Prec}=\frac{\text{TP}}{\text{TP}+\text{FP}}
 \tag{2}</span></span></p>
 <p>PR curves start at <span class="math inline">(0, 1)</span> and end at <span class="math inline">(1, \frac{\text{P}}{\text{P}+\text{N}})</span>, where the endpoint reflects the proportion of positive samples. Because Precision depends on both TP and FP, the PR curve is non-monotonic and can decrease as Recall increases. Moreover, it is highly influenced by class imbalance <span class="citation" data-cites="Williams2021">(<a href="#ref-Williams2021" role="doc-biblioref">Williams 2021</a>)</span>. For a random classifier, the PR curve is a horizontal line at <span class="math inline">y = \frac{\text{P}}{\text{P}+\text{N}}</span>, whereas curves closer to the top-right indicate stronger performance.</p>
-<div id="fcec183e" class="cell" data-execution_count="7">
+<div id="20e0e5aa" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pr_curve(y_true, y_score):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    fps, tps, thresholds <span class="op">=</span> count_fp_tp(y_true, y_score)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -755,7 +757,7 @@ Figure&nbsp;2: ROC Convex Hull (ROCCH).
 \text{Prec}=\frac{\text{P}\cdot\text{TPR}}{\text{P}\cdot\text{TPR}+\text{N}\cdot\text{FPR}}
 =\frac{1}{1+\frac{\text{N}}{\text{P}}\cdot\frac{\text{FPR}}{\text{TPR}}}
 \tag{3}</span></span></p>
-<div id="08e830ea" class="cell" data-execution_count="8">
+<div id="e1301706" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.interpolate <span class="im">import</span> interp1d</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pr_from_roc(fpr, tpr, neg_to_pos):</span>
@@ -824,11 +826,13 @@ Figure&nbsp;4: PR curve (Scikit-learn).
 <h2 data-number="4" class="anchored" data-anchor-id="prg-curve"><span class="header-section-number">4</span> PRG Curve</h2>
 <p>ROC curves benefit from linear interpolation and universal baselines, whereas PR curves lack these properties. To address this, <span class="citation" data-cites="Flach2015">Flach and Kull (<a href="#ref-Flach2015" role="doc-biblioref">2015</a>)</span> proposed the Precision–Recall-Gain (PRG) curve, which transforms Precision and Recall into Gains and plots these Precision Gain and Recall Gain within the unit square:</p>
 <p><span id="eq-prec-rec-gain"><span class="math display">
-\text{PrecG}=\frac{\text{Prec}-\pi}{(1-\pi)\text{Prec}},\quad
-\text{RecG}=\frac{\text{Rec}-\pi}{(1-\pi)\text{Rec}}
+\begin{align}
+\text{PrecG}&amp;=\frac{\text{Prec}-\pi}{(1-\pi)\text{Prec}}, \\
+\text{RecG}&amp;=\frac{\text{Rec}-\pi}{(1-\pi)\text{Rec}},
+\end{align}
 \tag{4}</span></span></p>
 <p>where <span class="math inline">\pi=\frac{\text{P}}{\text{P}+\text{N}}</span> is the positive class fraction. Notably, Gains can be negative, and such points are typically omitted from the PRG curve.</p>
-<div id="8af48362" class="cell" data-execution_count="11">
+<div id="c2d17dd1" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prg_curve(y_true, y_score):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    prec, rec, thresholds <span class="op">=</span> pr_curve(y_true, y_score)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    pos_frac <span class="op">=</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_true)</span>

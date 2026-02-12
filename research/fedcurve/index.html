@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,14 +72,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-058708546a78a340caf62ac2437e8aa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-7d380d7a4a9913dd95cc60c99177187d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-058708546a78a340caf62ac2437e8aa4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-f93c2b1f3f0577f377aefa4848a86a36.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0d4a9d19931feb4fee1ddab4b2489000.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f93c2b1f3f0577f377aefa4848a86a36.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -350,8 +351,6 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Xuefeng Xu</span>
     </a>
@@ -422,14 +421,14 @@ window.Quarto = {
   </div>
 </header><div id="heading">
 <div class="center">
-<section id="xuefeng-xu-and-graham-cormode" class="level5">
-<h5 data-anchor-id="xuefeng-xu-and-graham-cormode">Xuefeng Xu and Graham Cormode</h5>
+<section id="and" class="level5">
+<h5 data-anchor-id="and"><a href="../..">Xuefeng Xu</a> and <a href="http://dimacs.rutgers.edu/~graham/">Graham Cormode</a></h5>
 </section>
 <section id="university-of-warwick" class="level5">
 <h5 data-anchor-id="university-of-warwick">University of Warwick</h5>
 </section>
-<section id="in-submission" class="level5">
-<h5 data-anchor-id="in-submission">In Submission</h5>
+<section id="preprint-2025" class="level5">
+<h5 data-anchor-id="preprint-2025">Preprint 2025</h5>
 </section>
 </div>
 </div> 
@@ -456,7 +455,14 @@ window.Quarto = {
 </section>
 <section id="methods-overview" class="level2">
 <h2 data-anchor-id="methods-overview">Methods Overview</h2>
-<p>Our method has two steps: (1) each client sends local histograms of prediction scores for both classes to the server, which aggregates them to estimate quantiles; (2) the server uses these quantiles to approximate the empirical cumulative distribution functions (ECDF) and reconstructs ROC and PR curves.</p>
+<p>Our method consists of five main steps:</p>
+<ol type="1">
+<li><strong>Local Histograms</strong>: Clients build histograms for positive/negative scores.</li>
+<li><strong>Aggregation</strong>: The server collects and combines histograms.</li>
+<li><strong>Quantile Estimation</strong>: Quantiles are estimated from bin counts.</li>
+<li><strong>ECDF Approximation</strong>: Interpolate quantiles to reconstruct ECDFs.</li>
+<li><strong>Curve Construction</strong>: Use ECDFs to compute ROC and PR curves.</li>
+</ol>
 <section id="quantiles-estimation-via-histograms" class="level3">
 <h3 data-anchor-id="quantiles-estimation-via-histograms">Quantiles Estimation via Histograms</h3>
 <p>To estimate quantiles, each client builds a hierarchical histogram (<a href="#fig-hist" class="quarto-xref">Figure&nbsp;1</a>) by recursively dividing the score range into equal-width bins and counting examples in each. The server aggregates these histograms and computes global quantiles based on the combined bin counts and boundaries.</p>
@@ -478,7 +484,7 @@ Figure&nbsp;1: Hierarchical histogram structure.
 </section>
 <section id="curve-approximation-via-quantiles" class="level3">
 <h3 data-anchor-id="curve-approximation-via-quantiles">Curve Approximation via Quantiles</h3>
-<p>Let <span class="math inline">\Phi^+(s)</span> and <span class="math inline">\Phi^-(s)</span> be the ECDFs of prediction score distributions for positive and negative examples. We estimate <span class="math inline">Q</span> evenly spaced quantiles (<span class="math inline">Q=6</span> in <a href="#fig-ecdf" class="quarto-xref">Figure&nbsp;2</a>), and apply <a href="../../blog/pchip.html">monotone piecewise cubic polynomial interpolation (PCHIP)</a> to approximate the full ECDFs.</p>
+<p>Let <span class="math inline">\Phi^-(s)</span> and <span class="math inline">\Phi^+(s)</span> be the ECDFs of prediction score distributions for negative and positive examples. We estimate <span class="math inline">Q</span> evenly spaced quantiles (<span class="math inline">Q=6</span> in <a href="#fig-ecdf" class="quarto-xref">Figure&nbsp;2</a>), and apply <a href="../../blog/pchip.html">monotone piecewise cubic polynomial interpolation (PCHIP)</a> to approximate the full ECDFs.</p>
 <div id="fig-ecdf" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ecdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -561,22 +567,23 @@ Figure&nbsp;3: ROC and PR curves approximated from ECDFs.
 \tag{4}</span></span></p>
 <p><span id="eq-area-error-pr"><span class="math display">
 \begin{equation*}
-\text{AE}_\text{PR} = \int_0^1 |P(t) - \hat{P}(t)| dt.
+\text{AE}_\text{PR} = \int_0^1 |P(t) - \hat{P}(t)| dt,
 \end{equation*}
 \tag{5}</span></span></p>
+<p>where <span class="math inline">T(f) = T(F^{-1}(f))</span> and <span class="math inline">P(t) = \frac{tn^+}{tn^+ + F(T^{-1}(t))n^-}</span> are the true ROC and PR curves, and <span class="math inline">\hat{T}(f) = \hat{T}(\hat{F}^{-1}(f))</span> and <span class="math inline">\hat{P}(t) = \frac{tn^+}{tn^+ + \hat{F}(\hat{T}^{-1}(t))n^-}</span> are their estimates.</p>
 </div>
-<p>Assuming Lipschitz continuity of score distributions, we bound the AE as follows:</p>
+<p>Assuming Lipschitz continuity of score distributions <span class="math inline">\Phi^-(s)</span> and <span class="math inline">\Phi^+(s)</span>, we bound the AE as follows:</p>
 <div id="thm-area-error-sa" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 1</strong></span> Let <span class="math inline">Q</span> be the number of quantiles used. Then:</p>
 <ul>
 <li>Under Secure Aggregation: <span class="math inline">\text{AE}_\text{ROC}\le O(1/Q)</span> and <span class="math inline">\text{AE}_\text{PR}\le\tilde{O}(1/Q)</span>.</li>
-<li>Under <span class="math inline">\varepsilon</span>-Differential Privacy: <span class="math inline">\text{AE}\le\tilde{O}(\frac{1}{Q} + \frac{1}{n\varepsilon})</span>, where <span class="math inline">n</span> is the number of examples.</li>
+<li>Under <span class="math inline">\varepsilon</span>-Differential Privacy: <span class="math inline">\text{AE}\le\tilde{O}\left(\frac{1}{Q} + \frac{1}{n\varepsilon}\right)</span>, where <span class="math inline">n</span> is the number of examples.</li>
 </ul>
 </div>
 </section>
 <section id="empirical-evaluation" class="level2">
 <h2 data-anchor-id="empirical-evaluation">Empirical Evaluation</h2>
-<p>We evaluate the method using the <a href="https://archive.ics.uci.edu/dataset/2/adult">Adult dataset</a> and <a href="https://xgboost.readthedocs.io/">XGBoost classifier</a>, We test both Secure Aggregation (SA) and Distributed Differential Privacy (DDP), varying <span class="math inline">Q</span> from 4 to 1024 and <span class="math inline">\varepsilon\in\{0.1,0.3,1\}</span>.</p>
+<p>We evaluate the method using the <a href="https://archive.ics.uci.edu/dataset/2/adult">Adult dataset</a> and <a href="https://xgboost.readthedocs.io/">XGBoost classifier</a> in <a href="#fig-error" class="quarto-xref">Figure&nbsp;4</a>. We test both Secure Aggregation (SA) and Distributed Differential Privacy (DDP), varying <span class="math inline">Q</span> from 4 to 1024 and <span class="math inline">\varepsilon\in\{0.1,0.3,1\}</span>.</p>
 <div id="fig-error" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -602,7 +609,12 @@ Figure&nbsp;4: Area Error of ROC and PR curves vs.&nbsp;number of quantiles.
 </figcaption>
 </figure>
 </div>
-<p>As <span class="math inline">Q</span> increases, Area Error decreases. PR curves generally show slightly higher error than ROC curves. Under DP, error plateaus due to noise, and grows as <span class="math inline">\varepsilon</span> decreases (stronger privacy).</p>
+<p>Key observations are as follows:</p>
+<ol type="1">
+<li>Area Error decreases with more quantiles <span class="math inline">Q</span>.</li>
+<li>PR curve incurs slightly higher error than ROC curve.</li>
+<li>With DP, error plateaus and grows as <span class="math inline">\varepsilon</span> decreases (stronger privacy).</li>
+</ol>
 </section>
 <section id="citation" class="level2">
 <h2 data-anchor-id="citation">Citation</h2>
