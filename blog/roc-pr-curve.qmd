@@ -24,12 +24,15 @@ For binary classification, with Positive (P) and Negative (N) classes, predictio
 | **Actual Neg (N)** | FP | TN | N=FP+TN |
 | | PP=TP+FP | PN=FN+TN | |
 
-: The Confusion Matrix {#tbl-confusion-matrix}
+: The Confusion Matrix {#tbl-confusion-matrix .striped .hover}
 
 The ROC curve plots TPR vs. FPR, where:
 
 $$
-\text{TPR}=\text{TP}/\text{P},\quad \text{FPR}=\text{FP}/\text{N}
+\begin{align}
+\text{TPR}&=\text{TP}/\text{P}, \\
+\text{FPR}&=\text{FP}/\text{N}.
+\end{align}
 $$ {#eq-tpr-fpr}
 
 A simple algorithm constructs the ROC curve: (i) Sort predictions in descending score order. (ii) Sweep thresholds across scores, updating TP and FP counts [@Fawcett2006].
@@ -248,8 +251,10 @@ plot_curve(recall, precision, "PR", pos_frac, drawstyle="steps-post")
 ROC curves benefit from linear interpolation and universal baselines, whereas PR curves lack these properties. To address this, @Flach2015 proposed the Precision–Recall-Gain (PRG) curve, which transforms Precision and Recall into Gains and plots these Precision Gain and Recall Gain within the unit square:
 
 $$
-\text{PrecG}=\frac{\text{Prec}-\pi}{(1-\pi)\text{Prec}},\quad
-\text{RecG}=\frac{\text{Rec}-\pi}{(1-\pi)\text{Rec}}
+\begin{align}
+\text{PrecG}&=\frac{\text{Prec}-\pi}{(1-\pi)\text{Prec}}, \\
+\text{RecG}&=\frac{\text{Rec}-\pi}{(1-\pi)\text{Rec}},
+\end{align}
 $$ {#eq-prec-rec-gain}
 
 where $\pi=\frac{\text{P}}{\text{P}+\text{N}}$ is the positive class fraction. Notably, Gains can be negative, and such points are typically omitted from the PRG curve.

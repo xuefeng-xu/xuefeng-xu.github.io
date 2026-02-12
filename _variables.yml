@@ -1,0 +1,24 @@
+# icon
+blog: "{{< iconify vscode-icons:file-type-rss >}}"
+paper: "{{< iconify twemoji:party-popper >}}"
+poster: "{{< iconify twemoji:spiral-notepad >}}"
+talk: "{{< iconify twemoji:loudspeaker >}}"
+visit: "{{< iconify noto:globe-showing-asia-australia >}}"
+volunteer: "{{< iconify noto:green-heart >}}"
+
+# people
+anttih: "[Antti Honkela](https://www.cs.helsinki.fi/u/ahonkela/)"
+grahamc: "[Graham Cormode](http://dimacs.rutgers.edu/~graham/)"
+hakanf: "[Hakan Ferhatosmanoglu](https://warwick.ac.uk/fac/sci/dcs/people/hakan_ferhatosmanoglu/)"
+xuefengx: "[Xuefeng Xu](/)"
+yanqingy: "[Yanqing Yao](https://scholar.google.com/citations?user=arBASTIAAAAJ)"
+
+# projects
+fedcurve: "[FedCurve](/research/fedcurve/)"
+fedps: "[FedPS](/research/fedps/)"
+powertf: "[PowerTF](/research/powertf/)"
+sprint: "[SPRINT](/research/sprint/)"
+
+# venues
+aistats: Annual Conference on Artificial Intelligence and Statistics (AISTATS)
+iclr: International Conference on Learning Representations (ICLR)

@@ -1,0 +1,25 @@
+---
+title: "SPRINT: Scalable Private Retrieval<br> with Indexed Neighbor Trees"
+aliases:
+  - /sprint.html
+toc: false
+open-graph:
+  description: "Private nearest neighbor search over vector databases using a tree-indexed structure."
+about:
+  id: heading
+  template: jolla
+---
+
+:::{#heading}
+:::{.center}
+
+##### {{< var xuefengx >}}$^1$, {{< var grahamc >}}$^2$, and {{< var hakanf >}}$^1$
+
+##### $^1$University of Warwick, $^2$University of Oxford
+
+##### Coming Soon
+
+:::
+:::
+
+##### **TL;DR**: {{< meta open-graph.description >}}

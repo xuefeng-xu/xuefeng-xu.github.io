@@ -9,15 +9,15 @@ date-modified: last-modified
 <ul class="loose_margin">
   <li>
     University of Warwick \| Coventry, UK<br>
-    Ph.D. in Computer Science | September 2024 - Present
+    Ph.D. in Computer Science | September 2024 -- Present
   </li>
   <li>
     Beihang University \| Beijing, China<br>
-    M.E. in Cyberspace Security | September 2019 - January 2022
+    M.E. in Cyberspace Security | September 2019 -- January 2022
   </li>
   <li>
     Jilin University \| Changchun, China<br>
-    B.E. in Communication Engineering | September 2015 - July 2019
+    B.E. in Communication Engineering | September 2015 -- July 2019
   </li>
 </ul>
 
@@ -25,12 +25,16 @@ date-modified: last-modified
 
 <ul class="loose_margin">
   <li>
+    University of Helsinki \| Helsinki, Finland<br>
+    Visiting Doctoral Researcher \| January 2026 -- Present
+  </li>
+  <li>
     PrimiHub \| Beijing, China<br>
-    Privacy Engineer \| December 2022 - August 2024
+    Privacy Engineer \| December 2022 -- August 2024
   </li>
   <li>
     OPPO \| Shenzhen, China<br>
-    Machine Learning Intern \| May 2022 - August 2022
+    Machine Learning Intern \| May 2022 -- August 2022
   </li>
 </ul>
 
@@ -46,5 +50,5 @@ date-modified: last-modified
 
 ##### Conference Reviewer
 
--   Annual Conference on Artificial Intelligence and Statistics (AISTATS): 2026
--   International Conference on Learning Representations (ICLR): 2025, 2026
+- {{< var aistats >}}: 2026
+- {{< var iclr >}}: 2026, 2025

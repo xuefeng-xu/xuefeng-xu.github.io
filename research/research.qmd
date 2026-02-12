@@ -1,21 +1,34 @@
+##### Preprints
+
 <ol reversed class="loose_margin">
   <li>
-    [Power Transform Revisited: Numerically Stable, and Federated](/research/powertf/index.qmd)<br>
-    [Xuefeng Xu]{.underline} and Graham Cormode<br>
-    In Submission
+    [SPRINT: Scalable Private Retrieval with Indexed Neighbor Trees](/research/sprint/)<br>
+    [Xuefeng Xu]{.underline}, {{< var grahamc >}}, and {{< var hakanf >}}<br>
+    Coming Soon<br>
   </li>
   <li>
-    [Federated Computation of ROC and PR Curves](/research/fedcurve/index.qmd)<br>
-    [Xuefeng Xu]{.underline} and Graham Cormode<br>
-    In Submission
+    [FedPS: Federated data Preprocessing via aggregated Statistics](/research/fedps/)<br>
+    [Xuefeng Xu]{.underline} and {{< var grahamc >}}<br>
+    Preprint 2026<br>
   </li>
   <li>
-    FedPS: Federated data Preprocessing via aggregated Statistics<br>
-    [Code](https://github.com/xuefeng-xu/fedps)
+    [Federated Computation of ROC and PR Curves](/research/fedcurve/)<br>
+    [Xuefeng Xu]{.underline} and {{< var grahamc >}}<br>
+    Preprint 2025<br>
+  </li>
+</ol>
+
+##### Papers
+
+<ol reversed class="loose_margin">
+  <li>
+    [Power Transform Revisited: Numerically Stable, and Federated](/research/powertf/)<br>
+    [Xuefeng Xu]{.underline} and {{< var grahamc >}}<br>
+    {{< var aistats >}} 2026<br>
   </li>
   <li>
     [Deep Learning Algorithms Design and Implementation Based on Differential Privacy](https://link.springer.com/chapter/10.1007/978-3-030-62223-7_27)<br>
-    [Xuefeng Xu]{.underline}, Yanqing Yao, and Lei Cheng<br>
-    International Conference on Machine Learning for Cyber Security, 2020<br>
+    [Xuefeng Xu]{.underline}, {{< var yanqingy >}}, and Lei Cheng<br>
+    International Conference on Machine Learning for Cyber Security 2020<br>
   </li>
 </ol>

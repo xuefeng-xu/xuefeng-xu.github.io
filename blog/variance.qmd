@@ -20,7 +20,10 @@ Given a dataset $\{x_1, \ldots, x_n\}$, variance measures how much data points d
 The most common definition computes the mean first, then the average squared deviation from it:
 
 $$
-\mu = \frac{1}{n} \sum_{i=1}^n x_i,\ \sigma^2 = \frac{1}{n} \sum_{i=1}^n (x_i - \mu)^2.
+\begin{align}
+\mu &= \frac{1}{n} \sum_{i=1}^n x_i, \\
+\sigma^2 &= \frac{1}{n} \sum_{i=1}^n (x_i - \mu)^2.
+\end{align}
 $$ {#eq-textbook-var-twopass}
 
 ```{python}

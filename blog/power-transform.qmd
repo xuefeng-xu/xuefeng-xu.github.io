@@ -198,11 +198,11 @@ To see why this works, consider the log-variance term for $\lambda \ne 0$:
 
 $$
 \begin{align*}
-\ln\text{Var}[\psi_{\text{BC}}(\lambda,x)]
-&=\ln\text{Var}[(x^\lambda-1)/\lambda] \\
-&=\ln\text{Var}[x^\lambda/\lambda] \\
-&=\ln[\text{Var}(x^\lambda)/\lambda^2] \\
-&=\ln\text{Var}(x^\lambda) - 2\ln|\lambda| \\
+&\ln\text{Var}[\psi_{\text{BC}}(\lambda,x)] \\
+=&\ln\text{Var}[(x^\lambda-1)/\lambda] \\
+=&\ln\text{Var}[x^\lambda/\lambda] \\
+=&\ln[\text{Var}(x^\lambda)/\lambda^2] \\
+=&\ln\text{Var}(x^\lambda) - 2\ln|\lambda| \\
 \end{align*}
 $$ {#eq-boxcox-log-var}
 
@@ -210,11 +210,11 @@ If $x$ is scaled by a constant $c > 0$:
 
 $$
 \begin{align*}
-\ln\text{Var}[\psi_{\text{BC}}(\lambda,x/c)]
-&=\ln\text{Var}[(x/c)^\lambda] - 2\ln|\lambda| \\
-&=\ln[\text{Var}(x^\lambda)/c^{2\lambda}] - 2\ln|\lambda| \\
-&=\ln\text{Var}(x^\lambda) - 2\lambda\ln c  - 2\ln|\lambda| \\
-&=\ln\text{Var}[\psi_{\text{BC}}(\lambda,x)] - 2\lambda\ln c \\
+&\ln\text{Var}[\psi_{\text{BC}}(\lambda,x/c)] \\
+=&\ln\text{Var}[(x/c)^\lambda] - 2\ln|\lambda| \\
+=&\ln[\text{Var}(x^\lambda)/c^{2\lambda}] - 2\ln|\lambda| \\
+=&\ln\text{Var}(x^\lambda) - 2\lambda\ln c  - 2\ln|\lambda| \\
+=&\ln\text{Var}[\psi_{\text{BC}}(\lambda,x)] - 2\lambda\ln c \\
 \end{align*}
 $$ {#eq-boxcox-log-var-mass}
 
@@ -222,10 +222,10 @@ Plugging into the log−likelihood:
 
 $$
 \begin{align*}
-\ln\mathcal{L}_{\text{BC}}(\lambda, x/c)
-&=(\lambda-1) \sum_i^n \ln(x_i/c) - \frac{n}{2}\ln\text{Var}[\psi_{\text{BC}}(\lambda,x/c)] \\
-&=\ln\mathcal{L}_{\text{BC}}(\lambda, x) - n(\lambda-1)\ln c + n\lambda\ln c \\
-&=\ln\mathcal{L}_{\text{BC}}(\lambda, x) + n\ln c \\
+&\ln\mathcal{L}_{\text{BC}}(\lambda, x/c) \\
+=&(\lambda-1) \sum_i^n \ln(x_i/c) - \frac{n}{2}\ln\text{Var}[\psi_{\text{BC}}(\lambda,x/c)] \\
+=&\ln\mathcal{L}_{\text{BC}}(\lambda, x) - n(\lambda-1)\ln c + n\lambda\ln c \\
+=&\ln\mathcal{L}_{\text{BC}}(\lambda, x) + n\ln c \\
 \end{align*}
 $$ {#eq-boxcox-llf-mass}
 

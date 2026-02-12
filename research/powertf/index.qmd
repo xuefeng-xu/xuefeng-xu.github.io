@@ -20,11 +20,11 @@ about:
 :::{#heading}
 :::{.center}
 
-##### Xuefeng Xu and Graham Cormode
+##### {{< var xuefengx >}}$^1$ and {{< var grahamc >}}$^2$
 
-##### University of Warwick
+##### $^1$University of Warwick, $^2$University of Oxford
 
-##### In Submission
+##### AISTATS 2026
 
 :::
 :::
@@ -82,27 +82,31 @@ As shown in @fig-nll-formula, different forms yield very different numerical beh
 NLL computed under different variance formulas.
 :::
 
-#### *Takeaway 1: Equivalent formulas can behave differently, careful analysis is essential.*
+##### *[Takeaway 1]{.mark} -- Equivalent formulas can behave differently, careful analysis is essential.*
 
 ## Challenge 2: Numerical Overflow
 
-Variance terms are also prone to overflow. We construct adversarial datasets that trigger overflow across floating-point precisions for Box-Cox:
+Variance terms are also prone to overflow. We construct adversarial datasets that trigger overflow across floating-point precisions for Box-Cox in @tbl-advdata.
 
-+----------+---------------------------+-------------+---------------+------------------------+
-| Overflow | Adversarial data          | $\lambda^*$ | Extreme value | Max Value (Precision)  |
-+:========:+:=========================:+:===========:+:=============:+:======================:+
-| Negative | [0.1, 0.1, 0.1, 0.101]    | -361.15     | -3.87e+358    |                        |
-+----------+---------------------------+-------------+---------------+ 1.80e+308 (Double)     |
-| Positive | [10, 10, 10, 9.9]         | 357.55      | 9.96e+354     |                        |
-+----------+---------------------------+-------------+---------------+------------------------+
-| Negative | [0.1, 0.1, 0.1, 0.10001]  | -35936.9    | -2.30e+35932  |                        |
-+----------+---------------------------+-------------+---------------+ 1.19e+4932 (Quadruple) |
-| Positive | [10, 10, 10, 9.999]       | 35933.3     | 5.85e+35928   |                        |
-+----------+---------------------------+-------------+---------------+------------------------+
-| Negative | [0.1, 0.1, 0.1, 0.100001] | -359353.0   | -2.74e+359347 |                        |
-+----------+---------------------------+-------------+---------------+ 1.61e+78913 (Octuple)  |
-| Positive | [10, 10, 10, 9.9999]      | 359349.0    | 6.99e+359343  |                        |
-+----------+---------------------------+-------------+---------------+------------------------+
++----------+---------------------------+-------------+-------+-----------------------------+------------------------+
+| Overflow | Adversarial Data          | $\lambda^*$ | NLL   | Extreme $\psi(\lambda^*,x)$ | Max Value (Precision)  |
++:========:+:=========================:+:===========:+:=====:+:===========================:+:======================:+
+| Negative | [0.1, 0.1, 0.1, 0.109]    | -41.70      | 23.91 | -1.20e+40                   |                        |
++----------+---------------------------+-------------+-------+-----------------------------+ 3.40e+38 (Single)      |
+| Positive | [10, 10, 10, 9.2]         | 43.10       | 5.79  | 2.90e+41                    |                        |
++----------+---------------------------+-------------+-------+-----------------------------+------------------------+
+| Negative | [0.1, 0.1, 0.1, 0.101]    | -361.15     | 32.62 | -3.87e+358                  |                        |
++----------+---------------------------+-------------+-------+-----------------------------+ 1.80e+308 (Double)     |
+| Positive | [10, 10, 10, 9.9]         | 357.55      | 14.18 | 9.96e+354                   |                        |
++----------+---------------------------+-------------+-------+-----------------------------+------------------------+
+| Negative | [0.1, 0.1, 0.1, 0.10001]  | -35936.9    | 51.03 | -2.30e+35932                |                        |
++----------+---------------------------+-------------+-------+-----------------------------+ 1.19e+4932 (Quadruple) |
+| Positive | [10, 10, 10, 9.999]       | 35933.3     | 32.61 | 5.85e+35928                 |                        |
++----------+---------------------------+-------------+-------+-----------------------------+------------------------+
+| Negative | [0.1, 0.1, 0.1, 0.100001] | -359353.0   | 60.24 | -2.74e+359347               |                        |
++----------+---------------------------+-------------+-------+-----------------------------+ 1.61e+78913 (Octuple)  |
+| Positive | [10, 10, 10, 9.9999]      | 359349.0    | 41.82 | 6.99e+359343                |                        |
++----------+---------------------------+-------------+-------+-----------------------------+------------------------+
 
 : Adversarial datasets inducing overflow {#tbl-advdata .striped .hover}
 
@@ -118,7 +122,7 @@ Such issues also appear in real-world dataset. @fig-hist shows the histograms of
 Histograms of skewed and large-valued features.
 :::
 
-To avoid overflow, we use [log-domain computation](/blog/power-transform.qmd) for the variance. @fig-nll-log-linear compares NLL curves: linear-domain breaks down, while log-domain remains continuous and stable.
+To avoid overflow, we use [log-domain computation](/blog/power-transform.qmd#log-domain-computation) for the variance. @fig-nll-log-linear compares NLL curves: linear-domain breaks down, while log-domain remains continuous and stable.
 
 ::: {#fig-nll-log-linear layout-ncol=2}
 
@@ -129,19 +133,19 @@ To avoid overflow, we use [log-domain computation](/blog/power-transform.qmd) fo
 NLL computed in log-domain vs. linear-domain.
 :::
 
-#### *Takeaway 2: Use log-domain computation when handling extreme values.*
+##### *[Takeaway 2]{.mark} -- Use log-domain computation when handling extreme values.*
 
 ## Challenge 3: Federated Aggregation
 
 In federated learning, we want to estimate a global $\lambda^*$ across distributed clients. This requires stable computation of global NLL under communication constraints.
 
-A naive one-pass method has clients send $(n, \sum x, \sum x^2)$, and the server computes:
+A naive one-pass method has clients send $(n, \sum x_i, \sum x_i^2)$, and the server sums each component. The variance is then computed as:
 
 $$
 \frac{1}{n} \sum_{i=1}^n x_i^2 - \frac{1}{n^2} \left(\sum_{i=1}^n x_i\right)^2
 $$ {#eq-var-naive}
 
-[The @eq-var-naive is unstable](/blog/variance.qmd). Instead, we adopt the pairwise algorithm: clients send $(n, \bar{x}, s)$ with mean $\bar{x}$ and sum of squared deviations $s=\sum(x-\bar{x})^2$. The server merges them in a tree structure (@fig-tree-queue):
+[The @eq-var-naive is unstable](/blog/variance.qmd#numerical-cancellation). Instead, we adopt the pairwise algorithm: clients send $(n, \bar{x}, s)$ with mean $\bar{x}$ and sum of squared deviations $s=\sum(x-\bar{x})^2$. The server merges them in a tree structure (@fig-tree-queue):
 
 ::: {#fig-tree-queue}
 
@@ -150,17 +154,15 @@ $$ {#eq-var-naive}
 Tree-style pairwise aggregation.
 :::
 
-The merging formulas are:
+The merging formulas are as follows and the final variance is $s/n$:
 
 $$
-n^{(AB)} = n^{(A)} + n^{(B)},
-$$ {#eq-var-pairwise-n}
-$$
-\bar{x}^{(AB)} = \bar{x}^{(A)} + (\bar{x}^{(B)} - \bar{x}^{(A)}) \cdot \frac{n^{(B)}}{n^{(AB)}},
-$$ {#eq-var-pairwise-xbar}
-$$
-s^{(AB)} = s^{(A)} + s^{(B)} +(\bar{x}^{(B)} - \bar{x}^{(A)})^2 \cdot \frac{n^{(A)}n^{(B)}}{n^{(AB)}}.
-$$ {#eq-var-pairwise-s}
+\begin{align*}
+n^{(AB)} &= n^{(A)} + n^{(B)},\\
+\bar{x}^{(AB)} &= \bar{x}^{(A)} + (\bar{x}^{(B)} - \bar{x}^{(A)}) \cdot \frac{n^{(B)}}{n^{(AB)}},\\
+s^{(AB)} &= s^{(A)} + s^{(B)} +(\bar{x}^{(B)} - \bar{x}^{(A)})^2 \cdot \frac{n^{(A)}n^{(B)}}{n^{(AB)}}.
+\end{align*}
+$$ {#eq-var-pairwise}
 
 @fig-fednll-pairwise shows that naive formulas produce spiky curves, while pairwise aggregation yields smooth ones.
 
@@ -173,14 +175,14 @@ $$ {#eq-var-pairwise-s}
 NLL in federated setting: naive vs. pairwise.
 :::
 
-#### *Takeaway 3: Avoid textbook one-pass variance formula in numerical computing.*
+##### *[Takeaway 3]{.mark} -- Avoid textbook one-pass variance formula in numerical computing.*
 
 ## Open Source Contributions
 
-Our methods have been integrated into [SciPy](https://www.scipy.org/) and [Scikit-learn](https://scikit-learn.org/):
+Our methods have been integrated into [SciPy](https://scipy.org/) and [Scikit-learn](https://scikit-learn.org/):
 
-- [scipy.stats.boxcox_llf](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.boxcox_llf.html)
 - [scipy.stats.boxcox_normmax](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.boxcox_normmax.html)
+- [scipy.stats.boxcox_llf](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.boxcox_llf.html) and [scipy.stats.yeojohnson_llf](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.yeojohnson_llf.html)
 - [scipy.special.boxcox](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.boxcox.html) and [scipy.special.boxcox1p](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.boxcox1p.html)
 - [scipy.special.inv_boxcox](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.inv_boxcox.html) and [scipy.special.inv_boxcox1p](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.inv_boxcox1p.html)
 - [sklearn.preprocessing.PowerTransformer](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PowerTransformer.html)

@@ -1,11 +1,11 @@
-#### **Teaching Assistant**
+##### Teaching Assistant
 
-##### \@ University of Warwick
+##### \ \ \ \ @ University of Warwick
 
--   CS275 Probability and Statistics: Autumn 2025
--   CS429/CS909 Data Mining: Spring 2025
--   CS133 Professional Skills: Autumn 2024
+- CS275 Probability and Statistics: Autumn 2025
+- CS909 Machine Learning Algorithms and Practice: Spring 2025
+- CS133 Professional Skills: Autumn 2024
 
-##### \@ Beihang University
+##### \ \ \ \ @ Beihang University
 
--   39112201 Abstract Algebra: Autumn 2019
+- 39112201 Abstract Algebra: Autumn 2019

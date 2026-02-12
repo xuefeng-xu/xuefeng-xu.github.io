@@ -2,6 +2,7 @@
 title: "Xuefeng Xu 许雪峰"
 title-prefix: ""
 image: img/me.jpg
+engine: knitr
 toc: false
 about:
   id: heading
@@ -20,13 +21,37 @@ Email: [xuefeng.xu@warwick.ac.uk](mailto:xuefeng.xu@warwick.ac.uk)
 
 :::
 
-### Biography
+### About Me
 
-I am a Ph.D. student in Computer Science at the University of Warwick, co-supervised by [Graham Cormode](http://dimacs.rutgers.edu/~graham/) and [Hakan Ferhatosmanoglu](https://warwick.ac.uk/fac/sci/dcs/people/hakan_ferhatosmanoglu/). My research interests are privacy-preserving algorithms, particularly in the context of privacy-preserving machine learning. Previously, I received my M.E. from Beihang University and B.E. from Jilin University.
+I am a second-year Ph.D. student in the Department of Computer Science at the University of Warwick, co-supervised by {{< var grahamc >}} and {{< var hakanf >}}.
+Currently, I am a visiting doctoral researcher at the University of Helsinki, working with {{< var anttih >}}.
+Previously, I received my M.E. from Beihang University and B.E. from Jilin University.
 
-### News
+### Research Interests
 
-- 09/2025: Volunteer at [VLDB Conference 2025](https://vldb.org/2025/)
-- 08/2025: Poster presentation at [CISPA - ELLIS Summer School 2025](https://cispa.de/summer-school-2025)
-- 03/2025: [Online talk](https://www.youtube.com/live/C0pce6jfcWg?feature=shared&t=35500) at [Flower AI Summit 2025](https://flower.ai/events/flower-ai-summit-2025/)
-- 02/2025: Lightning talk at [Privacy in Machine Learning Meetup](https://www.imperial.ac.uk/events/183182/privacy-in-machine-learning-meetup-imperial/)
+My research centers on the design, analysis, and implementation of privacy-preserving algorithms, including but not limited to federated learning and analytics, differential privacy, and nearest neighbor search.
+I am particularly interested in creating elegant algorithmic solutions that achieve strong, non-trivial theoretical guarantees, a philosophy that ensures both robustness and practical applicability.
+
+### Recent News
+
+<details open>
+<summary>2026</summary>
+- 02/2026 \| {{< var talk >}} Gave a talk on {{< var fedcurve >}} and {{< var sprint >}} at the [Trustworthy Machine Learning group](https://www.helsinki.fi/en/researchgroups/trustworthy-machine-learning)
+- 01/2026 \| {{< var visit >}} Visiting {{< var anttih >}} at the University of Helsinki
+- 01/2026 \| {{< var paper >}} {{< var powertf >}} accepted at [AISTATS 2026](https://virtual.aistats.org/Conferences/2026)
+</details>
+
+<details>
+<summary>2025</summary>
+- 10/2025 \| {{< var blog >}} Published a blog post: [How to Compute Variance?](blog/variance.qmd)
+- 09/2025 \| {{< var volunteer >}} Volunteered at [VLDB 2025](https://vldb.org/2025/)
+- 08/2025 \| {{< var poster >}} Presented a poster on {{< var fedcurve >}} at the [CISPA–ELLIS Summer School 2025](https://cispa.de/summer-school-2025)
+- 07/2025 \| {{< var blog >}} Published a blog post: [ROC and PR Curves](blog/roc-pr-curve.qmd)
+- 04/2025 \| {{< var blog >}} Published a blog post: [Power Transform](blog/power-transform.qmd)
+- 03/2025 \| {{< var talk >}} Gave an [online talk](https://www.youtube.com/live/C0pce6jfcWg?feature=shared&t=35500) on {{< var fedps >}} at the [Flower AI Summit 2025](https://flower.ai/events/flower-ai-summit-2025/)
+- 03/2025 \| {{< var blog >}} Published a blog post: [Monotone Piecewise Cubic Interpolation](blog/pchip.qmd)
+- 02/2025 \| {{< var talk >}} Gave a lightning talk on {{< var fedps >}} at the [Privacy in Machine Learning Meetup](https://www.imperial.ac.uk/events/183182/privacy-in-machine-learning-meetup-imperial/)
+</details>
+
+---
+Last updated: `r format(Sys.Date(), "%B %d, %Y")`
