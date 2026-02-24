@@ -77,9 +77,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-f93c2b1f3f0577f377aefa4848a86a36.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-0d4a9d19931feb4fee1ddab4b2489000.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-f93c2b1f3f0577f377aefa4848a86a36.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-4ef7a0a50fb983a5bcea27c5849a3c79.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-751ab7fea6d366cf3fdfc68e735773ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-4ef7a0a50fb983a5bcea27c5849a3c79.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -117,6 +117,7 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
 </script>
+<script id="quarto-axe-checker-options" type="text/plain">dHJ1ZQ==</script>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -165,11 +166,13 @@ window.Quarto = {
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Federated Computation of ROC and PR Curves – Xuefeng Xu">
 <meta property="og:description" content="Privacy-preserving ROC/PR curve approximation for federated learning.">
-<meta property="og:image" content="https://xuefeng-xu.github.io/research/fedcurve/img/approx-roc.svg">
+<meta property="og:image" content="https://xuefeng-xu.github.io/research/fedcurve/img/approx-roc.png">
 <meta property="og:site_name" content="Xuefeng Xu">
+<meta property="og:image:height" content="600">
+<meta property="og:image:width" content="600">
 <meta name="twitter:title" content="Federated Computation of ROC and PR Curves – Xuefeng Xu">
 <meta name="twitter:description" content="Xuefeng Xu’s Homepage">
-<meta name="twitter:image" content="https://xuefeng-xu.github.io/research/fedcurve/img/approx-roc.svg">
+<meta name="twitter:image" content="https://xuefeng-xu.github.io/research/fedcurve/img/hier-hist.svg">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -362,20 +365,16 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../../research/index.html"> 
 <span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../teach/index.html"> 
-<span class="menu-text">Teaching</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../../blog/index.html"> 
 <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../teach/index.html"> 
+<span class="menu-text">Teaching</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../cv.html"> 
@@ -512,31 +511,25 @@ Figure&nbsp;2: ECDFs reconstructed from <span class="math inline">Q</span> quant
 </div>
 <p>For the ROC curve, we then compute:</p>
 <p><span id="eq-tpr"><span class="math display">
-\begin{equation*}
 T(s)=1-\Phi^+(s),
-\end{equation*}
 \tag{1}</span></span></p>
 <p><span id="eq-fpr"><span class="math display">
-\begin{equation*}
 F(s)=1-\Phi^-(s),
-\end{equation*}
 \tag{2}</span></span></p>
 <p>where <span class="math inline">T(s)</span> and <span class="math inline">F(s)</span> denote the true positive rate (TPR) and false positive rate (FPR).</p>
 <p>For the PR curve, recall is equivalent to TPR, and precision is computed by:</p>
 <p><span id="eq-precision"><span class="math display">
-\begin{equation*}
 P(s)=\frac{T(s)n^+}{T(s)n^+ + F(s)n^-}
-\end{equation*}
 \tag{3}</span></span></p>
 <p>Here, <span class="math inline">n^+</span> and <span class="math inline">n^-</span> are the number of positive and negative examples. <a href="#fig-curve" class="quarto-xref">Figure&nbsp;3</a> shows the resulting approximated ROC and PR curves.</p>
 <div id="fig-curve" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-curve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
-<div class="preview-image quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="img/approx-roc.svg" class="preview-image img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><img src="img/approx-roc.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
 </div>
@@ -561,14 +554,10 @@ Figure&nbsp;3: ROC and PR curves approximated from ECDFs.
 <p>To quantify approximation quality, we define the <strong>Area Error (AE)</strong> as:</p>
 <div id="def-area-error" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1</strong></span> AE is the integral of the absolute difference between the true and estimated curves: <span id="eq-area-error-roc"><span class="math display">
-\begin{equation*}
 \text{AE}_\text{ROC} = \int_0^1 |T(f) - \hat{T}(f)| df,
-\end{equation*}
 \tag{4}</span></span></p>
 <p><span id="eq-area-error-pr"><span class="math display">
-\begin{equation*}
 \text{AE}_\text{PR} = \int_0^1 |P(t) - \hat{P}(t)| dt,
-\end{equation*}
 \tag{5}</span></span></p>
 <p>where <span class="math inline">T(f) = T(F^{-1}(f))</span> and <span class="math inline">P(t) = \frac{tn^+}{tn^+ + F(T^{-1}(t))n^-}</span> are the true ROC and PR curves, and <span class="math inline">\hat{T}(f) = \hat{T}(\hat{F}^{-1}(f))</span> and <span class="math inline">\hat{P}(t) = \frac{tn^+}{tn^+ + \hat{F}(\hat{T}^{-1}(t))n^-}</span> are their estimates.</p>
 </div>
@@ -583,7 +572,7 @@ Figure&nbsp;3: ROC and PR curves approximated from ECDFs.
 </section>
 <section id="empirical-evaluation" class="level2">
 <h2 data-anchor-id="empirical-evaluation">Empirical Evaluation</h2>
-<p>We evaluate the method using the <a href="https://archive.ics.uci.edu/dataset/2/adult">Adult dataset</a> and <a href="https://xgboost.readthedocs.io/">XGBoost classifier</a> in <a href="#fig-error" class="quarto-xref">Figure&nbsp;4</a>. We test both Secure Aggregation (SA) and Distributed Differential Privacy (DDP), varying <span class="math inline">Q</span> from 4 to 1024 and <span class="math inline">\varepsilon\in\{0.1,0.3,1\}</span>.</p>
+<p>We evaluate our method on the <a href="https://archive.ics.uci.edu/dataset/2/adult">Adult dataset</a> using an <a href="https://xgboost.readthedocs.io/">XGBoost classifier</a>, as shown in <a href="#fig-error" class="quarto-xref">Figure&nbsp;4</a>. We vary the number of quantiles <span class="math inline">Q\in\{4,8,\dots,1024\}</span> and test both Secure Aggregation (SA) and Distributed Differential Privacy (DDP) with privacy budgets <span class="math inline">\varepsilon\in\{0.1,0.3,1\}</span>.</p>
 <div id="fig-error" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -632,7 +621,7 @@ Figure&nbsp;4: Area Error of ROC and PR curves vs.&nbsp;number of quantiles.
 
 </section>
 
-</main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right

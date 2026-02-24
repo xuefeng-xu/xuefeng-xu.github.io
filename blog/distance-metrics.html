@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Xuefeng Xu">
+<meta name="dcterms.date" content="2026-02-22">
+<meta name="description" content="Order-preserving transforms between Euclidean Distance, Inner Product, and Cosine Similarity.">
+
+<title>Transforming Between Distance Metrics – Xuefeng Xu</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../img/goose.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-4ef7a0a50fb983a5bcea27c5849a3c79.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-751ab7fea6d366cf3fdfc68e735773ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-4ef7a0a50fb983a5bcea27c5849a3c79.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-9QXY2VK8LM"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
+</script>
+<script id="quarto-axe-checker-options" type="text/plain">dHJ1ZQ==</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="Transforming Between Distance Metrics – Xuefeng Xu">
+<meta property="og:description" content="Order-preserving transforms between Euclidean Distance, Inner Product, and Cosine Similarity.">
+<meta property="og:image" content="https://xuefeng-xu.github.io/blog/distance-metrics_files/figure-html/mermaid-figure-1.png">
+<meta property="og:site_name" content="Xuefeng Xu">
+<meta property="og:image:height" content="1300">
+<meta property="og:image:width" content="1420">
+<meta name="twitter:title" content="Transforming Between Distance Metrics – Xuefeng Xu">
+<meta name="twitter:description" content="Order-preserving transforms between Euclidean Distance, Inner Product, and Cosine Similarity.">
+<meta name="twitter:image" content="https://xuefeng-xu.github.io/blog/distance-metrics_files/figure-html/mermaid-figure-1.png">
+<meta name="twitter:image-height" content="1300">
+<meta name="twitter:image-width" content="1420">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="citation_title" content="Transforming Between Distance Metrics">
+<meta name="citation_author" content="Xuefeng Xu">
+<meta name="citation_publication_date" content="2026-02-22">
+<meta name="citation_cover_date" content="2026-02-22">
+<meta name="citation_year" content="2026">
+<meta name="citation_online_date" content="2026-02-22">
+<meta name="citation_fulltext_html_url" content="https://xuefeng-xu.github.io/blog/distance-metrics.html">
+<meta name="citation_language" content="en">
+<meta name="citation_reference" content="citation_title=A method for constructing local monotone piecewise cubic interpolants;,citation_author=F. N. Fritsch;,citation_author=J. Butland;,citation_publication_date=1984;,citation_cover_date=1984;,citation_year=1984;,citation_issue=2;,citation_doi=10.1137/0905021;,citation_volume=5;,citation_journal_title=SIAM Journal on Scientific and Statistical Computing;">
+<meta name="citation_reference" content="citation_title=Monotone piecewise cubic interpolation;,citation_author=F. N. Fritsch;,citation_author=R. E. Carlson;,citation_publication_date=1980;,citation_cover_date=1980;,citation_year=1980;,citation_issue=2;,citation_doi=10.1137/0717021;,citation_volume=17;,citation_journal_title=SIAM Journal on Numerical Analysis;">
+<meta name="citation_reference" content="citation_title=Numerical computing with matlab;,citation_author=Cleve B. Moler;,citation_publication_date=2004;,citation_cover_date=2004;,citation_year=2004;,citation_doi=10.1137/1.9780898717952.ch3;">
+<meta name="citation_reference" content="citation_title=An analysis of transformations;,citation_author=G. E. P. Box;,citation_author=D. R. Cox;,citation_publication_date=1964-12;,citation_cover_date=1964-12;,citation_year=1964;,citation_issue=2;,citation_doi=10.1111/j.2517-6161.1964.tb00553.x;,citation_volume=26;,citation_journal_title=Journal of the Royal Statistical Society: Series B (Methodological);">
+<meta name="citation_reference" content="citation_title=Concavity of box-cox log-likelihood function;,citation_author=Elies Kouider;,citation_author=Hanfeng Chen;,citation_publication_date=1995;,citation_cover_date=1995;,citation_year=1995;,citation_issue=2;,citation_doi=10.1016/0167-7152(94)00219-X;,citation_volume=25;,citation_journal_title=Statistics &amp;amp;amp; Probability Letters;">
+<meta name="citation_reference" content="citation_title=A new family of power transformations to reduce skewness or approximate normality;,citation_author=In-Kwon Yeo;,citation_publication_date=1997;,citation_cover_date=1997;,citation_year=1997;,citation_fulltext_html_url=https://www.proquest.com/openview/b7835693052aecd65e635d39a6bd099a/;,citation_dissertation_institution=The University of Wisconsin-Madison;">
+<meta name="citation_reference" content="citation_title=A new family of power transformations to improve normality or symmetry;,citation_author=In‐Kwon Yeo;,citation_author=Richard A. Johnson;,citation_publication_date=2000-12;,citation_cover_date=2000-12;,citation_year=2000;,citation_issue=4;,citation_doi=10.1093/biomet/87.4.954;,citation_volume=87;,citation_journal_title=Biometrika;">
+<meta name="citation_reference" content="citation_title=Modern applied statistics with s;,citation_author=W. N. Venables;,citation_author=B. D. Ripley;,citation_publication_date=2002;,citation_cover_date=2002;,citation_year=2002;,citation_fulltext_html_url=https://www.stats.ox.ac.uk/pub/MASS4/;,citation_doi=10.32614/CRAN.package.MASS;">
+<meta name="citation_reference" content="citation_title=Algorithms for minimization without derivatives;,citation_author=Richard P. Brent;,citation_publication_date=2013;,citation_cover_date=2013;,citation_year=2013;,citation_isbn=9780486143682;,citation_series_title=Dover books on mathematics;">
+<meta name="citation_reference" content="citation_title=SecureFedYJ: A safe feature gaussianization protocol for federated learning;,citation_author=Tanguy Marchand;,citation_author=Boris Muzellec;,citation_author=Constance Béguier;,citation_author=Jean Ogier du Terrail;,citation_author=Mathieu Andreux;,citation_publication_date=2022;,citation_cover_date=2022;,citation_year=2022;,citation_doi=10.48550/arXiv.2210.01639;,citation_volume=35;,citation_conference_title=Advances in neural information processing systems;,citation_conference=Curran Associates, Inc.;">
+<meta name="citation_reference" content="citation_title=BUG: Fix overflow in stats.yeojohnson;,citation_author=Matt Haberland;,citation_publication_date=2023-07;,citation_cover_date=2023-07;,citation_year=2023;,citation_fulltext_html_url=https://github.com/scipy/scipy/pull/18852#issuecomment-1657858886;">
+<meta name="citation_reference" content="citation_title=Robust classification for imprecise environments;,citation_author=Foster J. Provost;,citation_author=Tom Fawcett;,citation_publication_date=2001;,citation_cover_date=2001;,citation_year=2001;,citation_issue=3;,citation_doi=10.1023/A:1007601015854;,citation_volume=42;,citation_journal_title=Machine Learning;">
+<meta name="citation_reference" content="citation_title=The relationship between precision-recall and ROC curves;,citation_author=Jesse Davis;,citation_author=Mark Goadrich;,citation_publication_date=2006;,citation_cover_date=2006;,citation_year=2006;,citation_doi=10.1145/1143844.1143874;,citation_conference_title=Proceedings of the 23rd international conference on machine learning;,citation_conference=Association for Computing Machinery;,citation_series_title=ICML ’06;">
+<meta name="citation_reference" content="citation_title=An introduction to ROC analysis;,citation_author=Tom Fawcett;,citation_publication_date=2006;,citation_cover_date=2006;,citation_year=2006;,citation_issue=8;,citation_doi=10.1016/j.patrec.2005.10.010;,citation_volume=27;,citation_journal_title=Pattern Recognition Letters;">
+<meta name="citation_reference" content="citation_title=Precision-recall-gain curves: PR analysis done right;,citation_author=Peter Flach;,citation_author=Meelis Kull;,citation_publication_date=2015;,citation_cover_date=2015;,citation_year=2015;,citation_fulltext_html_url=https://papers.nips.cc/paper/5867-precision-recall-gain-curves-pr-analysis-done-right;,citation_volume=28;,citation_conference_title=Advances in neural information processing systems;,citation_conference=Curran Associates, Inc.;">
+<meta name="citation_reference" content="citation_title=The effect of class imbalance on precision-recall curves;,citation_author=Christopher K. I. Williams;,citation_publication_date=2021-04;,citation_cover_date=2021-04;,citation_year=2021;,citation_issue=4;,citation_doi=10.1162/neco_a_01362;,citation_volume=33;,citation_journal_title=Neural Computation;">
+<meta name="citation_reference" content="citation_title=Note on a method for calculating corrected sums of squares and products;,citation_author=B. P. Welford;,citation_publication_date=1962;,citation_cover_date=1962;,citation_year=1962;,citation_issue=3;,citation_doi=10.1080/00401706.1962.10490022;,citation_volume=4;,citation_journal_title=Technometrics;,citation_publisher=ASA Website;">
+<meta name="citation_reference" content="citation_title=Comparison of several algorithms for computing sample means and variances;,citation_author=Robert F. Ling;,citation_publication_date=1974;,citation_cover_date=1974;,citation_year=1974;,citation_issue=348;,citation_doi=10.1080/01621459.1974.10480219;,citation_volume=69;,citation_journal_title=Journal of the American Statistical Association;,citation_publisher=ASA Website;">
+<meta name="citation_reference" content="citation_title=Updating formulae and a pairwise algorithm for computing sample variances;,citation_author=T. F. Chan;,citation_author=G. H. Golub;,citation_author=R. J. LeVeque;,citation_publication_date=1982;,citation_cover_date=1982;,citation_year=1982;,citation_doi=10.1007/978-3-642-51461-6_3;,citation_conference_title=COMPSTAT 1982 5th symposium held at toulouse 1982;,citation_conference=Physica-Verlag HD;">
+<meta name="citation_reference" content="citation_title=Algorithms for computing the sample variance: Analysis and recommendations;,citation_author=Tony F. Chan;,citation_author=Gene H. Golub;,citation_author=Randall J. Leveque;,citation_publication_date=1983;,citation_cover_date=1983;,citation_year=1983;,citation_issue=3;,citation_doi=10.1080/00031305.1983.10483115;,citation_volume=37;,citation_journal_title=The American Statistician;,citation_publisher=ASA Website;">
+<meta name="citation_reference" content="citation_title=Speeding up the xbox recommender system using a euclidean transformation for inner-product spaces;,citation_author=Yoram Bachrach;,citation_author=Yehuda Finkelstein;,citation_author=Ran Gilad-Bachrach;,citation_author=Liran Katzir;,citation_author=Noam Koenigstein;,citation_author=Nir Nice;,citation_author=Ulrich Paquet;,citation_publication_date=2014;,citation_cover_date=2014;,citation_year=2014;,citation_doi=10.1145/2645710.2645741;,citation_conference_title=Proceedings of the 8th ACM conference on recommender systems;,citation_conference=Association for Computing Machinery;,citation_series_title=RecSys ’14;">
+<meta name="citation_reference" content="citation_title=The faiss library;,citation_author=Matthijs Douze;,citation_author=Alexandr Guzhva;,citation_author=Chengqi Deng;,citation_author=Jeff Johnson;,citation_author=Gergely Szilvasy;,citation_author=Pierre-Emmanuel Mazaré;,citation_author=Maria Lomeli;,citation_author=Lucas Hosseini;,citation_author=Hervé Jégou;,citation_publication_date=2025;,citation_cover_date=2025;,citation_year=2025;,citation_fulltext_html_url=https://arxiv.org/abs/2401.08281;">
+<meta name="citation_reference" content="citation_title=Non-metric similarity graphs for maximum inner product search;,citation_author=Stanislav Morozov;,citation_author=Artem Babenko;,citation_publication_date=2018;,citation_cover_date=2018;,citation_year=2018;,citation_fulltext_html_url=http://papers.neurips.cc/paper/7722-non-metric-similarity-graphs-for-maximum-inner-product-search;,citation_conference_title=Proceedings of the 32nd international conference on neural information processing systems;,citation_conference=Curran Associates Inc.;,citation_series_title=NIPS’18;">
+</head>
+
+<body class="floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Xuefeng Xu</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../research/index.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../blog/index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../teach/index.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../cv.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../misc/index.html"> 
+<span class="menu-text">Misc.</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="../blog/index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Transforming Between Distance Metrics</h1>
+                  <div>
+        <div class="description">
+          Order-preserving transforms between Euclidean Distance, Inner Product, and Cosine Similarity.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Transform</div>
+                <div class="quarto-category">Metric</div>
+                <div class="quarto-category">Python</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Xuefeng Xu </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 22, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#distance-metrics" id="toc-distance-metrics" class="nav-link active" data-scroll-target="#distance-metrics"><span class="header-section-number">1</span> Distance Metrics</a></li>
+  <li><a href="#preprocessing" id="toc-preprocessing" class="nav-link" data-scroll-target="#preprocessing"><span class="header-section-number">2</span> Preprocessing</a></li>
+  <li><a href="#transformation" id="toc-transformation" class="nav-link" data-scroll-target="#transformation"><span class="header-section-number">3</span> Transformation</a>
+  <ul class="collapse">
+  <li><a href="#ip-cs" id="toc-ip-cs" class="nav-link" data-scroll-target="#ip-cs"><span class="header-section-number">3.1</span> IP –&gt; CS</a></li>
+  <li><a href="#ed-cs" id="toc-ed-cs" class="nav-link" data-scroll-target="#ed-cs"><span class="header-section-number">3.2</span> ED –&gt; CS</a></li>
+  <li><a href="#cs-ip" id="toc-cs-ip" class="nav-link" data-scroll-target="#cs-ip"><span class="header-section-number">3.3</span> CS –&gt; IP</a></li>
+  <li><a href="#ed-ip" id="toc-ed-ip" class="nav-link" data-scroll-target="#ed-ip"><span class="header-section-number">3.4</span> ED –&gt; IP</a></li>
+  <li><a href="#ip-ed" id="toc-ip-ed" class="nav-link" data-scroll-target="#ip-ed"><span class="header-section-number">3.5</span> IP –&gt; ED</a></li>
+  <li><a href="#cs-ed" id="toc-cs-ed" class="nav-link" data-scroll-target="#cs-ed"><span class="header-section-number">3.6</span> CS –&gt; ED</a></li>
+  </ul></li>
+  <li><a href="#side-effects" id="toc-side-effects" class="nav-link" data-scroll-target="#side-effects"><span class="header-section-number">4</span> Side Effects</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/xuefeng-xu/xuefeng-xu.github.io/blob/master/blog/distance-metrics.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="distance-metrics.ipynb" download="distance-metrics.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '1452781');
+</script>
+<!-- End MailerLite Universal -->
+
+<div class="ml-embedded" data-form="nZXgeU"></div>
+
+</div></div>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+
+<p>Euclidean Distance, Inner Product, and Cosine Similarity are three fundamental measures used in <a href="https://en.wikipedia.org/wiki/Nearest_neighbor_search">nearest neighbor search</a>. Although they appear different, they are deeply connected. In fact, through simple preprocessing (normalization or dimension expansion), we can transform one metric into another while preserving the ranking of nearest neighbors.</p>
+<section id="distance-metrics" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="distance-metrics"><span class="header-section-number">1</span> Distance Metrics</h2>
+<p>Let <span class="math inline">\mathbf{x}, \mathbf{y} \in \mathbb{R}^d</span> be vectors. The three distance metrics are defined as follows:</p>
+<p><strong>Euclidean Distance (ED):</strong></p>
+<p><span id="eq-ED"><span class="math display">
+\|\mathbf{x} - \mathbf{y}\|=\sqrt{\sum_{i=1}^d (x_i - y_i)^2}
+\tag{1}</span></span></p>
+<p><strong>Inner Product (IP):</strong></p>
+<p><span id="eq-IP"><span class="math display">
+\langle\mathbf{x}, \mathbf{y}\rangle = \sum_{i=1}^d x_i y_i
+\tag{2}</span></span></p>
+<p><strong>Cosine Similarity (CS):</strong></p>
+<p><span id="eq-CS"><span class="math display">
+\cos(\mathbf{x}, \mathbf{y})=\frac{\langle\mathbf{x}, \mathbf{y}\rangle}{\|\mathbf{x}\|\|\mathbf{y}\|}
+\tag{3}</span></span></p>
+<p>For Euclidean Distance, smaller values indicate more similar vectors. For Inner Product and Cosine Similarity, larger values indicate more similar vectors. In nearest neighbor search, given a query vector <span class="math inline">\mathbf{x}</span>, we seek the most similar vector in a database <span class="math inline">\{\mathbf{y}^{(i)}\}</span>:</p>
+<p><span id="eq-nns"><span class="math display">
+\begin{align*}
+\argmin_i &amp;\|\mathbf{x} - \mathbf{y}^{(i)}\| &amp;\text{(ED)} \\
+\argmax_i &amp;\langle\mathbf{x}, \mathbf{y}^{(i)}\rangle &amp;\text{(IP)} \\
+\argmax_i &amp;\cos(\mathbf{x}, \mathbf{y}^{(i)}) &amp;\text{(CS)}
+\end{align*}
+\tag{4}</span></span></p>
+</section>
+<section id="preprocessing" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="preprocessing"><span class="header-section-number">2</span> Preprocessing</h2>
+<p>Many nearest neighbor search algorithms are optimized for specific metrics. However, different applications may require different similarity measures. Fortunately, these three metrics are connected through order-preserving transformations <span class="citation" data-cites="Bachrach2014">(<a href="#ref-Bachrach2014" role="doc-biblioref">Bachrach et al. 2014</a>)</span>.</p>
+<p>By preprocessing input vectors through normalization or dimension expansion, you can retrieve nearest neighbors for any metric by running an algorithm compute with a different metric. This approach is summarized in <a href="#tbl-summary" class="quarto-xref">Table&nbsp;1</a> and <a href="#fig-relation" class="quarto-xref">Figure&nbsp;1</a> (see Table 2 in <span class="citation" data-cites="Douze2025">Douze et al. (<a href="#ref-Douze2025" role="doc-biblioref">2025</a>)</span>).</p>
+<div id="tbl-summary" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Summary of the transformations.
+</figcaption>
+<div aria-describedby="tbl-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table-striped table-hover caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Compute</th>
+<th style="text-align: center;">Want</th>
+<th style="text-align: center;">Transform</th>
+<th style="text-align: center;">Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">IP</td>
+<td style="text-align: center;">CS</td>
+<td style="text-align: center;">Normalize</td>
+<td style="text-align: center;">N/A</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ED</td>
+<td style="text-align: center;">CS</td>
+<td style="text-align: center;">Normalize</td>
+<td style="text-align: center;">N/A</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">CS</td>
+<td style="text-align: center;">IP</td>
+<td style="text-align: center;">Add 1 dim</td>
+<td style="text-align: center;"><span class="math inline">\alpha</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ED</td>
+<td style="text-align: center;">IP</td>
+<td style="text-align: center;">Add 1 dim</td>
+<td style="text-align: center;"><span class="math inline">\alpha</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">IP</td>
+<td style="text-align: center;">ED</td>
+<td style="text-align: center;">Add 1 dim</td>
+<td style="text-align: center;"><span class="math inline">\alpha</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">CS</td>
+<td style="text-align: center;">ED</td>
+<td style="text-align: center;">Add 2 dims</td>
+<td style="text-align: center;"><span class="math inline">\alpha,\beta</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div class="cell preview-image" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-relation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-relation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<p><img src="distance-metrics_files/figure-html/mermaid-figure-1.png" style="width:3.71in;height:3.4in" class="figure-img"></p>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-relation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Demonstration of relationships. Arrows indicate the transformations.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="transformation" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="transformation"><span class="header-section-number">3</span> Transformation</h2>
+<p>This section demonstrates how to transform between distance metrics through order-preserving transformations. For each transformation, we provide the mathematical formulation, a proof of correctness, and a Python implementation to verify the results.</p>
+<div id="c17fd7fb" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> euclidean_distances, cosine_similarity</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">8</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> rng.normal(size<span class="op">=</span>(<span class="dv">1</span>, d))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> rng.normal(size<span class="op">=</span>(<span class="dv">6</span>, d))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dist_func(X, Y, metric):</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> metric <span class="op">==</span> <span class="st">'ED'</span>:</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> euclidean_distances(X, Y)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> metric <span class="op">==</span> <span class="st">'IP'</span>:</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> X.dot(Y.T)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> metric <span class="op">==</span> <span class="st">'CS'</span>:</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> cosine_similarity(X, Y)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"Unknown metric: </span><span class="sc">{</span>metric<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="ip-cs" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="ip-cs"><span class="header-section-number">3.1</span> IP –&gt; CS</h3>
+<p>We want the ranking results of Cosine Similarity by computing Inner Product. Since Cosine Similarity is Inner Product on normalized vectors, the transformation is simple normalization:</p>
+<p><span id="eq-ip-to-cs"><span class="math display">
+\begin{align*}
+\text{Query: } \mathbf{x'} &amp;= \mathbf{x}/\|\mathbf{x}\| \\
+\text{Database: } \mathbf{y'} &amp;= \mathbf{y}/\|\mathbf{y}\|
+\end{align*}
+\tag{5}</span></span></p>
+<div id="62e35365" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ip_to_cs(X, Y):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    Xp <span class="op">=</span> X <span class="op">/</span> np.linalg.norm(X, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    Yp <span class="op">=</span> Y <span class="op">/</span> np.linalg.norm(Y, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Xp, Yp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span><span id="eq-proof-ip-to-cs"><span class="math display">
+\argmin_i \langle\mathbf{x'}, \mathbf{y'}^{(i)}\rangle = \argmin_i \cos(\mathbf{x}, \mathbf{y}^{(i)})
+\tag{6}</span></span></p>
+</div>
+<p>To verify the implementation, we can compare the ranking results of IP on <span class="math inline">\mathbf{x'}</span> and <span class="math inline">\mathbf{y'}</span> with the ranking results of CS on <span class="math inline">\mathbf{x}</span> and <span class="math inline">\mathbf{y}</span>.</p>
+<div id="56112b28" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Xp, Yp <span class="op">=</span> ip_to_cs(X, Y)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"IP(X',Y'):"</span>, np.argsort(<span class="op">-</span>dist_func(Xp, Yp, <span class="st">"IP"</span>)))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"CS(X, Y) :"</span>, np.argsort(<span class="op">-</span>dist_func(X, Y, <span class="st">"CS"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>IP(X',Y'): [[1 4 3 2 0 5]]
+CS(X, Y) : [[1 4 3 2 0 5]]</code></pre>
+</div>
+</div>
+</section>
+<section id="ed-cs" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="ed-cs"><span class="header-section-number">3.2</span> ED –&gt; CS</h3>
+<p>We want the ranking results of Cosine Similarity by computing Euclidean Distance. Similar to the previous case, we can also achieve this through normalization:</p>
+<p><span id="eq-ed-to-cs"><span class="math display">
+\begin{align*}
+\text{Query: } \mathbf{x'} &amp;= \mathbf{x}/\|\mathbf{x}\| \\
+\text{Database: } \mathbf{y'} &amp;= \mathbf{y}/\|\mathbf{y}\|
+\end{align*}
+\tag{7}</span></span></p>
+<div id="c62ec903" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ed_to_cs(X, Y):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    Xp <span class="op">=</span> X <span class="op">/</span> np.linalg.norm(X, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    Yp <span class="op">=</span> Y <span class="op">/</span> np.linalg.norm(Y, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Xp, Yp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span><span id="eq-proof-ed-to-cs"><span class="math display">
+\begin{align*}
+&amp; \argmin_i \|\mathbf{x'} - \mathbf{y'}^{(i)}\| \\
+=&amp; \argmin_i 2 - 2\langle\mathbf{x'}, \mathbf{y'}^{(i)}\rangle \\
+=&amp; \argmax_i \langle\mathbf{x'}, \mathbf{y'}^{(i)}\rangle \\
+=&amp; \argmax_i \cos(\mathbf{x}, \mathbf{y}^{(i)})
+\end{align*}
+\tag{8}</span></span></p>
+</div>
+<p>Comparing the ranking results of ED on <span class="math inline">\mathbf{x'}</span> and <span class="math inline">\mathbf{y'}</span> with the ranking results of CS on <span class="math inline">\mathbf{x}</span> and <span class="math inline">\mathbf{y}</span>.</p>
+<div id="62969e97" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Xp, Yp <span class="op">=</span> ed_to_cs(X, Y)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ED(X',Y'):"</span>, np.argsort(dist_func(Xp, Yp, <span class="st">"ED"</span>)))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"CS(X, Y) :"</span>, np.argsort(<span class="op">-</span>dist_func(X, Y, <span class="st">"CS"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ED(X',Y'): [[1 4 3 2 0 5]]
+CS(X, Y) : [[1 4 3 2 0 5]]</code></pre>
+</div>
+</div>
+</section>
+<section id="cs-ip" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="cs-ip"><span class="header-section-number">3.3</span> CS –&gt; IP</h3>
+<p>We want the ranking results of Inner Product by computing Cosine Similarity. This can be achieved by adding one dimension to the original vectors, where <span class="math inline">\alpha</span> is a parameter to be determined:</p>
+<p><span id="eq-cs-to-ip"><span class="math display">
+\begin{align*}
+\text{Query: } \mathbf{x'} &amp;= [\mathbf{x};0] \\
+\text{Database: } \mathbf{y'} &amp;= [\alpha\mathbf{y};\sqrt{1-\|\alpha\mathbf{y}\|^2}]
+\end{align*}
+\tag{9}</span></span></p>
+<p>To avoid negative values in the square root, we need to choose <span class="math inline">\alpha</span> such that:</p>
+<p><span id="eq-alpha-cs-to-ip"><span class="math display">
+\begin{gather*}
+1-\|\alpha\mathbf{y}^{(i)}\|^2 \ge 0 \text{ for all } i \\
+\Downarrow \\
+|\alpha| \le \min_i 1/\|\mathbf{y}^{(i)}\|
+\end{gather*}
+\tag{10}</span></span></p>
+<p>In fact, we also need <span class="math inline">\alpha&gt;0</span> to make sure the transformation is order preserving (detail in the proof). So we choose <span class="math inline">\alpha</span> to be slightly smaller than <span class="math inline">\min_i 1/\|\mathbf{y}^{(i)}\|</span>.</p>
+<div id="247b81b2" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cs_to_ip(X, Y):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    Xp <span class="op">=</span> np.hstack([X, np.zeros((X.shape[<span class="dv">0</span>], <span class="dv">1</span>))])</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    Y_norms <span class="op">=</span> np.linalg.norm(Y, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    alpha <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> (<span class="bu">max</span>(Y_norms) <span class="op">+</span> <span class="fl">1e-4</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    Yp <span class="op">=</span> np.hstack([alpha <span class="op">*</span> Y, np.sqrt(<span class="dv">1</span> <span class="op">-</span> (alpha <span class="op">*</span> Y_norms)<span class="op">**</span><span class="dv">2</span>)])</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Xp, Yp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span><span id="eq-proof-cs-to-ip"><span class="math display">
+\begin{align*}
+&amp; \argmax_i \cos(\mathbf{x'}, \mathbf{y'}^{(i)}) \\
+=&amp; \argmax_i \frac{\langle \mathbf{x'}, \mathbf{y'}^{(i)} \rangle}{\|\mathbf{x'}\|\|\mathbf{y'}^{(i)}\|} \\
+=&amp; \argmax_i \frac{\alpha\langle\mathbf{x}, \mathbf{y}^{(i)}\rangle}{\|\mathbf{x}\|} \\
+=&amp; \argmax_i \langle\mathbf{x}, \mathbf{y}^{(i)}\rangle \ (\text{require }\alpha&gt;0)
+\end{align*}
+\tag{11}</span></span></p>
+</div>
+<p>Note that <span class="math inline">\|\mathbf{x}\|</span> and <span class="math inline">\alpha</span> are constants with respect to <span class="math inline">i</span>, so they don’t affect the <span class="math inline">\argmax</span> operation. We then compare the ranking results of CS on <span class="math inline">\mathbf{x'}</span> and <span class="math inline">\mathbf{y'}</span> with the ranking results of IP on <span class="math inline">\mathbf{x}</span> and <span class="math inline">\mathbf{y}</span>.</p>
+<div id="5881ab0a" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Xp, Yp <span class="op">=</span> cs_to_ip(X, Y)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"CS(X',Y'):"</span>, np.argsort(<span class="op">-</span>dist_func(Xp, Yp, <span class="st">"CS"</span>)))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"IP(X, Y) :"</span>, np.argsort(<span class="op">-</span>dist_func(X, Y, <span class="st">"IP"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CS(X',Y'): [[1 4 3 2 0 5]]
+IP(X, Y) : [[1 4 3 2 0 5]]</code></pre>
+</div>
+</div>
+</section>
+<section id="ed-ip" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="ed-ip"><span class="header-section-number">3.4</span> ED –&gt; IP</h3>
+<p>We want the ranking results of Inner Product by computing Euclidean Distance. Similar to the previous case, we can also achieve this by adding one dimension to the original vectors:</p>
+<p><span id="eq-ed-to-ip"><span class="math display">
+\begin{align*}
+\text{Query: } \mathbf{x'} &amp;= [\mathbf{x};0] \\
+\text{Database: } \mathbf{y'} &amp;= [\mathbf{y};\sqrt{\alpha^2 - \|\mathbf{y}\|^2}]
+\end{align*}
+\tag{12}</span></span></p>
+<p>Again, we need to choose <span class="math inline">\alpha</span> to avoid negative values in the square root:</p>
+<p><span id="eq-alpha-ed-to-ip"><span class="math display">
+\begin{gather*}
+\alpha^2 - \|\mathbf{y}^{(i)}\|^2\ge 0 \text{ for all } i\\
+\Downarrow\\
+|\alpha|\ge \max_i\|\mathbf{y}^{(i)}\|
+\end{gather*}
+\tag{13}</span></span></p>
+<p>We choose <span class="math inline">\alpha</span> to be slightly larger than <span class="math inline">\max_i\|\mathbf{y}^{(i)}\|</span>.</p>
+<div id="598f651d" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ed_to_ip(X, Y):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    Xp <span class="op">=</span> np.hstack([X, np.zeros((X.shape[<span class="dv">0</span>], <span class="dv">1</span>))])</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    Y_norms <span class="op">=</span> np.linalg.norm(Y, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    alpha <span class="op">=</span> <span class="bu">max</span>(Y_norms) <span class="op">+</span> <span class="fl">1e-4</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    Yp <span class="op">=</span> np.hstack([Y, np.sqrt(alpha<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> Y_norms<span class="op">**</span><span class="dv">2</span>)])</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Xp, Yp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span><span id="eq-proof-ed-to-ip"><span class="math display">
+\begin{align*}
+&amp; \argmin_i \|\mathbf{x'} - \mathbf{y'}^{(i)}\| \\
+=&amp; \argmin_i \| \mathbf{x'} \|^2 + \| \mathbf{y'}^{(i)} \|^2 - 2 \langle\mathbf{x'}, \mathbf{y'}^{(i)}\rangle \\
+=&amp; \argmin_i \|\mathbf{x}\|^2 + \alpha^2 - 2\langle\mathbf{x}, \mathbf{y}^{(i)}\rangle \\
+=&amp; \argmax_i \langle\mathbf{x}, \mathbf{y}^{(i)}\rangle
+\end{align*}
+\tag{14}</span></span></p>
+</div>
+<p>Removing <span class="math inline">\|\mathbf{x}\|^2</span> and <span class="math inline">\alpha^2</span> doesn’t affect the operation. Again, we compare the ranking results of ED on <span class="math inline">\mathbf{x'}</span> and <span class="math inline">\mathbf{y'}</span> with the ranking results of IP on <span class="math inline">\mathbf{x}</span> and <span class="math inline">\mathbf{y}</span>.</p>
+<div id="dbeabe3e" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Xp, Yp <span class="op">=</span> ed_to_ip(X, Y)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ED(X',Y'):"</span>, np.argsort(dist_func(Xp, Yp, <span class="st">"ED"</span>)))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"IP(X, Y) :"</span>, np.argsort(<span class="op">-</span>dist_func(X, Y, <span class="st">"IP"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ED(X',Y'): [[1 4 3 2 0 5]]
+IP(X, Y) : [[1 4 3 2 0 5]]</code></pre>
+</div>
+</div>
+</section>
+<section id="ip-ed" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="ip-ed"><span class="header-section-number">3.5</span> IP –&gt; ED</h3>
+<p>We want the ranking results of Euclidean Distance by computing Inner Product. This can also be achieved by adding one dimension to the original vectors:</p>
+<p><span id="eq-ip-to-ed"><span class="math display">
+\begin{align*}
+\text{Query: } \mathbf{x'} &amp;= [\mathbf{x};-\alpha/2] \\
+\text{Database: } \mathbf{y'} &amp;= [\mathbf{y};\|\mathbf{y}\|^2/\alpha]
+\end{align*}
+\tag{15}</span></span></p>
+<p>Here, <span class="math inline">\alpha</span> can be any non-zero value. For simplicity, we set <span class="math inline">\alpha=1</span>.</p>
+<div id="34340b96" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ip_to_ed(X, Y):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    alpha <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    Xp <span class="op">=</span> np.hstack([X, <span class="op">-</span>alpha <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> np.ones((X.shape[<span class="dv">0</span>], <span class="dv">1</span>))])</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    Y_norms <span class="op">=</span> np.linalg.norm(Y, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    Yp <span class="op">=</span> np.hstack([Y, (Y_norms<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> alpha])</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Xp, Yp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span><span id="eq-proof-ip-to-ed"><span class="math display">
+\begin{align*}
+&amp; \argmax_i \langle\mathbf{x'}, \mathbf{y'}^{(i)}\rangle \\
+=&amp; \argmax_i \langle \mathbf{x}, \mathbf{y}^{(i)} \rangle - \|\mathbf{y}^{(i)}\|^2/2 \\
+=&amp; \argmin_i - 2\langle\mathbf{x}, \mathbf{y}^{(i)}\rangle + \|\mathbf{y}^{(i)}\|^2 + \|\mathbf{x}\|^2 \\
+=&amp; \argmin_i \|\mathbf{x} - \mathbf{y}^{(i)}\|^2
+\end{align*}
+\tag{16}</span></span></p>
+</div>
+<p>Similarly, adding <span class="math inline">\|\mathbf{x}\|^2</span> doesn’t affect the <span class="math inline">\argmax</span> operation. We then compare the ranking results of IP on <span class="math inline">\mathbf{x'}</span> and <span class="math inline">\mathbf{y'}</span> with the ranking results of ED on <span class="math inline">\mathbf{x}</span> and <span class="math inline">\mathbf{y}</span>.</p>
+<div id="709e0d35" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Xp, Yp <span class="op">=</span> ip_to_ed(X, Y)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"IP(X',Y'):"</span>, np.argsort(<span class="op">-</span>dist_func(Xp, Yp, <span class="st">"IP"</span>)))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ED(X, Y) :"</span>, np.argsort(dist_func(X, Y, <span class="st">"ED"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>IP(X',Y'): [[1 3 0 5 4 2]]
+ED(X, Y) : [[1 3 0 5 4 2]]</code></pre>
+</div>
+</div>
+</section>
+<section id="cs-ed" class="level3" data-number="3.6">
+<h3 data-number="3.6" class="anchored" data-anchor-id="cs-ed"><span class="header-section-number">3.6</span> CS –&gt; ED</h3>
+<p>We want the ranking results of Euclidean Distance by computing Cosine Similarity. This can be achieved by adding two dimensions, where <span class="math inline">\alpha</span> and <span class="math inline">\beta</span> are parameters to be determined:</p>
+<p><span id="eq-cs-to-ed"><span class="math display">
+\begin{align*}
+\text{Query: } \mathbf{x'} &amp;= [\mathbf{x};-\alpha/2;0] \\
+\text{Database: } \mathbf{y'} &amp;= [\beta\mathbf{y};\beta\|\mathbf{y}\|^2/\alpha;\sqrt{1-\beta^2\|\mathbf{y}\|^2-\beta^2\|\mathbf{y}\|^4/\alpha^2}]
+\end{align*}
+\tag{17}</span></span></p>
+<p>To avoid negative values in the square root, we need to choose <span class="math inline">\beta</span> such that:</p>
+<p><span id="eq-beta-cs-to-ed"><span class="math display">
+\begin{gather*}
+1-\beta^2\|\mathbf{y}^{(i)}\|^2-\beta^2\|\mathbf{y}^{(i)}\|^4/\alpha^2\ge 0 \text{ for all } i\\
+\Downarrow\\
+|\beta|\le \min_i 1/\sqrt{\|\mathbf{y}^{(i)}\|^2+\|\mathbf{y}^{(i)}\|^4/\alpha^2}
+\end{gather*}
+\tag{18}</span></span></p>
+<p>Here, we also need <span class="math inline">\beta&gt;0</span> to ensure the transformation is order-preserving (see proof). For <span class="math inline">\alpha</span>, it only requires <span class="math inline">\alpha\neq 0</span>, so we simply set <span class="math inline">\alpha=1</span>.</p>
+<div id="0d67d61e" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cs_to_ed(X, Y):</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    alpha <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    Xp <span class="op">=</span> np.hstack(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        [X, <span class="op">-</span>alpha <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> np.ones((X.shape[<span class="dv">0</span>], <span class="dv">1</span>)), np.zeros((X.shape[<span class="dv">0</span>], <span class="dv">1</span>))]</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    Y_norms <span class="op">=</span> np.linalg.norm(Y, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    beta <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="bu">max</span>(np.sqrt(Y_norms<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> (Y_norms<span class="op">**</span><span class="dv">4</span>) <span class="op">/</span> alpha<span class="op">**</span><span class="dv">2</span>) <span class="op">+</span> <span class="fl">1e-4</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    Yp <span class="op">=</span> np.hstack(</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        [</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>            beta <span class="op">*</span> Y,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>            beta <span class="op">*</span> (Y_norms<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> alpha,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>            np.sqrt(<span class="dv">1</span> <span class="op">-</span> beta<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> Y_norms<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> (beta<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> Y_norms<span class="op">**</span><span class="dv">4</span>) <span class="op">/</span> alpha<span class="op">**</span><span class="dv">2</span>),</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Xp, Yp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span><span id="eq-proof-cs-to-ed"><span class="math display">
+\begin{align*}
+&amp; \argmax_i \cos(\mathbf{x'}, \mathbf{y'}^{(i)}) \\
+=&amp; \argmax_i \frac{\langle \mathbf{x'}, \mathbf{y'}^{(i)} \rangle}{\|\mathbf{x'}\|\|\mathbf{y'}^{(i)}\|} \\
+=&amp; \argmax_i \frac{\beta\langle \mathbf{x}, \mathbf{y}^{(i)}\rangle + \beta\|\mathbf{y}^{(i)}\|^2/2}{\sqrt{\|\mathbf{x}\|^2 + \alpha^2/4}} \\
+=&amp; \argmax_i \beta(\langle\mathbf{x}, \mathbf{y}^{(i)}\rangle - \|\mathbf{y}^{(i)}\|^2/2) \\
+=&amp; \argmax_i \langle\mathbf{x}, \mathbf{y}^{(i)}\rangle - \|\mathbf{y}^{(i)}\|^2/2 \ (\text{require }\beta&gt;0) \\
+=&amp; \argmin_i \|\mathbf{x} - \mathbf{y}^{(i)}\|^2
+\end{align*}
+\tag{19}</span></span></p>
+</div>
+<p>Comparing the ranking results of CS on <span class="math inline">\mathbf{x'}</span> and <span class="math inline">\mathbf{y'}</span> with the ranking results of ED on <span class="math inline">\mathbf{x}</span> and <span class="math inline">\mathbf{y}</span>.</p>
+<div id="a459a47e" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Xp, Yp <span class="op">=</span> cs_to_ed(X, Y)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"CS(X',Y'):"</span>, np.argsort(<span class="op">-</span>dist_func(Xp, Yp, <span class="st">"CS"</span>)))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ED(X, Y) :"</span>, np.argsort(dist_func(X, Y, <span class="st">"ED"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CS(X',Y'): [[1 3 0 5 4 2]]
+ED(X, Y) : [[1 3 0 5 4 2]]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="side-effects" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="side-effects"><span class="header-section-number">4</span> Side Effects</h2>
+<p>Although these transformations preserve the ranking order of nearest neighbors, the added dimensions are not homogeneous with the original dimensions. This can make some algorithms more difficult, especially vector quantization methods.</p>
+<p>In particular, <span class="citation" data-cites="Morozov2018">Morozov and Babenko (<a href="#ref-Morozov2018" role="doc-biblioref">2018</a>)</span> pointed out the following issue. Suppose we want to use IP as the metric but compute with ED, so database vectors are transformed using <a href="#eq-ed-to-ip" class="quarto-xref">Equation&nbsp;12</a>. Consider two database vectors <span class="math inline">\mathbf{u}</span> and <span class="math inline">\mathbf{v}</span>. After transformation, we have:</p>
+<p><span id="eq-uv-ed-to-ip"><span class="math display">
+\begin{align*}
+\mathbf{u'} &amp;= [\mathbf{u};\sqrt{\alpha^2 - \|\mathbf{u}\|^2}] \\
+\mathbf{v'} &amp;= [\mathbf{v};\sqrt{\alpha^2 - \|\mathbf{v}\|^2}]
+\end{align*}
+\tag{20}</span></span></p>
+<p>Assume an algorithm wants to put similar vectors close to each other. Since the algorithm is based on ED, it will try to minimize the Euclidean distance <span class="math inline">\|\mathbf{u'} - \mathbf{v'}\|</span>. In fact:</p>
+<p><span id="eq-ed-up-vp"><span class="math display">
+\begin{align*}
+&amp; \|\mathbf{u'} - \mathbf{v'}\|^2 \\
+=&amp; \|\mathbf{u'}\|^2 + \|\mathbf{v'}\|^2 - 2\langle\mathbf{u'}, \mathbf{v'}\rangle \\
+=&amp; 2\alpha^2 - 2\langle\mathbf{u}, \mathbf{v}\rangle - 2\sqrt{\alpha^2 - \|\mathbf{u}\|^2}\sqrt{\alpha^2 - \|\mathbf{v}\|^2}
+\end{align*}
+\tag{21}</span></span></p>
+<p>This is equivalent to maximizing the following objective:</p>
+<p><span id="eq-obj-up-vp"><span class="math display">
+\begin{align*}
+&amp; \langle\mathbf{u}, \mathbf{v}\rangle + \sqrt{\alpha^2 - \|\mathbf{u}\|^2}\sqrt{\alpha^2 - \|\mathbf{v}\|^2} \\
+=&amp; \|\mathbf{u}\|\|\mathbf{v}\|\cos(\mathbf{u}, \mathbf{v}) + \sqrt{\alpha^2 - \|\mathbf{u}\|^2}\sqrt{\alpha^2 - \|\mathbf{v}\|^2}
+\end{align*}
+\tag{22}</span></span></p>
+<p>However, this is not equivalent to maximizing the inner product <span class="math inline">\langle\mathbf{u}, \mathbf{v}\rangle</span> alone, since the second term also depends on the vector norms. Vectors with larger norms will have a larger first term but a smaller second term. Consequently, the algorithm will cluster vectors differently in the transformed space compared to the original IP space, potentially leading to suboptimal results.</p>
+<p>To illustrate this issue, we compare the ranking results of ED on <span class="math inline">\mathbf{u'}</span> and <span class="math inline">\mathbf{v'}</span> with the ranking results of IP on <span class="math inline">\mathbf{u}</span> and <span class="math inline">\mathbf{v}</span>. The two ranking results are different.</p>
+<div id="bda6288b" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>_, Yp <span class="op">=</span> ed_to_ip(X, Y)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>Up, Vp <span class="op">=</span> Yp[<span class="dv">0</span>].reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>), Yp[<span class="dv">1</span>:]</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ED(U',V'):"</span>, np.argsort(dist_func(Up, Vp, <span class="st">"ED"</span>)))</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>U, V <span class="op">=</span> Y[<span class="dv">0</span>].reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>), Y[<span class="dv">1</span>:]</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"IP(U, V) :"</span>, np.argsort(<span class="op">-</span>dist_func(U, V, <span class="st">"IP"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ED(U',V'): [[0 2 4 3 1]]
+IP(U, V) : [[1 0 2 4 3]]</code></pre>
+</div>
+</div>
+<p><span class="citation" data-cites="Douze2025">Douze et al. (<a href="#ref-Douze2025" role="doc-biblioref">2025</a>)</span> suggests several mitigation strategies, including <a href="https://en.wikipedia.org/wiki/Random_projection">random projection</a>, <a href="https://en.wikipedia.org/wiki/Principal_component_analysis">Principal Component Analysis (PCA)</a>, and other transformation techniques applied to the transformed vectors to mitigate these side effects.</p>
+
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Bachrach2014" class="csl-entry" role="listitem">
+Bachrach, Yoram, Yehuda Finkelstein, Ran Gilad-Bachrach, Liran Katzir, Noam Koenigstein, Nir Nice, and Ulrich Paquet. 2014. <span>“Speeding up the Xbox Recommender System Using a Euclidean Transformation for Inner-Product Spaces.”</span> In <em>Proceedings of the 8th ACM Conference on Recommender Systems</em>, 257–64. RecSys ’14. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/2645710.2645741">https://doi.org/10.1145/2645710.2645741</a>.
+</div>
+<div id="ref-Douze2025" class="csl-entry" role="listitem">
+Douze, Matthijs, Alexandr Guzhva, Chengqi Deng, Jeff Johnson, Gergely Szilvasy, Pierre-Emmanuel Mazaré, Maria Lomeli, Lucas Hosseini, and Hervé Jégou. 2025. <span>“The Faiss Library.”</span> <a href="https://arxiv.org/abs/2401.08281">https://arxiv.org/abs/2401.08281</a>.
+</div>
+<div id="ref-Morozov2018" class="csl-entry" role="listitem">
+Morozov, Stanislav, and Artem Babenko. 2018. <span>“Non-Metric Similarity Graphs for Maximum Inner Product Search.”</span> In <em>Proceedings of the 32nd International Conference on Neural Information Processing Systems</em>, 4726–35. NIPS’18. Red Hook, NY, USA: Curran Associates Inc. <a href="http://papers.neurips.cc/paper/7722-non-metric-similarity-graphs-for-maximum-inner-product-search">http://papers.neurips.cc/paper/7722-non-metric-similarity-graphs-for-maximum-inner-product-search</a>.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{distance-metrics,
+  author = {Xu, Xuefeng},
+  title = {Transforming {Between} {Distance} {Metrics}},
+  date = {2026-02-22},
+  url = {https://xuefeng-xu.github.io/blog/distance-metrics.html},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-distance-metrics" class="csl-entry quarto-appendix-citeas" role="listitem">
+Xu, Xuefeng. 2026. <span>“Transforming Between Distance Metrics.”</span>
+February 22, 2026. <a href="https://xuefeng-xu.github.io/blog/distance-metrics.html">https://xuefeng-xu.github.io/blog/distance-metrics.html</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/xuefeng-xu\.github\.io");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "xuefeng-xu/xuefeng-xu.github.io";
+    script.dataset.repoId = "MDEwOlJlcG9zaXRvcnkyMzA2OTY4NzA=";
+    script.dataset.category = "Announcements";
+    script.dataset.categoryId = "DIC_kwDODcAnps4CpFmX";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/xuefeng-xu/xuefeng-xu.github.io/blob/master/blog/distance-metrics.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div></div></footer></body></html>

@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2025-07-31">
 <meta name="description" content="Graphical tools for evaluating classification models, highlighting trade-offs in model performance.">
 
-<title>ROC and PR Curves – Xuefeng Xu</title>
+<title>ROC, PR, and PRG Curves – Xuefeng Xu</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -101,9 +101,9 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f93c2b1f3f0577f377aefa4848a86a36.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-0d4a9d19931feb4fee1ddab4b2489000.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-f93c2b1f3f0577f377aefa4848a86a36.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-4ef7a0a50fb983a5bcea27c5849a3c79.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-751ab7fea6d366cf3fdfc68e735773ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-4ef7a0a50fb983a5bcea27c5849a3c79.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -141,6 +141,7 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
 </script>
+<script id="quarto-axe-checker-options" type="text/plain">dHJ1ZQ==</script>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -187,19 +188,19 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="ROC and PR Curves – Xuefeng Xu">
+<meta property="og:title" content="ROC, PR, and PRG Curves – Xuefeng Xu">
 <meta property="og:description" content="Graphical tools for evaluating classification models, highlighting trade-offs in model performance.">
 <meta property="og:image" content="https://xuefeng-xu.github.io/blog/roc-pr-curve_files/figure-html/fig-rocch-output-1.png">
 <meta property="og:site_name" content="Xuefeng Xu">
 <meta property="og:image:height" content="603">
 <meta property="og:image:width" content="604">
-<meta name="twitter:title" content="ROC and PR Curves – Xuefeng Xu">
+<meta name="twitter:title" content="ROC, PR, and PRG Curves – Xuefeng Xu">
 <meta name="twitter:description" content="Graphical tools for evaluating classification models, highlighting trade-offs in model performance.">
 <meta name="twitter:image" content="https://xuefeng-xu.github.io/blog/roc-pr-curve_files/figure-html/fig-rocch-output-1.png">
 <meta name="twitter:image-height" content="603">
 <meta name="twitter:image-width" content="604">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="citation_title" content="ROC and PR Curves">
+<meta name="citation_title" content="ROC, PR, and PRG Curves">
 <meta name="citation_author" content="Xuefeng Xu">
 <meta name="citation_publication_date" content="2025-07-31">
 <meta name="citation_cover_date" content="2025-07-31">
@@ -217,7 +218,7 @@ window.Quarto = {
 <meta name="citation_reference" content="citation_title=Modern applied statistics with s;,citation_author=W. N. Venables;,citation_author=B. D. Ripley;,citation_publication_date=2002;,citation_cover_date=2002;,citation_year=2002;,citation_fulltext_html_url=https://www.stats.ox.ac.uk/pub/MASS4/;,citation_doi=10.32614/CRAN.package.MASS;">
 <meta name="citation_reference" content="citation_title=Algorithms for minimization without derivatives;,citation_author=Richard P. Brent;,citation_publication_date=2013;,citation_cover_date=2013;,citation_year=2013;,citation_isbn=9780486143682;,citation_series_title=Dover books on mathematics;">
 <meta name="citation_reference" content="citation_title=SecureFedYJ: A safe feature gaussianization protocol for federated learning;,citation_author=Tanguy Marchand;,citation_author=Boris Muzellec;,citation_author=Constance Béguier;,citation_author=Jean Ogier du Terrail;,citation_author=Mathieu Andreux;,citation_publication_date=2022;,citation_cover_date=2022;,citation_year=2022;,citation_doi=10.48550/arXiv.2210.01639;,citation_volume=35;,citation_conference_title=Advances in neural information processing systems;,citation_conference=Curran Associates, Inc.;">
-<meta name="citation_reference" content="citation_author=Matt Haberland;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://github.com/scipy/scipy/pull/18852#issuecomment-1657858886;">
+<meta name="citation_reference" content="citation_title=BUG: Fix overflow in stats.yeojohnson;,citation_author=Matt Haberland;,citation_publication_date=2023-07;,citation_cover_date=2023-07;,citation_year=2023;,citation_fulltext_html_url=https://github.com/scipy/scipy/pull/18852#issuecomment-1657858886;">
 <meta name="citation_reference" content="citation_title=Robust classification for imprecise environments;,citation_author=Foster J. Provost;,citation_author=Tom Fawcett;,citation_publication_date=2001;,citation_cover_date=2001;,citation_year=2001;,citation_issue=3;,citation_doi=10.1023/A:1007601015854;,citation_volume=42;,citation_journal_title=Machine Learning;">
 <meta name="citation_reference" content="citation_title=The relationship between precision-recall and ROC curves;,citation_author=Jesse Davis;,citation_author=Mark Goadrich;,citation_publication_date=2006;,citation_cover_date=2006;,citation_year=2006;,citation_doi=10.1145/1143844.1143874;,citation_conference_title=Proceedings of the 23rd international conference on machine learning;,citation_conference=Association for Computing Machinery;,citation_series_title=ICML ’06;">
 <meta name="citation_reference" content="citation_title=An introduction to ROC analysis;,citation_author=Tom Fawcett;,citation_publication_date=2006;,citation_cover_date=2006;,citation_year=2006;,citation_issue=8;,citation_doi=10.1016/j.patrec.2005.10.010;,citation_volume=27;,citation_journal_title=Pattern Recognition Letters;">
@@ -227,6 +228,9 @@ window.Quarto = {
 <meta name="citation_reference" content="citation_title=Comparison of several algorithms for computing sample means and variances;,citation_author=Robert F. Ling;,citation_publication_date=1974;,citation_cover_date=1974;,citation_year=1974;,citation_issue=348;,citation_doi=10.1080/01621459.1974.10480219;,citation_volume=69;,citation_journal_title=Journal of the American Statistical Association;,citation_publisher=ASA Website;">
 <meta name="citation_reference" content="citation_title=Updating formulae and a pairwise algorithm for computing sample variances;,citation_author=T. F. Chan;,citation_author=G. H. Golub;,citation_author=R. J. LeVeque;,citation_publication_date=1982;,citation_cover_date=1982;,citation_year=1982;,citation_doi=10.1007/978-3-642-51461-6_3;,citation_conference_title=COMPSTAT 1982 5th symposium held at toulouse 1982;,citation_conference=Physica-Verlag HD;">
 <meta name="citation_reference" content="citation_title=Algorithms for computing the sample variance: Analysis and recommendations;,citation_author=Tony F. Chan;,citation_author=Gene H. Golub;,citation_author=Randall J. Leveque;,citation_publication_date=1983;,citation_cover_date=1983;,citation_year=1983;,citation_issue=3;,citation_doi=10.1080/00031305.1983.10483115;,citation_volume=37;,citation_journal_title=The American Statistician;,citation_publisher=ASA Website;">
+<meta name="citation_reference" content="citation_title=Speeding up the xbox recommender system using a euclidean transformation for inner-product spaces;,citation_author=Yoram Bachrach;,citation_author=Yehuda Finkelstein;,citation_author=Ran Gilad-Bachrach;,citation_author=Liran Katzir;,citation_author=Noam Koenigstein;,citation_author=Nir Nice;,citation_author=Ulrich Paquet;,citation_publication_date=2014;,citation_cover_date=2014;,citation_year=2014;,citation_doi=10.1145/2645710.2645741;,citation_conference_title=Proceedings of the 8th ACM conference on recommender systems;,citation_conference=Association for Computing Machinery;,citation_series_title=RecSys ’14;">
+<meta name="citation_reference" content="citation_title=The faiss library;,citation_author=Matthijs Douze;,citation_author=Alexandr Guzhva;,citation_author=Chengqi Deng;,citation_author=Jeff Johnson;,citation_author=Gergely Szilvasy;,citation_author=Pierre-Emmanuel Mazaré;,citation_author=Maria Lomeli;,citation_author=Lucas Hosseini;,citation_author=Hervé Jégou;,citation_publication_date=2025;,citation_cover_date=2025;,citation_year=2025;,citation_fulltext_html_url=https://arxiv.org/abs/2401.08281;">
+<meta name="citation_reference" content="citation_title=Non-metric similarity graphs for maximum inner product search;,citation_author=Stanislav Morozov;,citation_author=Artem Babenko;,citation_publication_date=2018;,citation_cover_date=2018;,citation_year=2018;,citation_fulltext_html_url=http://papers.neurips.cc/paper/7722-non-metric-similarity-graphs-for-maximum-inner-product-search;,citation_conference_title=Proceedings of the 32nd international conference on neural information processing systems;,citation_conference=Curran Associates Inc.;,citation_series_title=NIPS’18;">
 </head>
 
 <body class="floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -418,20 +422,16 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../research/index.html"> 
 <span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../teach/index.html"> 
-<span class="menu-text">Teaching</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../blog/index.html"> 
 <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../teach/index.html"> 
+<span class="menu-text">Teaching</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../cv.html"> 
@@ -460,14 +460,15 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">ROC and PR Curves</h1>
+      <h1 class="title">ROC, PR, and PRG Curves</h1>
                   <div>
         <div class="description">
           Graphical tools for evaluating classification models, highlighting trade-offs in model performance.
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Data Science</div>
+                <div class="quarto-category">Machine Learning</div>
+                <div class="quarto-category">Metric</div>
                 <div class="quarto-category">Python</div>
               </div>
                   </div>
@@ -578,13 +579,13 @@ Table&nbsp;1: The Confusion Matrix
 </div>
 <p>The ROC curve plots TPR vs.&nbsp;FPR, where:</p>
 <p><span id="eq-tpr-fpr"><span class="math display">
-\begin{align}
+\begin{align*}
 \text{TPR}&amp;=\text{TP}/\text{P}, \\
 \text{FPR}&amp;=\text{FP}/\text{N}.
-\end{align}
+\end{align*}
 \tag{1}</span></span></p>
 <p>A simple algorithm constructs the ROC curve: (i) Sort predictions in descending score order. (ii) Sweep thresholds across scores, updating TP and FP counts <span class="citation" data-cites="Fawcett2006">(<a href="#ref-Fawcett2006" role="doc-biblioref">Fawcett 2006</a>)</span>.</p>
-<div id="f79956cf" class="cell" data-execution_count="1">
+<div id="1e94e133" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_fp_tp(y_true, y_score):</span>
@@ -617,7 +618,7 @@ Table&nbsp;1: The Confusion Matrix
 </dl>
 </div>
 </div>
-<div id="16600999" class="cell" data-execution_count="2">
+<div id="236aca11" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> roc_curve(y_true, y_score):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    fps, tps, thresholds <span class="op">=</span> count_fp_tp(y_true, y_score)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    fpr <span class="op">=</span> fps <span class="op">/</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">0</span>)</span>
@@ -625,7 +626,7 @@ Table&nbsp;1: The Confusion Matrix
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fpr, tpr, thresholds</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The ROC curve is always monotonically non-decreasing, starting at <span class="math inline">(0, 0)</span> for the highest threshold and ending at <span class="math inline">(1, 1)</span> for the lowest threshold. Points are connected using linear interpolation. A random classifier lies along <span class="math inline">y=x</span>, while curves closer to the top-left indicate better performance.</p>
-<div id="46a35935" class="cell" data-execution_count="3">
+<div id="5c8c2aae" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -692,7 +693,7 @@ Figure&nbsp;1: ROC curve.
 <section id="roc-convex-hull" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="roc-convex-hull"><span class="header-section-number">2</span> ROC Convex Hull</h2>
 <p>The ROC <a href="https://en.wikipedia.org/wiki/Convex_hull">Convex Hull</a> (ROCCH) highlights potentially optimal performance of a classifier (or a set of classifiers) by connecting upper boundary points <span class="citation" data-cites="Provost2001">(<a href="#ref-Provost2001" role="doc-biblioref">Provost and Fawcett 2001</a>)</span>. It can be computed via algorithms like the <a href="https://en.wikibooks.org/wiki/Algorithm_Implementation/Geometry/Convex_hull/Monotone_chain#Python">Monotone chain algorithm</a>.</p>
-<div id="a7fce21d" class="cell" data-execution_count="5">
+<div id="8ed95efe" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convex_hull(points):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    points <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(points))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -708,8 +709,7 @@ Figure&nbsp;1: ROC curve.
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> upper</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="preview-image">
-<div id="cell-fig-rocch" class="cell" data-execution_count="6">
+<div id="cell-fig-rocch" class="cell preview-image" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rocch <span class="op">=</span> convex_hull(<span class="bu">zip</span>(fpr, tpr))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>rocch <span class="op">=</span> np.array(rocch)</span>
@@ -731,7 +731,6 @@ Figure&nbsp;2: ROC Convex Hull (ROCCH).
 </div>
 </div>
 </div>
-</div>
 </section>
 <section id="pr-curve" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="pr-curve"><span class="header-section-number">3</span> PR Curve</h2>
@@ -740,7 +739,7 @@ Figure&nbsp;2: ROC Convex Hull (ROCCH).
 \text{Prec}=\frac{\text{TP}}{\text{TP}+\text{FP}}
 \tag{2}</span></span></p>
 <p>PR curves start at <span class="math inline">(0, 1)</span> and end at <span class="math inline">(1, \frac{\text{P}}{\text{P}+\text{N}})</span>, where the endpoint reflects the proportion of positive samples. Because Precision depends on both TP and FP, the PR curve is non-monotonic and can decrease as Recall increases. Moreover, it is highly influenced by class imbalance <span class="citation" data-cites="Williams2021">(<a href="#ref-Williams2021" role="doc-biblioref">Williams 2021</a>)</span>. For a random classifier, the PR curve is a horizontal line at <span class="math inline">y = \frac{\text{P}}{\text{P}+\text{N}}</span>, whereas curves closer to the top-right indicate stronger performance.</p>
-<div id="20e0e5aa" class="cell" data-execution_count="7">
+<div id="c0d259d3" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pr_curve(y_true, y_score):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    fps, tps, thresholds <span class="op">=</span> count_fp_tp(y_true, y_score)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -757,7 +756,7 @@ Figure&nbsp;2: ROC Convex Hull (ROCCH).
 \text{Prec}=\frac{\text{P}\cdot\text{TPR}}{\text{P}\cdot\text{TPR}+\text{N}\cdot\text{FPR}}
 =\frac{1}{1+\frac{\text{N}}{\text{P}}\cdot\frac{\text{FPR}}{\text{TPR}}}
 \tag{3}</span></span></p>
-<div id="e1301706" class="cell" data-execution_count="8">
+<div id="9bded72a" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.interpolate <span class="im">import</span> interp1d</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pr_from_roc(fpr, tpr, neg_to_pos):</span>
@@ -826,13 +825,13 @@ Figure&nbsp;4: PR curve (Scikit-learn).
 <h2 data-number="4" class="anchored" data-anchor-id="prg-curve"><span class="header-section-number">4</span> PRG Curve</h2>
 <p>ROC curves benefit from linear interpolation and universal baselines, whereas PR curves lack these properties. To address this, <span class="citation" data-cites="Flach2015">Flach and Kull (<a href="#ref-Flach2015" role="doc-biblioref">2015</a>)</span> proposed the Precision–Recall-Gain (PRG) curve, which transforms Precision and Recall into Gains and plots these Precision Gain and Recall Gain within the unit square:</p>
 <p><span id="eq-prec-rec-gain"><span class="math display">
-\begin{align}
+\begin{align*}
 \text{PrecG}&amp;=\frac{\text{Prec}-\pi}{(1-\pi)\text{Prec}}, \\
 \text{RecG}&amp;=\frac{\text{Rec}-\pi}{(1-\pi)\text{Rec}},
-\end{align}
+\end{align*}
 \tag{4}</span></span></p>
 <p>where <span class="math inline">\pi=\frac{\text{P}}{\text{P}+\text{N}}</span> is the positive class fraction. Notably, Gains can be negative, and such points are typically omitted from the PRG curve.</p>
-<div id="c2d17dd1" class="cell" data-execution_count="11">
+<div id="b0f970b6" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prg_curve(y_true, y_score):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    prec, rec, thresholds <span class="op">=</span> pr_curve(y_true, y_score)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    pos_frac <span class="op">=</span> <span class="bu">sum</span>(y_true <span class="op">==</span> <span class="dv">0</span>) <span class="op">/</span> <span class="bu">len</span>(y_true)</span>
@@ -867,7 +866,7 @@ Figure&nbsp;5: PRG curve.
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Davis2006" class="csl-entry" role="listitem">
 Davis, Jesse, and Mark Goadrich. 2006. <span>“The Relationship Between Precision-Recall and ROC Curves.”</span> In <em>Proceedings of the 23rd International Conference on Machine Learning</em>, 233–40. ICML ’06. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/1143844.1143874">https://doi.org/10.1145/1143844.1143874</a>.
 </div>
@@ -885,13 +884,14 @@ Williams, Christopher K. I. 2021. <span>“The Effect of Class Imbalance on Prec
 </div>
 </div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{roc-pr-curve,
   author = {Xu, Xuefeng},
-  title = {ROC and {PR} {Curves}},
+  title = {ROC, {PR,} and {PRG} {Curves}},
   date = {2025-07-31},
   url = {https://xuefeng-xu.github.io/blog/roc-pr-curve.html},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-roc-pr-curve" class="csl-entry quarto-appendix-citeas" role="listitem">
-Xu, Xuefeng. 2025. <span>“ROC and PR Curves.”</span> July 31, 2025. <a href="https://xuefeng-xu.github.io/blog/roc-pr-curve.html">https://xuefeng-xu.github.io/blog/roc-pr-curve.html</a>.
+Xu, Xuefeng. 2025. <span>“ROC, PR, and PRG Curves.”</span> July 31,
+2025. <a href="https://xuefeng-xu.github.io/blog/roc-pr-curve.html">https://xuefeng-xu.github.io/blog/roc-pr-curve.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

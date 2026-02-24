@@ -10,33 +10,47 @@
 <atom:link href="https://xuefeng-xu.github.io/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Xuefeng Xu&#39;s Blog</description>
 <generator>quarto-1.8.27</generator>
-<lastBuildDate>Thu, 02 Oct 2025 21:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 21 Feb 2026 22:00:00 GMT</lastBuildDate>
 <item>
-  <title>How to Compute Variance?</title>
+  <title>Transforming Between Distance Metrics</title>
+  <dc:creator>Xuefeng Xu</dc:creator>
+  <link>https://xuefeng-xu.github.io/blog/distance-metrics.html</link>
+  <description><![CDATA[ Order-preserving transforms between Euclidean Distance, Inner Product, and Cosine Similarity. ]]></description>
+  <category>Transform</category>
+  <category>Metric</category>
+  <category>Python</category>
+  <guid>https://xuefeng-xu.github.io/blog/distance-metrics.html</guid>
+  <pubDate>Sat, 21 Feb 2026 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>How NOT to Compute Variance?</title>
   <dc:creator>Xuefeng Xu</dc:creator>
   <link>https://xuefeng-xu.github.io/blog/variance.html</link>
   <description><![CDATA[ Mathematically equivalent formulas for variance can have very different numerical stability. ]]></description>
   <category>Numerical</category>
+  <category>Statistics</category>
   <category>Python</category>
   <guid>https://xuefeng-xu.github.io/blog/variance.html</guid>
   <pubDate>Thu, 02 Oct 2025 21:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>ROC and PR Curves</title>
+  <title>ROC, PR, and PRG Curves</title>
   <dc:creator>Xuefeng Xu</dc:creator>
   <link>https://xuefeng-xu.github.io/blog/roc-pr-curve.html</link>
   <description><![CDATA[ Graphical tools for evaluating classification models, highlighting trade-offs in model performance. ]]></description>
-  <category>Data Science</category>
+  <category>Machine Learning</category>
+  <category>Metric</category>
   <category>Python</category>
   <guid>https://xuefeng-xu.github.io/blog/roc-pr-curve.html</guid>
   <pubDate>Wed, 30 Jul 2025 21:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>Power Transform</title>
+  <title>Numerically Stable Power Transform</title>
   <dc:creator>Xuefeng Xu</dc:creator>
   <link>https://xuefeng-xu.github.io/blog/power-transform.html</link>
   <description><![CDATA[ Parametric methods that normalize data but require careful handling to avoid numerical instability. ]]></description>
   <category>Numerical</category>
+  <category>Transform</category>
   <category>Python</category>
   <guid>https://xuefeng-xu.github.io/blog/power-transform.html</guid>
   <pubDate>Sun, 13 Apr 2025 21:00:00 GMT</pubDate>
@@ -46,6 +60,7 @@
   <dc:creator>Xuefeng Xu</dc:creator>
   <link>https://xuefeng-xu.github.io/blog/pchip.html</link>
   <description><![CDATA[ Shape-preserving interpolation method that preserves monotonicity and avoids overshoots. ]]></description>
+  <category>Math</category>
   <category>Statistics</category>
   <guid>https://xuefeng-xu.github.io/blog/pchip.html</guid>
   <pubDate>Wed, 12 Mar 2025 22:00:00 GMT</pubDate>

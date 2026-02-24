@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2025-04-14">
 <meta name="description" content="Parametric methods that normalize data but require careful handling to avoid numerical instability.">
 
-<title>Power Transform – Xuefeng Xu</title>
+<title>Numerically Stable Power Transform – Xuefeng Xu</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -101,9 +101,9 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f93c2b1f3f0577f377aefa4848a86a36.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-0d4a9d19931feb4fee1ddab4b2489000.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-f93c2b1f3f0577f377aefa4848a86a36.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-4ef7a0a50fb983a5bcea27c5849a3c79.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-751ab7fea6d366cf3fdfc68e735773ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-4ef7a0a50fb983a5bcea27c5849a3c79.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -141,6 +141,7 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
 </script>
+<script id="quarto-axe-checker-options" type="text/plain">dHJ1ZQ==</script>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -187,19 +188,19 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="Power Transform – Xuefeng Xu">
+<meta property="og:title" content="Numerically Stable Power Transform – Xuefeng Xu">
 <meta property="og:description" content="Parametric methods that normalize data but require careful handling to avoid numerical instability.">
 <meta property="og:image" content="https://xuefeng-xu.github.io/blog/power-transform_files/figure-html/fig-yeo-johnson-output-1.png">
 <meta property="og:site_name" content="Xuefeng Xu">
 <meta property="og:image:height" content="573">
 <meta property="og:image:width" content="591">
-<meta name="twitter:title" content="Power Transform – Xuefeng Xu">
+<meta name="twitter:title" content="Numerically Stable Power Transform – Xuefeng Xu">
 <meta name="twitter:description" content="Parametric methods that normalize data but require careful handling to avoid numerical instability.">
 <meta name="twitter:image" content="https://xuefeng-xu.github.io/blog/power-transform_files/figure-html/fig-yeo-johnson-output-1.png">
 <meta name="twitter:image-height" content="573">
 <meta name="twitter:image-width" content="591">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="citation_title" content="Power Transform">
+<meta name="citation_title" content="Numerically Stable Power Transform">
 <meta name="citation_author" content="Xuefeng Xu">
 <meta name="citation_publication_date" content="2025-04-14">
 <meta name="citation_cover_date" content="2025-04-14">
@@ -217,7 +218,7 @@ window.Quarto = {
 <meta name="citation_reference" content="citation_title=Modern applied statistics with s;,citation_author=W. N. Venables;,citation_author=B. D. Ripley;,citation_publication_date=2002;,citation_cover_date=2002;,citation_year=2002;,citation_fulltext_html_url=https://www.stats.ox.ac.uk/pub/MASS4/;,citation_doi=10.32614/CRAN.package.MASS;">
 <meta name="citation_reference" content="citation_title=Algorithms for minimization without derivatives;,citation_author=Richard P. Brent;,citation_publication_date=2013;,citation_cover_date=2013;,citation_year=2013;,citation_isbn=9780486143682;,citation_series_title=Dover books on mathematics;">
 <meta name="citation_reference" content="citation_title=SecureFedYJ: A safe feature gaussianization protocol for federated learning;,citation_author=Tanguy Marchand;,citation_author=Boris Muzellec;,citation_author=Constance Béguier;,citation_author=Jean Ogier du Terrail;,citation_author=Mathieu Andreux;,citation_publication_date=2022;,citation_cover_date=2022;,citation_year=2022;,citation_doi=10.48550/arXiv.2210.01639;,citation_volume=35;,citation_conference_title=Advances in neural information processing systems;,citation_conference=Curran Associates, Inc.;">
-<meta name="citation_reference" content="citation_author=Matt Haberland;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://github.com/scipy/scipy/pull/18852#issuecomment-1657858886;">
+<meta name="citation_reference" content="citation_title=BUG: Fix overflow in stats.yeojohnson;,citation_author=Matt Haberland;,citation_publication_date=2023-07;,citation_cover_date=2023-07;,citation_year=2023;,citation_fulltext_html_url=https://github.com/scipy/scipy/pull/18852#issuecomment-1657858886;">
 <meta name="citation_reference" content="citation_title=Robust classification for imprecise environments;,citation_author=Foster J. Provost;,citation_author=Tom Fawcett;,citation_publication_date=2001;,citation_cover_date=2001;,citation_year=2001;,citation_issue=3;,citation_doi=10.1023/A:1007601015854;,citation_volume=42;,citation_journal_title=Machine Learning;">
 <meta name="citation_reference" content="citation_title=The relationship between precision-recall and ROC curves;,citation_author=Jesse Davis;,citation_author=Mark Goadrich;,citation_publication_date=2006;,citation_cover_date=2006;,citation_year=2006;,citation_doi=10.1145/1143844.1143874;,citation_conference_title=Proceedings of the 23rd international conference on machine learning;,citation_conference=Association for Computing Machinery;,citation_series_title=ICML ’06;">
 <meta name="citation_reference" content="citation_title=An introduction to ROC analysis;,citation_author=Tom Fawcett;,citation_publication_date=2006;,citation_cover_date=2006;,citation_year=2006;,citation_issue=8;,citation_doi=10.1016/j.patrec.2005.10.010;,citation_volume=27;,citation_journal_title=Pattern Recognition Letters;">
@@ -227,6 +228,9 @@ window.Quarto = {
 <meta name="citation_reference" content="citation_title=Comparison of several algorithms for computing sample means and variances;,citation_author=Robert F. Ling;,citation_publication_date=1974;,citation_cover_date=1974;,citation_year=1974;,citation_issue=348;,citation_doi=10.1080/01621459.1974.10480219;,citation_volume=69;,citation_journal_title=Journal of the American Statistical Association;,citation_publisher=ASA Website;">
 <meta name="citation_reference" content="citation_title=Updating formulae and a pairwise algorithm for computing sample variances;,citation_author=T. F. Chan;,citation_author=G. H. Golub;,citation_author=R. J. LeVeque;,citation_publication_date=1982;,citation_cover_date=1982;,citation_year=1982;,citation_doi=10.1007/978-3-642-51461-6_3;,citation_conference_title=COMPSTAT 1982 5th symposium held at toulouse 1982;,citation_conference=Physica-Verlag HD;">
 <meta name="citation_reference" content="citation_title=Algorithms for computing the sample variance: Analysis and recommendations;,citation_author=Tony F. Chan;,citation_author=Gene H. Golub;,citation_author=Randall J. Leveque;,citation_publication_date=1983;,citation_cover_date=1983;,citation_year=1983;,citation_issue=3;,citation_doi=10.1080/00031305.1983.10483115;,citation_volume=37;,citation_journal_title=The American Statistician;,citation_publisher=ASA Website;">
+<meta name="citation_reference" content="citation_title=Speeding up the xbox recommender system using a euclidean transformation for inner-product spaces;,citation_author=Yoram Bachrach;,citation_author=Yehuda Finkelstein;,citation_author=Ran Gilad-Bachrach;,citation_author=Liran Katzir;,citation_author=Noam Koenigstein;,citation_author=Nir Nice;,citation_author=Ulrich Paquet;,citation_publication_date=2014;,citation_cover_date=2014;,citation_year=2014;,citation_doi=10.1145/2645710.2645741;,citation_conference_title=Proceedings of the 8th ACM conference on recommender systems;,citation_conference=Association for Computing Machinery;,citation_series_title=RecSys ’14;">
+<meta name="citation_reference" content="citation_title=The faiss library;,citation_author=Matthijs Douze;,citation_author=Alexandr Guzhva;,citation_author=Chengqi Deng;,citation_author=Jeff Johnson;,citation_author=Gergely Szilvasy;,citation_author=Pierre-Emmanuel Mazaré;,citation_author=Maria Lomeli;,citation_author=Lucas Hosseini;,citation_author=Hervé Jégou;,citation_publication_date=2025;,citation_cover_date=2025;,citation_year=2025;,citation_fulltext_html_url=https://arxiv.org/abs/2401.08281;">
+<meta name="citation_reference" content="citation_title=Non-metric similarity graphs for maximum inner product search;,citation_author=Stanislav Morozov;,citation_author=Artem Babenko;,citation_publication_date=2018;,citation_cover_date=2018;,citation_year=2018;,citation_fulltext_html_url=http://papers.neurips.cc/paper/7722-non-metric-similarity-graphs-for-maximum-inner-product-search;,citation_conference_title=Proceedings of the 32nd international conference on neural information processing systems;,citation_conference=Curran Associates Inc.;,citation_series_title=NIPS’18;">
 </head>
 
 <body class="floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -418,20 +422,16 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../research/index.html"> 
 <span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../teach/index.html"> 
-<span class="menu-text">Teaching</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../blog/index.html"> 
 <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../teach/index.html"> 
+<span class="menu-text">Teaching</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../cv.html"> 
@@ -460,7 +460,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Power Transform</h1>
+      <h1 class="title">Numerically Stable Power Transform</h1>
                   <div>
         <div class="description">
           Parametric methods that normalize data but require careful handling to avoid numerical instability.
@@ -468,6 +468,7 @@ window.Quarto = {
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">Numerical</div>
+                <div class="quarto-category">Transform</div>
                 <div class="quarto-category">Python</div>
               </div>
                   </div>
@@ -556,7 +557,7 @@ window.Quarto = {
 \end{cases}
 \tag{2}</span></span></p>
 <p><a href="#fig-power-transform" class="quarto-xref">Figure&nbsp;1</a> visualizes these transformations across various <span class="math inline">\lambda</span> values.</p>
-<div id="df068e11" class="cell" data-execution_count="1">
+<div id="27911276" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -634,8 +635,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div class="preview-image quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-power-transform" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="cell-fig-yeo-johnson" class="cell quarto-layout-cell-subref" data-execution_count="3" data-ref-parent="fig-power-transform">
+<div id="cell-fig-yeo-johnson" class="cell preview-image quarto-layout-cell-subref quarto-layout-cell" data-execution_count="3" data-ref-parent="fig-power-transform" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="cell-output cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-power-transform">
 <div id="fig-yeo-johnson" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
@@ -646,7 +646,6 @@ window.Quarto = {
 (b) Yeo-Johnson
 </figcaption>
 </figure>
-</div>
 </div>
 </div>
 </div>
@@ -665,7 +664,7 @@ Figure&nbsp;1: Box-Cox and Yeo-Johnson transformations.
 \ln\mathcal{L}_{\text{YJ}}(\lambda, x)=(\lambda-1) \sum_i^n \text{sgn} (x_i) \ln(|x_i|+1) - \frac{n}{2}\ln\sigma^2_{\psi_{\text{YJ}}}
 \tag{4}</span></span></p>
 <p>Here, <span class="math inline">\sigma^2_\psi</span> represents the variance of the transformed data, <span class="math inline">\text{Var}[\psi(\lambda,x)]</span>. These log-likelihood functions are concave <span class="citation" data-cites="Kouider1995 Marchand2022">(<a href="#ref-Kouider1995" role="doc-biblioref">Kouider and Chen 1995</a>; <a href="#ref-Marchand2022" role="doc-biblioref">Marchand et al. 2022</a>)</span>, which guarantees a unique maximum. Brent’s method <span class="citation" data-cites="Brent2013">(<a href="#ref-Brent2013" role="doc-biblioref">Brent 2013</a>)</span> is commonly employed for optimization.</p>
-<div id="cd62598d" class="cell" data-execution_count="4">
+<div id="7ff4f5bc" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> brent</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> max_llf(x, llf):</span>
@@ -677,14 +676,14 @@ Figure&nbsp;1: Box-Cox and Yeo-Johnson transformations.
 <section id="numerical-instabilities" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="numerical-instabilities"><span class="header-section-number">2</span> Numerical Instabilities</h2>
 <p>Because both transformations involve exponentiation, they are susceptible to numerical overflow. This problem has been observed by <span class="citation" data-cites="Marchand2022">(<a href="#ref-Marchand2022" role="doc-biblioref">Marchand et al. 2022</a>)</span> and discussed in <a href="https://github.com/scikit-learn/scikit-learn/issues/23319">Scikit-learn’s GitHub Issue</a>. Below is an example illustrating the problem using a naive implementation of <a href="#eq-box-cox-llf" class="quarto-xref">Equation&nbsp;3</a>:</p>
-<div id="6a231ab8" class="cell" data-execution_count="5">
+<div id="2ce30c7c" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_llf_naive(lmb, x):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    logx <span class="op">=</span> np.log(x)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    logvar <span class="op">=</span> np.log(np.var(boxcox(x, lmb)))</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (lmb <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> np.<span class="bu">sum</span>(logx) <span class="op">-</span> n<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> logvar</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="629c3e8c" class="cell" data-execution_count="6">
+<div id="c80bc4b2" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="fl">9.9</span>])</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(max_llf(x, llf<span class="op">=</span>boxcox_llf_naive))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -702,7 +701,7 @@ overflow encountered in reduce
 </div>
 </div>
 <p>Although this returns a <span class="math inline">\lambda</span> value, it produces overflow warnings. A useful diagnostic is to visualize the log-likelihood curve:</p>
-<div id="4e08bb91" class="cell" data-execution_count="7">
+<div id="5c01d3ba" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_llf(x, lb, ub, llf):</span>
@@ -742,7 +741,7 @@ Figure&nbsp;2: Naive log-likelihood computation.
 <section id="existing-solutions" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="existing-solutions"><span class="header-section-number">3</span> Existing Solutions</h2>
 <p>The MASS package in R <span class="citation" data-cites="Venables2002">(<a href="#ref-Venables2002" role="doc-biblioref">Venables and Ripley 2002</a>)</span> proposes a simple yet effective trick: divide the data by its mean. This rescales the data and avoids numerical instability without affecting the optimization outcome.</p>
-<div id="5e04adfa" class="cell" data-execution_count="9">
+<div id="47a1491d" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x_dm <span class="op">=</span> x <span class="op">/</span> np.mean(x)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(max_llf(x_dm, llf<span class="op">=</span>boxcox_llf_naive))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -802,7 +801,7 @@ Figure&nbsp;3: Log-likelihood after mean division.
 <section id="log-domain-computation" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="log-domain-computation"><span class="header-section-number">4</span> Log-Domain Computation</h2>
 <p>To address numerical instability for both transformations, log-domain computation <span class="citation" data-cites="Haberland2023">(<a href="#ref-Haberland2023" role="doc-biblioref">Haberland 2023</a>)</span> is effective. It uses the <a href="https://en.wikipedia.org/wiki/LogSumExp">Log-Sum-Exp trick</a> to compute statistics in log domain:</p>
-<div id="690f4547" class="cell" data-execution_count="11">
+<div id="9cf3f0cc" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> logsumexp</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_mean(logx):</span>
@@ -817,7 +816,7 @@ Figure&nbsp;3: Log-likelihood after mean division.
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.real(logsumexp(<span class="dv">2</span> <span class="op">*</span> logxmu)) <span class="op">-</span> np.log(<span class="bu">len</span>(logx))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This allows direct computation of <span class="math inline">\ln\sigma^2_\psi</span> from <span class="math inline">\ln x</span>. Plugging in <a href="#eq-boxcox-log-var" class="quarto-xref">Equation&nbsp;5</a>, we can compute the log-likelihood in the log-domain.</p>
-<div id="34f4d231" class="cell" data-execution_count="12">
+<div id="8cf7fd61" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_llf(lmb, x):</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    logx <span class="op">=</span> np.log(x)</span>
@@ -828,7 +827,7 @@ Figure&nbsp;3: Log-likelihood after mean division.
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (lmb <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> np.<span class="bu">sum</span>(logx) <span class="op">-</span> n<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> logvar</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This version avoids overflow and reliably returns the optimal <span class="math inline">\lambda</span>.</p>
-<div id="32b4170b" class="cell" data-execution_count="13">
+<div id="fc29920b" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(max_llf(x, llf<span class="op">=</span>boxcox_llf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>357.55141245531865</code></pre>
@@ -854,7 +853,7 @@ Figure&nbsp;4: Log-likelihood using log-domain computation.
 </div>
 </div>
 <p>The same principle extends to Yeo-Johnson, even for mixed-sign inputs.</p>
-<div id="ebcf3de9" class="cell" data-execution_count="15">
+<div id="00497d16" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_var_yeojohnson(x, lmb):</span>
@@ -903,7 +902,7 @@ Figure&nbsp;4: Log-likelihood using log-domain computation.
 <section id="constrained-optimization" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="constrained-optimization"><span class="header-section-number">5</span> Constrained Optimization</h2>
 <p>Even with log-domain computation, applying the transformation using a large absolute value of <span class="math inline">\lambda</span> can result in overflow:</p>
-<div id="87199cd0" class="cell" data-execution_count="16">
+<div id="d20bf9ba" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>lmax <span class="op">=</span> max_llf(x, llf<span class="op">=</span>boxcox_llf)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(boxcox(x, lmax))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -927,14 +926,14 @@ Figure&nbsp;4: Log-likelihood using log-domain computation.
 \psi^{-1}_{\text{BC}}(x,y)=
 -\tfrac{1}{y}-\tfrac{1}{\ln x}W\left(-\tfrac{x^{-1/y}\ln x}{y}\right)
 \tag{9}</span></span></p>
-<div id="88b388d2" class="cell" data-execution_count="17">
+<div id="3d34c62c" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> lambertw</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_inv_lmbda(x, y):</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    num <span class="op">=</span> lambertw(<span class="op">-</span>(x <span class="op">**</span> (<span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y)) <span class="op">*</span> np.log(x) <span class="op">/</span> y, k<span class="op">=-</span><span class="dv">1</span>)</span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span> <span class="op">/</span> y <span class="op">-</span> np.real(num <span class="op">/</span> np.log(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="64ca3255" class="cell" data-execution_count="18">
+<div id="ace9ab4a" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boxcox_constranined_lmax(lmax, x, ymax):</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x &gt; 1, boxcox(x) &gt; 0; x &lt; 1, boxcox(x) &lt; 0</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    xmin, xmax <span class="op">=</span> <span class="bu">min</span>(x), <span class="bu">max</span>(x)</span>
@@ -951,7 +950,7 @@ Figure&nbsp;4: Log-likelihood using log-domain computation.
 <span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lmax</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This method can be verified by testing different values for <span class="math inline">y_{\max}</span>:</p>
-<div id="1c962f7b" class="cell" data-execution_count="19">
+<div id="662952e1" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> verify_boxcox_constranined_lmax(x):</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    np.set_printoptions(precision<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    lmax <span class="op">=</span> max_llf(x, llf<span class="op">=</span>boxcox_llf)</span>
@@ -959,7 +958,7 @@ Figure&nbsp;4: Log-likelihood using log-domain computation.
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        l <span class="op">=</span> boxcox_constranined_lmax(lmax, x, ymax)</span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(boxcox(x, l))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="0d75e74a" class="cell" data-execution_count="20">
+<div id="68659c3b" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Positive overflow</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="fl">9.9</span>])</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>verify_boxcox_constranined_lmax(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -970,7 +969,7 @@ Figure&nbsp;4: Log-likelihood using log-domain computation.
 [1.00e+10 1.00e+10 1.00e+10 8.95e+09]</code></pre>
 </div>
 </div>
-<div id="5a4ee51b" class="cell" data-execution_count="21">
+<div id="02dcfedf" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative overflow</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.101</span>])</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>verify_boxcox_constranined_lmax(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -982,7 +981,7 @@ Figure&nbsp;4: Log-likelihood using log-domain computation.
 </div>
 </div>
 <p>The constrained optimization approach can also be extended to Yeo-Johnson, ensures overflow-free transformations even for extreme values.</p>
-<div id="8d8ed9e1" class="cell" data-execution_count="22">
+<div id="b5c2a2ed" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> yeojohnson_inv_lmbda(x, y):</span>
@@ -1016,7 +1015,7 @@ Figure&nbsp;4: Log-likelihood using log-domain computation.
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Box1964" class="csl-entry" role="listitem">
 Box, G. E. P., and D. R. Cox. 1964. <span>“An Analysis of Transformations.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 26 (2): 211–43. <a href="https://doi.org/10.1111/j.2517-6161.1964.tb00553.x">https://doi.org/10.1111/j.2517-6161.1964.tb00553.x</a>.
 </div>
@@ -1024,7 +1023,7 @@ Box, G. E. P., and D. R. Cox. 1964. <span>“An Analysis of Transformations.”<
 Brent, Richard P. 2013. <em>Algorithms for Minimization Without Derivatives</em>. Dover Books on Mathematics. Dover Publications, Incorporated.
 </div>
 <div id="ref-Haberland2023" class="csl-entry" role="listitem">
-Haberland, Matt. 2023. <a href="https://github.com/scipy/scipy/pull/18852#issuecomment-1657858886">https://github.com/scipy/scipy/pull/18852#issuecomment-1657858886</a>.
+Haberland, Matt. 2023. <span>“BUG: Fix Overflow in Stats.yeojohnson.”</span> <a href="https://github.com/scipy/scipy/pull/18852#issuecomment-1657858886">https://github.com/scipy/scipy/pull/18852#issuecomment-1657858886</a>.
 </div>
 <div id="ref-Kouider1995" class="csl-entry" role="listitem">
 Kouider, Elies, and Hanfeng Chen. 1995. <span>“Concavity of Box-Cox Log-Likelihood Function.”</span> <em>Statistics &amp; Probability Letters</em> 25 (2): 171–75. <a href="https://doi.org/10.1016/0167-7152(94)00219-X">https://doi.org/10.1016/0167-7152(94)00219-X</a>.
@@ -1043,13 +1042,14 @@ Yeo, In‐Kwon, and Richard A. Johnson. 2000. <span>“A New Family of Power Tra
 </div>
 </div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{power-transform,
   author = {Xu, Xuefeng},
-  title = {Power {Transform}},
+  title = {Numerically {Stable} {Power} {Transform}},
   date = {2025-04-14},
   url = {https://xuefeng-xu.github.io/blog/power-transform.html},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-power-transform" class="csl-entry quarto-appendix-citeas" role="listitem">
-Xu, Xuefeng. 2025. <span>“Power Transform.”</span> April 14, 2025. <a href="https://xuefeng-xu.github.io/blog/power-transform.html">https://xuefeng-xu.github.io/blog/power-transform.html</a>.
+Xu, Xuefeng. 2025. <span>“Numerically Stable Power Transform.”</span>
+April 14, 2025. <a href="https://xuefeng-xu.github.io/blog/power-transform.html">https://xuefeng-xu.github.io/blog/power-transform.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2025-10-03">
 <meta name="description" content="Mathematically equivalent formulas for variance can have very different numerical stability.">
 
-<title>How to Compute Variance? – Xuefeng Xu</title>
+<title>How NOT to Compute Variance? – Xuefeng Xu</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -101,9 +101,9 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f93c2b1f3f0577f377aefa4848a86a36.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-0d4a9d19931feb4fee1ddab4b2489000.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-f93c2b1f3f0577f377aefa4848a86a36.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-4ef7a0a50fb983a5bcea27c5849a3c79.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-751ab7fea6d366cf3fdfc68e735773ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-4ef7a0a50fb983a5bcea27c5849a3c79.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -141,6 +141,7 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
 </script>
+<script id="quarto-axe-checker-options" type="text/plain">dHJ1ZQ==</script>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -187,19 +188,19 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="How to Compute Variance? – Xuefeng Xu">
+<meta property="og:title" content="How NOT to Compute Variance? – Xuefeng Xu">
 <meta property="og:description" content="Mathematically equivalent formulas for variance can have very different numerical stability.">
 <meta property="og:image" content="https://xuefeng-xu.github.io/blog/variance_files/figure-html/fig-rel-error-output-1.png">
 <meta property="og:site_name" content="Xuefeng Xu">
 <meta property="og:image:height" content="605">
 <meta property="og:image:width" content="622">
-<meta name="twitter:title" content="How to Compute Variance? – Xuefeng Xu">
+<meta name="twitter:title" content="How NOT to Compute Variance? – Xuefeng Xu">
 <meta name="twitter:description" content="Mathematically equivalent formulas for variance can have very different numerical stability.">
 <meta name="twitter:image" content="https://xuefeng-xu.github.io/blog/variance_files/figure-html/fig-rel-error-output-1.png">
 <meta name="twitter:image-height" content="605">
 <meta name="twitter:image-width" content="622">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="citation_title" content="How to Compute Variance?">
+<meta name="citation_title" content="How NOT to Compute Variance?">
 <meta name="citation_author" content="Xuefeng Xu">
 <meta name="citation_publication_date" content="2025-10-03">
 <meta name="citation_cover_date" content="2025-10-03">
@@ -217,7 +218,7 @@ window.Quarto = {
 <meta name="citation_reference" content="citation_title=Modern applied statistics with s;,citation_author=W. N. Venables;,citation_author=B. D. Ripley;,citation_publication_date=2002;,citation_cover_date=2002;,citation_year=2002;,citation_fulltext_html_url=https://www.stats.ox.ac.uk/pub/MASS4/;,citation_doi=10.32614/CRAN.package.MASS;">
 <meta name="citation_reference" content="citation_title=Algorithms for minimization without derivatives;,citation_author=Richard P. Brent;,citation_publication_date=2013;,citation_cover_date=2013;,citation_year=2013;,citation_isbn=9780486143682;,citation_series_title=Dover books on mathematics;">
 <meta name="citation_reference" content="citation_title=SecureFedYJ: A safe feature gaussianization protocol for federated learning;,citation_author=Tanguy Marchand;,citation_author=Boris Muzellec;,citation_author=Constance Béguier;,citation_author=Jean Ogier du Terrail;,citation_author=Mathieu Andreux;,citation_publication_date=2022;,citation_cover_date=2022;,citation_year=2022;,citation_doi=10.48550/arXiv.2210.01639;,citation_volume=35;,citation_conference_title=Advances in neural information processing systems;,citation_conference=Curran Associates, Inc.;">
-<meta name="citation_reference" content="citation_author=Matt Haberland;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://github.com/scipy/scipy/pull/18852#issuecomment-1657858886;">
+<meta name="citation_reference" content="citation_title=BUG: Fix overflow in stats.yeojohnson;,citation_author=Matt Haberland;,citation_publication_date=2023-07;,citation_cover_date=2023-07;,citation_year=2023;,citation_fulltext_html_url=https://github.com/scipy/scipy/pull/18852#issuecomment-1657858886;">
 <meta name="citation_reference" content="citation_title=Robust classification for imprecise environments;,citation_author=Foster J. Provost;,citation_author=Tom Fawcett;,citation_publication_date=2001;,citation_cover_date=2001;,citation_year=2001;,citation_issue=3;,citation_doi=10.1023/A:1007601015854;,citation_volume=42;,citation_journal_title=Machine Learning;">
 <meta name="citation_reference" content="citation_title=The relationship between precision-recall and ROC curves;,citation_author=Jesse Davis;,citation_author=Mark Goadrich;,citation_publication_date=2006;,citation_cover_date=2006;,citation_year=2006;,citation_doi=10.1145/1143844.1143874;,citation_conference_title=Proceedings of the 23rd international conference on machine learning;,citation_conference=Association for Computing Machinery;,citation_series_title=ICML ’06;">
 <meta name="citation_reference" content="citation_title=An introduction to ROC analysis;,citation_author=Tom Fawcett;,citation_publication_date=2006;,citation_cover_date=2006;,citation_year=2006;,citation_issue=8;,citation_doi=10.1016/j.patrec.2005.10.010;,citation_volume=27;,citation_journal_title=Pattern Recognition Letters;">
@@ -227,6 +228,9 @@ window.Quarto = {
 <meta name="citation_reference" content="citation_title=Comparison of several algorithms for computing sample means and variances;,citation_author=Robert F. Ling;,citation_publication_date=1974;,citation_cover_date=1974;,citation_year=1974;,citation_issue=348;,citation_doi=10.1080/01621459.1974.10480219;,citation_volume=69;,citation_journal_title=Journal of the American Statistical Association;,citation_publisher=ASA Website;">
 <meta name="citation_reference" content="citation_title=Updating formulae and a pairwise algorithm for computing sample variances;,citation_author=T. F. Chan;,citation_author=G. H. Golub;,citation_author=R. J. LeVeque;,citation_publication_date=1982;,citation_cover_date=1982;,citation_year=1982;,citation_doi=10.1007/978-3-642-51461-6_3;,citation_conference_title=COMPSTAT 1982 5th symposium held at toulouse 1982;,citation_conference=Physica-Verlag HD;">
 <meta name="citation_reference" content="citation_title=Algorithms for computing the sample variance: Analysis and recommendations;,citation_author=Tony F. Chan;,citation_author=Gene H. Golub;,citation_author=Randall J. Leveque;,citation_publication_date=1983;,citation_cover_date=1983;,citation_year=1983;,citation_issue=3;,citation_doi=10.1080/00031305.1983.10483115;,citation_volume=37;,citation_journal_title=The American Statistician;,citation_publisher=ASA Website;">
+<meta name="citation_reference" content="citation_title=Speeding up the xbox recommender system using a euclidean transformation for inner-product spaces;,citation_author=Yoram Bachrach;,citation_author=Yehuda Finkelstein;,citation_author=Ran Gilad-Bachrach;,citation_author=Liran Katzir;,citation_author=Noam Koenigstein;,citation_author=Nir Nice;,citation_author=Ulrich Paquet;,citation_publication_date=2014;,citation_cover_date=2014;,citation_year=2014;,citation_doi=10.1145/2645710.2645741;,citation_conference_title=Proceedings of the 8th ACM conference on recommender systems;,citation_conference=Association for Computing Machinery;,citation_series_title=RecSys ’14;">
+<meta name="citation_reference" content="citation_title=The faiss library;,citation_author=Matthijs Douze;,citation_author=Alexandr Guzhva;,citation_author=Chengqi Deng;,citation_author=Jeff Johnson;,citation_author=Gergely Szilvasy;,citation_author=Pierre-Emmanuel Mazaré;,citation_author=Maria Lomeli;,citation_author=Lucas Hosseini;,citation_author=Hervé Jégou;,citation_publication_date=2025;,citation_cover_date=2025;,citation_year=2025;,citation_fulltext_html_url=https://arxiv.org/abs/2401.08281;">
+<meta name="citation_reference" content="citation_title=Non-metric similarity graphs for maximum inner product search;,citation_author=Stanislav Morozov;,citation_author=Artem Babenko;,citation_publication_date=2018;,citation_cover_date=2018;,citation_year=2018;,citation_fulltext_html_url=http://papers.neurips.cc/paper/7722-non-metric-similarity-graphs-for-maximum-inner-product-search;,citation_conference_title=Proceedings of the 32nd international conference on neural information processing systems;,citation_conference=Curran Associates Inc.;,citation_series_title=NIPS’18;">
 </head>
 
 <body class="floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -418,20 +422,16 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../research/index.html"> 
 <span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../teach/index.html"> 
-<span class="menu-text">Teaching</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../blog/index.html"> 
 <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../teach/index.html"> 
+<span class="menu-text">Teaching</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../cv.html"> 
@@ -460,7 +460,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">How to Compute Variance?</h1>
+      <h1 class="title">How NOT to Compute Variance?</h1>
                   <div>
         <div class="description">
           Mathematically equivalent formulas for variance can have very different numerical stability.
@@ -468,6 +468,7 @@ window.Quarto = {
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">Numerical</div>
+                <div class="quarto-category">Statistics</div>
                 <div class="quarto-category">Python</div>
               </div>
                   </div>
@@ -538,12 +539,12 @@ window.Quarto = {
 <h2 data-number="1" class="anchored" data-anchor-id="textbook-formulas"><span class="header-section-number">1</span> Textbook Formulas</h2>
 <p>The most common definition computes the mean first, then the average squared deviation from it:</p>
 <p><span id="eq-textbook-var-twopass"><span class="math display">
-\begin{align}
+\begin{align*}
 \mu &amp;= \frac{1}{n} \sum_{i=1}^n x_i, \\
 \sigma^2 &amp;= \frac{1}{n} \sum_{i=1}^n (x_i - \mu)^2.
-\end{align}
+\end{align*}
 \tag{1}</span></span></p>
-<div id="e363e640" class="cell" data-execution_count="1">
+<div id="4a87019f" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> var_twopass_textbook(x):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    n, s <span class="op">=</span> <span class="dv">0</span>, <span class="dv">0</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> xi <span class="kw">in</span> x:</span>
@@ -560,7 +561,7 @@ window.Quarto = {
 <p><span id="eq-textbook-var-onepass"><span class="math display">
 \sigma^2 = \frac{1}{n} \sum_{i=1}^n x_i^2 - \left(\frac{1}{n} \sum_{i=1}^n x_i\right)^2.
 \tag{2}</span></span></p>
-<div id="67685c3b" class="cell" data-execution_count="2">
+<div id="c7d89e6e" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> var_onepass_textbook(x):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    n, s, sq <span class="op">=</span> <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> xi <span class="kw">in</span> x:</span>
@@ -574,7 +575,7 @@ window.Quarto = {
 <section id="numerical-cancellation" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="numerical-cancellation"><span class="header-section-number">2</span> Numerical Cancellation</h2>
 <p>Let’s test both formulas on a simple dataset:</p>
-<div id="e805a65f" class="cell" data-execution_count="3">
+<div id="8248e1bf" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="fl">0.</span>, <span class="fl">1.</span>, <span class="fl">2.</span>])</span>
@@ -586,7 +587,7 @@ One-pass (Textbook): 0.6666666666666667</code></pre>
 </div>
 </div>
 <p>So far, so good. But if we shift all values by a large constant, the one-pass version quickly breaks down due to cancellation errors:</p>
-<div id="b12fd3b6" class="cell" data-execution_count="4">
+<div id="7f4a5d76" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> shift <span class="kw">in</span> [<span class="fl">1e3</span>, <span class="fl">1e6</span>, <span class="fl">1e9</span>, <span class="fl">1e12</span>]:</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    xt <span class="op">=</span> x <span class="op">+</span> shift</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Shift: </span><span class="sc">{</span>shift<span class="sc">:.0e}</span><span class="ss">"</span>)</span>
@@ -611,7 +612,7 @@ One-pass (Textbook): -134217728.0
 </code></pre>
 </div>
 </div>
-<div id="324ded74" class="cell" data-execution_count="5">
+<div id="eb9a8037" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -638,8 +639,11 @@ One-pass (Textbook): -134217728.0
 <span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    ax.grid()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot_errors(x, var_onepass_textbook, error_type<span class="op">=</span><span class="st">"absolute"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plot_errors(x, var_onepass_textbook, error_type<span class="op">=</span><span class="st">"relative"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div id="fig-power-transform" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-power-transform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -658,8 +662,7 @@ One-pass (Textbook): -134217728.0
 </div>
 </div>
 </div>
-<div class="preview-image quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-power-transform" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="cell-fig-rel-error" class="cell quarto-layout-cell-subref" data-execution_count="7" data-ref-parent="fig-power-transform">
+<div id="cell-fig-rel-error" class="cell preview-image quarto-layout-cell-subref quarto-layout-cell" data-execution_count="7" data-ref-parent="fig-power-transform" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="cell-output cell-output-display quarto-layout-cell-subref" data-ref-parent="fig-power-transform">
 <div id="fig-rel-error" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
@@ -675,7 +678,6 @@ One-pass (Textbook): -134217728.0
 </div>
 </div>
 </div>
-</div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-power-transform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Error plots for the one-pass textbook formula.
 </figcaption>
@@ -686,7 +688,7 @@ Figure&nbsp;1: Error plots for the one-pass textbook formula.
 <section id="floating-point-arithmetic" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="floating-point-arithmetic"><span class="header-section-number">3</span> Floating Point Arithmetic</h2>
 <p>Why does this happen? Because floating-point numbers can only represent a finite number of digits. Squaring a large number, for example, can lose precision:</p>
-<div id="b9272f95" class="cell" data-execution_count="8">
+<div id="65e89ec0" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1000000001.0</span> <span class="op">**</span> <span class="dv">2</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.000000002000000001e+18</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -694,14 +696,14 @@ Figure&nbsp;1: Error plots for the one-pass textbook formula.
 </div>
 </div>
 <p>Moreover, floating point numbers cannot exactly represent all values, especially very large numbers, leading to rounding errors.</p>
-<div id="98f0ce4f" class="cell" data-execution_count="9">
+<div id="95a2cee2" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1000000002000000001.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>1.000000002e+18</code></pre>
 </div>
 </div>
 <p>Most systems use the <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754 standard</a>. In double precision (64-bit), numbers have 53 bits of precision, so integers larger than <span class="math inline">2^{53}-1</span> (9007199254740991) cannot be represented exactly. For example, adding small increments beyond this threshold reveals precision loss:</p>
-<div id="78fea5e8" class="cell" data-execution_count="10">
+<div id="5d077a74" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="fl">9007199254740991.0</span>)        <span class="co"># correct</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="fl">9007199254740991.0</span> <span class="op">+</span> <span class="fl">1.0</span>)  <span class="co"># still correct</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="fl">9007199254740991.0</span> <span class="op">+</span> <span class="fl">2.0</span>)  <span class="co"># wrong</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -712,7 +714,7 @@ Figure&nbsp;1: Error plots for the one-pass textbook formula.
 </div>
 </div>
 <p>The hex representation makes this clear:</p>
-<div id="c1185eb6" class="cell" data-execution_count="11">
+<div id="3da0ed29" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">hex</span>(<span class="dv">9007199254740991</span>))  <span class="co"># exact</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">hex</span>(<span class="dv">9007199254740992</span>))  <span class="co"># exact</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">hex</span>(<span class="dv">9007199254740993</span>))  <span class="co"># last bit lost</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -723,7 +725,7 @@ Figure&nbsp;1: Error plots for the one-pass textbook formula.
 </div>
 </div>
 <p>Large numbers like:</p>
-<div id="5c800d44" class="cell" data-execution_count="12">
+<div id="061cb4f7" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">hex</span>(<span class="dv">1000000002000000001</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0xde0b6b41e999401</code></pre>
@@ -741,7 +743,7 @@ Figure&nbsp;1: Error plots for the one-pass textbook formula.
 S_k &amp;= S_{k-1} + \delta_k (x_k - \mu_k).
 \end{align*}
 \tag{3}</span></span></p>
-<div id="1411d221" class="cell" data-execution_count="13">
+<div id="0e9d11d9" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> var_onepass_welford(x):</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    n, mu, sd <span class="op">=</span> <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> xi <span class="kw">in</span> x:</span>
@@ -752,7 +754,7 @@ S_k &amp;= S_{k-1} + \delta_k (x_k - \mu_k).
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sd <span class="op">/</span> n</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Testing again with shifts:</p>
-<div id="586b9bfb" class="cell" data-execution_count="14">
+<div id="0ca298f6" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> shift <span class="kw">in</span> [<span class="fl">1e3</span>, <span class="fl">1e6</span>, <span class="fl">1e9</span>, <span class="fl">1e12</span>]:</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    xt <span class="op">=</span> x <span class="op">+</span> shift</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Shift: </span><span class="sc">{</span>shift<span class="sc">:.0e}</span><span class="ss">"</span>)</span>
@@ -778,7 +780,7 @@ One-pass (Welford): 0.6666666666666666
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Chan1982" class="csl-entry" role="listitem">
 Chan, T. F., G. H. Golub, and R. J. LeVeque. 1982. <span>“Updating Formulae and a Pairwise Algorithm for Computing Sample Variances.”</span> In <em>COMPSTAT 1982 5th Symposium Held at Toulouse 1982</em>, 30–41. Heidelberg: Physica-Verlag HD. <a href="https://doi.org/10.1007/978-3-642-51461-6_3">https://doi.org/10.1007/978-3-642-51461-6_3</a>.
 </div>
@@ -793,14 +795,14 @@ Welford, B. P. 1962. <span>“Note on a Method for Calculating Corrected Sums of
 </div>
 </div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{variance,
   author = {Xu, Xuefeng},
-  title = {How to {Compute} {Variance?}},
+  title = {How {NOT} to {Compute} {Variance?}},
   date = {2025-10-03},
   url = {https://xuefeng-xu.github.io/blog/variance.html},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-variance" class="csl-entry quarto-appendix-citeas" role="listitem">
-Xu, Xuefeng. 2025. <span>“How to Compute Variance?”</span> October 3,
-2025. <a href="https://xuefeng-xu.github.io/blog/variance.html">https://xuefeng-xu.github.io/blog/variance.html</a>.
+Xu, Xuefeng. 2025. <span>“How NOT to Compute Variance?”</span> October
+3, 2025. <a href="https://xuefeng-xu.github.io/blog/variance.html">https://xuefeng-xu.github.io/blog/variance.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
