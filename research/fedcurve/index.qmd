@@ -5,6 +5,7 @@ aliases:
 toc: false
 open-graph:
   description: "Privacy-preserving ROC/PR curve approximation for federated learning."
+  image: "./img/approx-roc.png"
 about:
   id: heading
   template: jolla
@@ -52,7 +53,6 @@ Our method consists of five main steps:
 To estimate quantiles, each client builds a hierarchical histogram (@fig-hist) by recursively dividing the score range into equal-width bins and counting examples in each. The server aggregates these histograms and computes global quantiles based on the combined bin counts and boundaries.
 
 ::: {#fig-hist}
-
 ![](img/hier-hist.svg)
 
 Hierarchical histogram structure.
@@ -68,7 +68,6 @@ To ensure client's privacy, we consider two mechanisms:
 Let $\Phi^-(s)$ and $\Phi^+(s)$ be the ECDFs of prediction score distributions for negative and positive examples. We estimate $Q$ evenly spaced quantiles ($Q=6$ in @fig-ecdf), and apply [monotone piecewise cubic polynomial interpolation (PCHIP)](/blog/pchip.qmd) to approximate the full ECDFs.
 
 ::: {#fig-ecdf layout-ncol=2}
-
 ![](img/ecdf-neg.svg){fig-align="center"}
 
 ![](img/ecdf-pos.svg){fig-align="center"}
@@ -79,15 +78,11 @@ ECDFs reconstructed from $Q$ quantiles for both classes.
 For the ROC curve, we then compute:
 
 $$
-\begin{equation*}
 T(s)=1-\Phi^+(s),
-\end{equation*}
 $$ {#eq-tpr}
 
 $$
-\begin{equation*}
 F(s)=1-\Phi^-(s),
-\end{equation*}
 $$ {#eq-fpr}
 
 where $T(s)$ and $F(s)$ denote the true positive rate (TPR) and false positive rate (FPR).
@@ -95,18 +90,13 @@ where $T(s)$ and $F(s)$ denote the true positive rate (TPR) and false positive r
 For the PR curve, recall is equivalent to TPR, and precision is computed by:
 
 $$
-\begin{equation*}
 P(s)=\frac{T(s)n^+}{T(s)n^+ + F(s)n^-}
-\end{equation*}
 $$ {#eq-precision}
 
 Here, $n^+$ and $n^-$ are the number of positive and negative examples. @fig-curve shows the resulting approximated ROC and PR curves.
 
 ::: {#fig-curve layout-ncol=2}
-
-:::{.preview-image}
-![](img/approx-roc.svg){.preview-image fig-align="center"}
-:::
+![](img/approx-roc.svg){fig-align="center"}
 
 ![](img/approx-pr.svg){fig-align="center"}
 
@@ -121,15 +111,11 @@ To quantify approximation quality, we define the **Area Error (AE)** as:
 
 AE is the integral of the absolute difference between the true and estimated curves:
 $$
-\begin{equation*}
 \text{AE}_\text{ROC} = \int_0^1 |T(f) - \hat{T}(f)| df,
-\end{equation*}
 $$ {#eq-area-error-roc}
 
 $$
-\begin{equation*}
 \text{AE}_\text{PR} = \int_0^1 |P(t) - \hat{P}(t)| dt,
-\end{equation*}
 $$ {#eq-area-error-pr}
 
 where $T(f) = T(F^{-1}(f))$ and $P(t) = \frac{tn^+}{tn^+ + F(T^{-1}(t))n^-}$ are the true ROC and PR curves, and $\hat{T}(f) = \hat{T}(\hat{F}^{-1}(f))$ and $\hat{P}(t) = \frac{tn^+}{tn^+ + \hat{F}(\hat{T}^{-1}(t))n^-}$ are their estimates.
@@ -148,10 +134,9 @@ Let $Q$ be the number of quantiles used. Then:
 
 ## Empirical Evaluation
 
-We evaluate the method using the [Adult dataset](https://archive.ics.uci.edu/dataset/2/adult) and [XGBoost classifier](https://xgboost.readthedocs.io/) in @fig-error. We test both Secure Aggregation (SA) and Distributed Differential Privacy (DDP), varying $Q$ from 4 to 1024 and $\varepsilon\in\{0.1,0.3,1\}$.
+We evaluate our method on the [Adult dataset](https://archive.ics.uci.edu/dataset/2/adult) using an [XGBoost classifier](https://xgboost.readthedocs.io/), as shown in @fig-error. We vary the number of quantiles $Q\in\{4,8,\dots,1024\}$ and test both Secure Aggregation (SA) and Distributed Differential Privacy (DDP) with privacy budgets $\varepsilon\in\{0.1,0.3,1\}$.
 
 ::: {#fig-error layout-ncol=2}
-
 ![](img/error-roc.svg){fig-align="center"}
 
 ![](img/error-pr.svg){fig-align="center"}

@@ -5,6 +5,7 @@ aliases:
 toc: false
 open-graph:
   description: "Numerically stable power transforms with an extension to federated learning."
+  image: "./img/tree-queue.png"
 about:
   id: heading
   template: jolla
@@ -74,7 +75,6 @@ $$ {#eq-var-lmbdaout}
 As shown in @fig-nll-formula, different forms yield very different numerical behavior. Removing the constant term and factoring out $\lambda$ produces smooth NLL curves, while the other forms lead to spikes and discontinuities.
 
 ::: {#fig-nll-formula layout-ncol=2}
-
 ![@eq-var-keepconst vs. @eq-var-removeconst](img/formula-const.svg){fig-align="center"}
 
 ![@eq-var-removeconst vs. @eq-var-lmbdaout](img/formula-lmb.svg){fig-align="center"}
@@ -86,7 +86,7 @@ NLL computed under different variance formulas.
 
 ## Challenge 2: Numerical Overflow
 
-Variance terms are also prone to overflow. We construct adversarial datasets that trigger overflow across floating-point precisions for Box-Cox in @tbl-advdata.
+Variance terms are also prone to overflow. We construct adversarial datasets that trigger overflow across floating-point precisions ([IEEE 754](https://en.wikipedia.org/wiki/IEEE_754)) for Box-Cox in @tbl-advdata.
 
 +----------+---------------------------+-------------+-------+-----------------------------+------------------------+
 | Overflow | Adversarial Data          | $\lambda^*$ | NLL   | Extreme $\psi(\lambda^*,x)$ | Max Value (Precision)  |
@@ -114,7 +114,6 @@ Variance terms are also prone to overflow. We construct adversarial datasets tha
 Such issues also appear in real-world dataset. @fig-hist shows the histograms of skewed and  large-value features in the [Ecoli](https://archive.ics.uci.edu/dataset/39/ecoli) and [House](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/data) datasets.
 
 ::: {#fig-hist layout-ncol=2}
-
 ![](img/hist-ecoli-lip.svg){fig-align="center"}
 
 ![](img/hist-house-YrSold.svg){fig-align="center"}
@@ -125,7 +124,6 @@ Histograms of skewed and large-valued features.
 To avoid overflow, we use [log-domain computation](/blog/power-transform.qmd#log-domain-computation) for the variance. @fig-nll-log-linear compares NLL curves: linear-domain breaks down, while log-domain remains continuous and stable.
 
 ::: {#fig-nll-log-linear layout-ncol=2}
-
 ![](img/nll-yj-ecoli-lip.svg){fig-align="center"}
 
 ![](img/nll-bc-house-YrSold.svg){fig-align="center"}
@@ -148,8 +146,7 @@ $$ {#eq-var-naive}
 [The @eq-var-naive is unstable](/blog/variance.qmd#numerical-cancellation). Instead, we adopt the pairwise algorithm: clients send $(n, \bar{x}, s)$ with mean $\bar{x}$ and sum of squared deviations $s=\sum(x-\bar{x})^2$. The server merges them in a tree structure (@fig-tree-queue):
 
 ::: {#fig-tree-queue}
-
-![](img/tree-queue.svg){.preview-image}
+![](img/tree-queue.svg)
 
 Tree-style pairwise aggregation.
 :::
@@ -167,7 +164,6 @@ $$ {#eq-var-pairwise}
 @fig-fednll-pairwise shows that naive formulas produce spiky curves, while pairwise aggregation yields smooth ones.
 
 ::: {#fig-fednll-pairwise layout-ncol=2}
-
 ![](img/fednll-bc-house-YrSold.svg){fig-align="center"}
 
 ![](img/fednll-yj-house-YrSold.svg){fig-align="center"}

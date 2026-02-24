@@ -5,6 +5,7 @@ aliases:
 toc: false
 open-graph:
   description: "A unified framework for tabular data preprocessing in federated learning."
+  image: "./img/overview.png"
 about:
   id: heading
   template: jolla
@@ -58,10 +59,7 @@ The FedPS framework operates in five steps (@fig-overview):
 :::
 
 ::: {#fig-overview}
-
-:::{.preview-image}
-![](img/overview.svg){.preview-image fig-align="center"}
-:::
+![](img/overview.svg)
 
 Overview of FedPS preprocessing framework.
 :::
@@ -163,7 +161,6 @@ We consider two types of client data distributions:
 - **Non-IID setting**: data is partitioned with skewed label distributions.
 
 ::: {#fig-accuracy layout-ncol=2}
-
 ![](img/cover-iid-mlp.svg){fig-align="center"}
 
 ![](img/cover-niid-mlp.svg){fig-align="center"}

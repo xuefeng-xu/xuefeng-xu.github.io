@@ -3,9 +3,14 @@ title: Monotone Piecewise Cubic Interpolation
 description: "Shape-preserving interpolation method that preserves monotonicity and avoids overshoots."
 date: March 13, 2025
 bibliography: reference.bib
-categories: [Statistics]
+categories: [Math, Statistics]
 citation:
   id: pchip
+format:
+  html:
+    code-fold: true
+  ipynb:
+    number-sections: true
 ---
 
 Piecewise Cubic Hermite Interpolating Polynomial (PCHIP) is a cubic spline-based interpolation method designed to preserve monotonicity. See [MATLAB](https://mathworks.com/help/matlab/ref/pchip.html) or [SciPy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.PchipInterpolator.html) for the implementation details.
@@ -125,10 +130,10 @@ $$ {#eq-d}
 where the ratio $r$ ($1/3<r<2/3$) is given by:
 
 $$
-\begin{align}
+\begin{align*}
 r&=\frac{h_{i-1}+2h_i}{3h_{i-1}+3h_i} \\
 &=\frac{1}{3}\left(1+\frac{h_i}{h_{i-1}+h_i}\right)
-\end{align}
+\end{align*}
 $$ {#eq-r}
 
 If $s_{i-1}$ and $s_i$ have opposite signs (indicating non-monotonicity) or one is zero, then $d_i=0$. Otherwise, $d_i$ is a weighted harmonic mean:
@@ -189,11 +194,11 @@ To verify @eq-d and @eq-d1 satisfy the monotonicity condition, we analyze them s
 If $s_{i-1}s_i>0$, then $\alpha_i>0$; otherwise, $\alpha_i=0$. Since the ratio $r$ satisfies $1/3<r<2/3$, $\alpha_i$ is upper-bounded by 3:
 
 $$
-\begin{align}
+\begin{align*}
 \alpha_i
 &=\frac{1}{rs_i/s_{i-1}+(1-r)} \\
 &<\frac{1}{1-r}<3
-\end{align}
+\end{align*}
 $$ {#eq-alpha-ub}
 
 For endpoint $\alpha_1$, we only need to show the condition of $\text{sgn}(\hat{d}_1)=\text{sgn}(s_1)=\text{sgn}(s_2)$, since other conditions already lie within the region $[0,3]$.
@@ -267,8 +272,8 @@ $$ {#eq-monotone-cond-2}
 
 @fig-monotone-region illustrates these conditions: Condition (i) — blue, Condition (ii) — green, Condition (iii) — red.
 
-:::{.preview-image}
 ```{python}
+#| classes: preview-image
 #| label: fig-monotone-region
 #| fig-cap: "The monotonicity region"
 
@@ -315,6 +320,6 @@ ax.tick_params(
 )
 plt.show()
 ```
-:::
+
 Finally, simplifying yields the final monotonicity condition (@lem-monotone-cond).
 :::

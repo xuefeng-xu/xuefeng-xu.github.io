@@ -1,0 +1,431 @@
+---
+title: Transforming Between Distance Metrics
+description: Order-preserving transforms between Euclidean Distance, Inner Product, and Cosine Similarity.
+date: Feburary 22, 2026
+bibliography: reference.bib
+categories: [Transform, Metric, Python]
+citation:
+  id: distance-metrics
+format:
+  html:
+    code-fold: false
+    mermaid-format: png
+  ipynb:
+    number-sections: true
+---
+
+Euclidean Distance, Inner Product, and Cosine Similarity are three fundamental measures used in [nearest neighbor search](https://en.wikipedia.org/wiki/Nearest_neighbor_search). Although they appear different, they are deeply connected. In fact, through simple preprocessing (normalization or dimension expansion), we can transform one metric into another while preserving the ranking of nearest neighbors.
+
+## Distance Metrics
+
+Let $\mathbf{x}, \mathbf{y} \in \mathbb{R}^d$ be vectors. The three distance metrics are defined as follows:
+
+**Euclidean Distance (ED):**
+
+$$
+\|\mathbf{x} - \mathbf{y}\|=\sqrt{\sum_{i=1}^d (x_i - y_i)^2}
+$$ {#eq-ED}
+
+**Inner Product (IP):**
+
+$$
+\langle\mathbf{x}, \mathbf{y}\rangle = \sum_{i=1}^d x_i y_i
+$$ {#eq-IP}
+
+**Cosine Similarity (CS):**
+
+$$
+\cos(\mathbf{x}, \mathbf{y})=\frac{\langle\mathbf{x}, \mathbf{y}\rangle}{\|\mathbf{x}\|\|\mathbf{y}\|}
+$$ {#eq-CS}
+
+For Euclidean Distance, smaller values indicate more similar vectors. For Inner Product and Cosine Similarity, larger values indicate more similar vectors. In nearest neighbor search, given a query vector $\mathbf{x}$, we seek the most similar vector in a database $\{\mathbf{y}^{(i)}\}$:
+
+$$
+\begin{align*}
+\argmin_i &\|\mathbf{x} - \mathbf{y}^{(i)}\| &\text{(ED)} \\
+\argmax_i &\langle\mathbf{x}, \mathbf{y}^{(i)}\rangle &\text{(IP)} \\
+\argmax_i &\cos(\mathbf{x}, \mathbf{y}^{(i)}) &\text{(CS)}
+\end{align*}
+$$ {#eq-nns}
+
+## Preprocessing
+
+Many nearest neighbor search algorithms are optimized for specific metrics. However, different applications may require different similarity measures. Fortunately, these three metrics are connected through order-preserving transformations [@Bachrach2014].
+
+By preprocessing input vectors through normalization or dimension expansion, you can retrieve nearest neighbors for any metric by running an algorithm compute with a different metric. This approach is summarized in @tbl-summary and @fig-relation (see Table 2 in @Douze2025).
+
+| Compute | Want | Transform  | Parameter      |
+|:-------:|:----:|:----------:|:--------------:|
+| IP      | CS   | Normalize  | N/A            |
+| ED      | CS   | Normalize  | N/A            |
+| CS      | IP   | Add 1 dim  | $\alpha$       |
+| ED      | IP   | Add 1 dim  | $\alpha$       |
+| IP      | ED   | Add 1 dim  | $\alpha$       |
+| CS      | ED   | Add 2 dims | $\alpha,\beta$ |
+
+: Summary of the transformations. {#tbl-summary .striped .hover}
+
+```{mermaid}
+%%| classes: preview-image
+%%| label: fig-relation
+%%| fig-cap: "Demonstration of relationships. Arrows indicate the transformations."
+flowchart TB
+    ED("Euclidean Distance")
+    IP("Inner Product")
+    CS("Cosine Similarity")
+
+    ED -->|"normalization"| CS
+    IP -->|"normalization"| CS
+    ED <-->|"dim expansion"| IP
+    CS -->|"dim expansion"| ED
+    CS -->|"dim expansion"| IP
+
+    linkStyle default stroke:red,color:red
+```
+
+## Transformation
+
+This section demonstrates how to transform between distance metrics through order-preserving transformations. For each transformation, we provide the mathematical formulation, a proof of correctness, and a Python implementation to verify the results.
+
+```{python}
+#| code-fold: true
+import numpy as np
+from sklearn.metrics.pairwise import euclidean_distances, cosine_similarity
+
+rng = np.random.default_rng(8)
+
+d = 10
+X = rng.normal(size=(1, d))
+Y = rng.normal(size=(6, d))
+
+def dist_func(X, Y, metric):
+    if metric == 'ED':
+        return euclidean_distances(X, Y)
+    elif metric == 'IP':
+        return X.dot(Y.T)
+    elif metric == 'CS':
+        return cosine_similarity(X, Y)
+    else:
+        raise ValueError(f"Unknown metric: {metric}")
+```
+
+### IP --> CS
+
+We want the ranking results of Cosine Similarity by computing Inner Product. Since Cosine Similarity is Inner Product on normalized vectors, the transformation is simple normalization:
+
+$$
+\begin{align*}
+\text{Query: } \mathbf{x'} &= \mathbf{x}/\|\mathbf{x}\| \\
+\text{Database: } \mathbf{y'} &= \mathbf{y}/\|\mathbf{y}\|
+\end{align*}
+$$ {#eq-ip-to-cs}
+
+```{python}
+def ip_to_cs(X, Y):
+    Xp = X / np.linalg.norm(X, axis=1, keepdims=True)
+    Yp = Y / np.linalg.norm(Y, axis=1, keepdims=True)
+    return Xp, Yp
+```
+
+::: {.proof}
+$$
+\argmin_i \langle\mathbf{x'}, \mathbf{y'}^{(i)}\rangle = \argmin_i \cos(\mathbf{x}, \mathbf{y}^{(i)})
+$$ {#eq-proof-ip-to-cs}
+:::
+
+To verify the implementation, we can compare the ranking results of IP on $\mathbf{x'}$ and $\mathbf{y'}$ with the ranking results of CS on $\mathbf{x}$ and $\mathbf{y}$.
+
+```{python}
+Xp, Yp = ip_to_cs(X, Y)
+print("IP(X',Y'):", np.argsort(-dist_func(Xp, Yp, "IP")))
+print("CS(X, Y) :", np.argsort(-dist_func(X, Y, "CS")))
+```
+
+### ED --> CS
+
+We want the ranking results of Cosine Similarity by computing Euclidean Distance. Similar to the previous case, we can also achieve this through normalization:
+
+$$
+\begin{align*}
+\text{Query: } \mathbf{x'} &= \mathbf{x}/\|\mathbf{x}\| \\
+\text{Database: } \mathbf{y'} &= \mathbf{y}/\|\mathbf{y}\|
+\end{align*}
+$$ {#eq-ed-to-cs}
+
+```{python}
+def ed_to_cs(X, Y):
+    Xp = X / np.linalg.norm(X, axis=1, keepdims=True)
+    Yp = Y / np.linalg.norm(Y, axis=1, keepdims=True)
+    return Xp, Yp
+```
+
+::: {.proof}
+$$
+\begin{align*}
+& \argmin_i \|\mathbf{x'} - \mathbf{y'}^{(i)}\| \\
+=& \argmin_i 2 - 2\langle\mathbf{x'}, \mathbf{y'}^{(i)}\rangle \\
+=& \argmax_i \langle\mathbf{x'}, \mathbf{y'}^{(i)}\rangle \\
+=& \argmax_i \cos(\mathbf{x}, \mathbf{y}^{(i)})
+\end{align*}
+$$ {#eq-proof-ed-to-cs}
+:::
+
+Comparing the ranking results of ED on $\mathbf{x'}$ and $\mathbf{y'}$ with the ranking results of CS on $\mathbf{x}$ and $\mathbf{y}$.
+
+```{python}
+Xp, Yp = ed_to_cs(X, Y)
+print("ED(X',Y'):", np.argsort(dist_func(Xp, Yp, "ED")))
+print("CS(X, Y) :", np.argsort(-dist_func(X, Y, "CS")))
+```
+
+### CS --> IP
+
+We want the ranking results of Inner Product by computing Cosine Similarity. This can be achieved by adding one dimension to the original vectors, where $\alpha$ is a parameter to be determined:
+
+$$
+\begin{align*}
+\text{Query: } \mathbf{x'} &= [\mathbf{x};0] \\
+\text{Database: } \mathbf{y'} &= [\alpha\mathbf{y};\sqrt{1-\|\alpha\mathbf{y}\|^2}]
+\end{align*}
+$$ {#eq-cs-to-ip}
+
+To avoid negative values in the square root, we need to choose $\alpha$ such that:
+
+$$
+\begin{gather*}
+1-\|\alpha\mathbf{y}^{(i)}\|^2 \ge 0 \text{ for all } i \\
+\Downarrow \\
+|\alpha| \le \min_i 1/\|\mathbf{y}^{(i)}\|
+\end{gather*}
+$$ {#eq-alpha-cs-to-ip}
+
+In fact, we also need $\alpha>0$ to make sure the transformation is order preserving (detail in the proof). So we choose $\alpha$ to be slightly smaller than $\min_i 1/\|\mathbf{y}^{(i)}\|$.
+
+```{python}
+def cs_to_ip(X, Y):
+    Xp = np.hstack([X, np.zeros((X.shape[0], 1))])
+    Y_norms = np.linalg.norm(Y, axis=1, keepdims=True)
+    alpha = 1.0 / (max(Y_norms) + 1e-4)
+    Yp = np.hstack([alpha * Y, np.sqrt(1 - (alpha * Y_norms)**2)])
+    return Xp, Yp
+```
+
+::: {.proof}
+$$
+\begin{align*}
+& \argmax_i \cos(\mathbf{x'}, \mathbf{y'}^{(i)}) \\
+=& \argmax_i \frac{\langle \mathbf{x'}, \mathbf{y'}^{(i)} \rangle}{\|\mathbf{x'}\|\|\mathbf{y'}^{(i)}\|} \\
+=& \argmax_i \frac{\alpha\langle\mathbf{x}, \mathbf{y}^{(i)}\rangle}{\|\mathbf{x}\|} \\
+=& \argmax_i \langle\mathbf{x}, \mathbf{y}^{(i)}\rangle \ (\text{require }\alpha>0) 
+\end{align*}
+$$ {#eq-proof-cs-to-ip}
+:::
+
+Note that $\|\mathbf{x}\|$ and $\alpha$ are constants with respect to $i$, so they don't affect the $\argmax$ operation. We then compare the ranking results of CS on $\mathbf{x'}$ and $\mathbf{y'}$ with the ranking results of IP on $\mathbf{x}$ and $\mathbf{y}$.
+
+```{python}
+Xp, Yp = cs_to_ip(X, Y)
+print("CS(X',Y'):", np.argsort(-dist_func(Xp, Yp, "CS")))
+print("IP(X, Y) :", np.argsort(-dist_func(X, Y, "IP")))
+```
+
+### ED --> IP
+
+We want the ranking results of Inner Product by computing Euclidean Distance. Similar to the previous case, we can also achieve this by adding one dimension to the original vectors:
+
+$$
+\begin{align*}
+\text{Query: } \mathbf{x'} &= [\mathbf{x};0] \\
+\text{Database: } \mathbf{y'} &= [\mathbf{y};\sqrt{\alpha^2 - \|\mathbf{y}\|^2}]
+\end{align*}
+$$ {#eq-ed-to-ip}
+
+Again, we need to choose $\alpha$ to avoid negative values in the square root:
+
+$$
+\begin{gather*}
+\alpha^2 - \|\mathbf{y}^{(i)}\|^2\ge 0 \text{ for all } i\\
+\Downarrow\\
+|\alpha|\ge \max_i\|\mathbf{y}^{(i)}\|
+\end{gather*}
+$$ {#eq-alpha-ed-to-ip}
+
+We choose $\alpha$ to be slightly larger than $\max_i\|\mathbf{y}^{(i)}\|$.
+
+```{python}
+def ed_to_ip(X, Y):
+    Xp = np.hstack([X, np.zeros((X.shape[0], 1))])
+    Y_norms = np.linalg.norm(Y, axis=1, keepdims=True)
+    alpha = max(Y_norms) + 1e-4
+    Yp = np.hstack([Y, np.sqrt(alpha**2 - Y_norms**2)])
+    return Xp, Yp
+```
+
+::: {.proof}
+$$
+\begin{align*}
+& \argmin_i \|\mathbf{x'} - \mathbf{y'}^{(i)}\| \\
+=& \argmin_i \| \mathbf{x'} \|^2 + \| \mathbf{y'}^{(i)} \|^2 - 2 \langle\mathbf{x'}, \mathbf{y'}^{(i)}\rangle \\
+=& \argmin_i \|\mathbf{x}\|^2 + \alpha^2 - 2\langle\mathbf{x}, \mathbf{y}^{(i)}\rangle \\
+=& \argmax_i \langle\mathbf{x}, \mathbf{y}^{(i)}\rangle
+\end{align*}
+$$ {#eq-proof-ed-to-ip}
+:::
+
+Removing $\|\mathbf{x}\|^2$ and $\alpha^2$ doesn’t affect the operation. Again, we compare the ranking results of ED on $\mathbf{x'}$ and $\mathbf{y'}$ with the ranking results of IP on $\mathbf{x}$ and $\mathbf{y}$.
+
+```{python}
+Xp, Yp = ed_to_ip(X, Y)
+print("ED(X',Y'):", np.argsort(dist_func(Xp, Yp, "ED")))
+print("IP(X, Y) :", np.argsort(-dist_func(X, Y, "IP")))
+```
+
+### IP --> ED
+
+We want the ranking results of Euclidean Distance by computing Inner Product. This can also be achieved by adding one dimension to the original vectors:
+
+$$
+\begin{align*}
+\text{Query: } \mathbf{x'} &= [\mathbf{x};-\alpha/2] \\
+\text{Database: } \mathbf{y'} &= [\mathbf{y};\|\mathbf{y}\|^2/\alpha]
+\end{align*}
+$$ {#eq-ip-to-ed}
+
+Here, $\alpha$ can be any non-zero value. For simplicity, we set $\alpha=1$.
+
+```{python}
+def ip_to_ed(X, Y):
+    alpha = 1.0
+    Xp = np.hstack([X, -alpha / 2 * np.ones((X.shape[0], 1))])
+    Y_norms = np.linalg.norm(Y, axis=1, keepdims=True)
+    Yp = np.hstack([Y, (Y_norms**2) / alpha])
+    return Xp, Yp
+```
+
+::: {.proof}
+$$
+\begin{align*}
+& \argmax_i \langle\mathbf{x'}, \mathbf{y'}^{(i)}\rangle \\
+=& \argmax_i \langle \mathbf{x}, \mathbf{y}^{(i)} \rangle - \|\mathbf{y}^{(i)}\|^2/2 \\
+=& \argmin_i - 2\langle\mathbf{x}, \mathbf{y}^{(i)}\rangle + \|\mathbf{y}^{(i)}\|^2 + \|\mathbf{x}\|^2 \\
+=& \argmin_i \|\mathbf{x} - \mathbf{y}^{(i)}\|^2
+\end{align*}
+$$ {#eq-proof-ip-to-ed}
+:::
+
+Similarly, adding $\|\mathbf{x}\|^2$ doesn't affect the $\argmax$ operation. We then compare the ranking results of IP on $\mathbf{x'}$ and $\mathbf{y'}$ with the ranking results of ED on $\mathbf{x}$ and $\mathbf{y}$.
+
+```{python}
+Xp, Yp = ip_to_ed(X, Y)
+print("IP(X',Y'):", np.argsort(-dist_func(Xp, Yp, "IP")))
+print("ED(X, Y) :", np.argsort(dist_func(X, Y, "ED")))
+```
+
+### CS --> ED
+
+We want the ranking results of Euclidean Distance by computing Cosine Similarity. This can be achieved by adding two dimensions, where $\alpha$ and $\beta$ are parameters to be determined:
+
+$$
+\begin{align*}
+\text{Query: } \mathbf{x'} &= [\mathbf{x};-\alpha/2;0] \\
+\text{Database: } \mathbf{y'} &= [\beta\mathbf{y};\beta\|\mathbf{y}\|^2/\alpha;\sqrt{1-\beta^2\|\mathbf{y}\|^2-\beta^2\|\mathbf{y}\|^4/\alpha^2}]
+\end{align*}
+$$ {#eq-cs-to-ed}
+
+To avoid negative values in the square root, we need to choose $\beta$ such that:
+
+$$
+\begin{gather*}
+1-\beta^2\|\mathbf{y}^{(i)}\|^2-\beta^2\|\mathbf{y}^{(i)}\|^4/\alpha^2\ge 0 \text{ for all } i\\
+\Downarrow\\
+|\beta|\le \min_i 1/\sqrt{\|\mathbf{y}^{(i)}\|^2+\|\mathbf{y}^{(i)}\|^4/\alpha^2}
+\end{gather*}
+$$ {#eq-beta-cs-to-ed}
+
+Here, we also need $\beta>0$ to ensure the transformation is order-preserving (see proof). For $\alpha$, it only requires $\alpha\neq 0$, so we simply set $\alpha=1$.
+
+```{python}
+def cs_to_ed(X, Y):
+    alpha = 1.0
+    Xp = np.hstack(
+        [X, -alpha / 2 * np.ones((X.shape[0], 1)), np.zeros((X.shape[0], 1))]
+    )
+    Y_norms = np.linalg.norm(Y, axis=1, keepdims=True)
+    beta = 1.0 / max(np.sqrt(Y_norms**2 + (Y_norms**4) / alpha**2) + 1e-4)
+    Yp = np.hstack(
+        [
+            beta * Y,
+            beta * (Y_norms**2) / alpha,
+            np.sqrt(1 - beta**2 * Y_norms**2 - (beta**2 * Y_norms**4) / alpha**2),
+        ]
+    )
+    return Xp, Yp
+```
+
+::: {.proof}
+$$
+\begin{align*}
+& \argmax_i \cos(\mathbf{x'}, \mathbf{y'}^{(i)}) \\
+=& \argmax_i \frac{\langle \mathbf{x'}, \mathbf{y'}^{(i)} \rangle}{\|\mathbf{x'}\|\|\mathbf{y'}^{(i)}\|} \\
+=& \argmax_i \frac{\beta\langle \mathbf{x}, \mathbf{y}^{(i)}\rangle + \beta\|\mathbf{y}^{(i)}\|^2/2}{\sqrt{\|\mathbf{x}\|^2 + \alpha^2/4}} \\
+=& \argmax_i \beta(\langle\mathbf{x}, \mathbf{y}^{(i)}\rangle - \|\mathbf{y}^{(i)}\|^2/2) \\
+=& \argmax_i \langle\mathbf{x}, \mathbf{y}^{(i)}\rangle - \|\mathbf{y}^{(i)}\|^2/2 \ (\text{require }\beta>0) \\
+=& \argmin_i \|\mathbf{x} - \mathbf{y}^{(i)}\|^2
+\end{align*}
+$$ {#eq-proof-cs-to-ed}
+:::
+
+Comparing the ranking results of CS on $\mathbf{x'}$ and $\mathbf{y'}$ with the ranking results of ED on $\mathbf{x}$ and $\mathbf{y}$.
+
+```{python}
+Xp, Yp = cs_to_ed(X, Y)
+print("CS(X',Y'):", np.argsort(-dist_func(Xp, Yp, "CS")))
+print("ED(X, Y) :", np.argsort(dist_func(X, Y, "ED")))
+```
+
+## Side Effects
+
+Although these transformations preserve the ranking order of nearest neighbors, the added dimensions are not homogeneous with the original dimensions. This can make some algorithms more difficult, especially vector quantization methods.
+
+In particular, @Morozov2018 pointed out the following issue. Suppose we want to use IP as the metric but compute with ED, so database vectors are transformed using @eq-ed-to-ip. Consider two database vectors $\mathbf{u}$ and $\mathbf{v}$. After transformation, we have:
+
+$$
+\begin{align*}
+\mathbf{u'} &= [\mathbf{u};\sqrt{\alpha^2 - \|\mathbf{u}\|^2}] \\
+\mathbf{v'} &= [\mathbf{v};\sqrt{\alpha^2 - \|\mathbf{v}\|^2}]
+\end{align*}
+$$ {#eq-uv-ed-to-ip}
+
+Assume an algorithm wants to put similar vectors close to each other. Since the algorithm is based on ED, it will try to minimize the Euclidean distance $\|\mathbf{u'} - \mathbf{v'}\|$. In fact:
+
+$$
+\begin{align*}
+& \|\mathbf{u'} - \mathbf{v'}\|^2 \\
+=& \|\mathbf{u'}\|^2 + \|\mathbf{v'}\|^2 - 2\langle\mathbf{u'}, \mathbf{v'}\rangle \\
+=& 2\alpha^2 - 2\langle\mathbf{u}, \mathbf{v}\rangle - 2\sqrt{\alpha^2 - \|\mathbf{u}\|^2}\sqrt{\alpha^2 - \|\mathbf{v}\|^2}
+\end{align*}
+$$ {#eq-ed-up-vp}
+
+This is equivalent to maximizing the following objective:
+
+$$
+\begin{align*}
+& \langle\mathbf{u}, \mathbf{v}\rangle + \sqrt{\alpha^2 - \|\mathbf{u}\|^2}\sqrt{\alpha^2 - \|\mathbf{v}\|^2} \\
+=& \|\mathbf{u}\|\|\mathbf{v}\|\cos(\mathbf{u}, \mathbf{v}) + \sqrt{\alpha^2 - \|\mathbf{u}\|^2}\sqrt{\alpha^2 - \|\mathbf{v}\|^2}
+\end{align*}
+$$ {#eq-obj-up-vp}
+
+However, this is not equivalent to maximizing the inner product $\langle\mathbf{u}, \mathbf{v}\rangle$ alone, since the second term also depends on the vector norms. Vectors with larger norms will have a larger first term but a smaller second term. Consequently, the algorithm will cluster vectors differently in the transformed space compared to the original IP space, potentially leading to suboptimal results.
+
+To illustrate this issue, we compare the ranking results of ED on $\mathbf{u'}$ and $\mathbf{v'}$ with the ranking results of IP on $\mathbf{u}$ and $\mathbf{v}$. The two ranking results are different.
+
+```{python}
+_, Yp = ed_to_ip(X, Y)
+Up, Vp = Yp[0].reshape(1, -1), Yp[1:]
+print("ED(U',V'):", np.argsort(dist_func(Up, Vp, "ED")))
+
+U, V = Y[0].reshape(1, -1), Y[1:]
+print("IP(U, V) :", np.argsort(-dist_func(U, V, "IP")))
+```
+
+@Douze2025 suggests several mitigation strategies, including [random projection](https://en.wikipedia.org/wiki/Random_projection), [Principal Component Analysis (PCA)](https://en.wikipedia.org/wiki/Principal_component_analysis), and other transformation techniques applied to the transformed vectors to mitigate these side effects.

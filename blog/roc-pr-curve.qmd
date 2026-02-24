@@ -1,9 +1,9 @@
 ---
-title: ROC and PR Curves
+title: ROC, PR, and PRG Curves
 description: "Graphical tools for evaluating classification models, highlighting trade-offs in model performance."
 date: July 31, 2025
 bibliography: reference.bib
-categories: [Data Science, Python]
+categories: [Machine Learning, Metric, Python]
 citation:
   id: roc-pr-curve
 format:
@@ -29,10 +29,10 @@ For binary classification, with Positive (P) and Negative (N) classes, predictio
 The ROC curve plots TPR vs. FPR, where:
 
 $$
-\begin{align}
+\begin{align*}
 \text{TPR}&=\text{TP}/\text{P}, \\
 \text{FPR}&=\text{FP}/\text{N}.
-\end{align}
+\end{align*}
 $$ {#eq-tpr-fpr}
 
 A simple algorithm constructs the ROC curve: (i) Sort predictions in descending score order. (ii) Sweep thresholds across scores, updating TP and FP counts [@Fawcett2006].
@@ -149,8 +149,8 @@ def convex_hull(points):
     return upper
 ```
 
-:::{.preview-image}
 ```{python}
+#| classes: preview-image
 #| label: fig-rocch
 #| fig-cap: "ROC Convex Hull (ROCCH)."
 #| fig-align: center
@@ -163,7 +163,6 @@ fig, ax = plt.subplots(figsize=(3, 3))
 ax.plot(fpr_ch, tpr_ch, 'C1-.', label="ROCCH")
 plot_curve(fpr, tpr, "ROC", ax=ax)
 ```
-:::
 
 ## PR Curve
 
@@ -251,10 +250,10 @@ plot_curve(recall, precision, "PR", pos_frac, drawstyle="steps-post")
 ROC curves benefit from linear interpolation and universal baselines, whereas PR curves lack these properties. To address this, @Flach2015 proposed the Precision–Recall-Gain (PRG) curve, which transforms Precision and Recall into Gains and plots these Precision Gain and Recall Gain within the unit square:
 
 $$
-\begin{align}
+\begin{align*}
 \text{PrecG}&=\frac{\text{Prec}-\pi}{(1-\pi)\text{Prec}}, \\
 \text{RecG}&=\frac{\text{Rec}-\pi}{(1-\pi)\text{Rec}},
-\end{align}
+\end{align*}
 $$ {#eq-prec-rec-gain}
 
 where $\pi=\frac{\text{P}}{\text{P}+\text{N}}$ is the positive class fraction. Notably, Gains can be negative, and such points are typically omitted from the PRG curve.

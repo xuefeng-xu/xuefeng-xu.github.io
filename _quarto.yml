@@ -15,16 +15,15 @@ website:
   open-graph: true
   twitter-card: true
   google-analytics: "G-9QXY2VK8LM"
+  back-to-top-navigation: true
   navbar:
     left:
-      - href: index.qmd
-        text: Home
       - href: research/index.qmd
         text: Research
-      - href: teach/index.qmd
-        text: Teaching
       - href: blog/index.qmd
         text: Blog
+      - href: teach/index.qmd
+        text: Teaching
       - href: cv.qmd
         text: CV
       - href: misc/index.qmd
@@ -40,6 +39,7 @@ format:
       dark: darkly
     respect-user-color-scheme: true
     css: styles.css
+    axe: true
     toc: true
     toc-title: Contents
     toc-location: left

@@ -1,9 +1,9 @@
 ---
-title: How to Compute Variance?
+title: How NOT to Compute Variance?
 description: Mathematically equivalent formulas for variance can have very different numerical stability.
 date: October 3, 2025
 bibliography: reference.bib
-categories: [Numerical, Python]
+categories: [Numerical, Statistics, Python]
 citation:
   id: variance
 format:
@@ -20,10 +20,10 @@ Given a dataset $\{x_1, \ldots, x_n\}$, variance measures how much data points d
 The most common definition computes the mean first, then the average squared deviation from it:
 
 $$
-\begin{align}
+\begin{align*}
 \mu &= \frac{1}{n} \sum_{i=1}^n x_i, \\
 \sigma^2 &= \frac{1}{n} \sum_{i=1}^n (x_i - \mu)^2.
-\end{align}
+\end{align*}
 $$ {#eq-textbook-var-twopass}
 
 ```{python}
@@ -108,17 +108,18 @@ def plot_errors(x, var_func, error_type="absolute"):
 
 ::: {#fig-power-transform layout-ncol=2}
 ```{python}
+#| code-fold: true
 #| label: fig-abs-error
 #| fig-cap: "Absolute error"
 plot_errors(x, var_onepass_textbook, error_type="absolute")
 ```
-:::{.preview-image}
 ```{python}
+#| code-fold: true
+#| classes: preview-image
 #| label: fig-rel-error
 #| fig-cap: "Relative error"
 plot_errors(x, var_onepass_textbook, error_type="relative")
 ```
-:::
 Error plots for the one-pass textbook formula.
 :::
 

@@ -2,7 +2,6 @@
 title: "Xuefeng Xu 许雪峰"
 title-prefix: ""
 image: img/me.jpg
-engine: knitr
 toc: false
 about:
   id: heading
@@ -36,6 +35,7 @@ I am particularly interested in creating elegant algorithmic solutions that achi
 
 <details open>
 <summary>2026</summary>
+- 02/2026 \| {{< var blog >}} Published a blog post: [Transforming Between Distance Metrics](blog/distance-metrics.qmd)
 - 02/2026 \| {{< var talk >}} Gave a talk on {{< var fedcurve >}} and {{< var sprint >}} at the [Trustworthy Machine Learning group](https://www.helsinki.fi/en/researchgroups/trustworthy-machine-learning)
 - 01/2026 \| {{< var visit >}} Visiting {{< var anttih >}} at the University of Helsinki
 - 01/2026 \| {{< var paper >}} {{< var powertf >}} accepted at [AISTATS 2026](https://virtual.aistats.org/Conferences/2026)
@@ -43,15 +43,15 @@ I am particularly interested in creating elegant algorithmic solutions that achi
 
 <details>
 <summary>2025</summary>
-- 10/2025 \| {{< var blog >}} Published a blog post: [How to Compute Variance?](blog/variance.qmd)
+- 10/2025 \| {{< var blog >}} Published a blog post: [How NOT to Compute Variance?](blog/variance.qmd)
 - 09/2025 \| {{< var volunteer >}} Volunteered at [VLDB 2025](https://vldb.org/2025/)
 - 08/2025 \| {{< var poster >}} Presented a poster on {{< var fedcurve >}} at the [CISPA–ELLIS Summer School 2025](https://cispa.de/summer-school-2025)
-- 07/2025 \| {{< var blog >}} Published a blog post: [ROC and PR Curves](blog/roc-pr-curve.qmd)
-- 04/2025 \| {{< var blog >}} Published a blog post: [Power Transform](blog/power-transform.qmd)
+- 07/2025 \| {{< var blog >}} Published a blog post: [ROC, PR and PRG Curves](blog/roc-pr-curve.qmd)
+- 04/2025 \| {{< var blog >}} Published a blog post: [Numerically Stable Power Transform](blog/power-transform.qmd)
 - 03/2025 \| {{< var talk >}} Gave an [online talk](https://www.youtube.com/live/C0pce6jfcWg?feature=shared&t=35500) on {{< var fedps >}} at the [Flower AI Summit 2025](https://flower.ai/events/flower-ai-summit-2025/)
 - 03/2025 \| {{< var blog >}} Published a blog post: [Monotone Piecewise Cubic Interpolation](blog/pchip.qmd)
 - 02/2025 \| {{< var talk >}} Gave a lightning talk on {{< var fedps >}} at the [Privacy in Machine Learning Meetup](https://www.imperial.ac.uk/events/183182/privacy-in-machine-learning-meetup-imperial/)
 </details>
 
 ---
-Last updated: `r format(Sys.Date(), "%B %d, %Y")`
+Last updated: {{< now "%B %d, %Y" >}}
