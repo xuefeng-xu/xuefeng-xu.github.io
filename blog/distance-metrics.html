@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,6 +12,9 @@
 
 <title>Transforming Between Distance Metrics – Xuefeng Xu</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -62,7 +65,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -91,19 +93,20 @@ div.csl-indent {
 <link href="../img/goose.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/quarto-axe/axe-check.js" type="module"></script>
+<script id="quarto-axe-checker-options" type="text/plain">dHJ1ZQ==</script>
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-4ef7a0a50fb983a5bcea27c5849a3c79.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-751ab7fea6d366cf3fdfc68e735773ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-4ef7a0a50fb983a5bcea27c5849a3c79.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2b4cb18426099a5056dbe00b6eeac45f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-39b5940464e35d1b96ef0325bc82d60b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-2b4cb18426099a5056dbe00b6eeac45f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -141,7 +144,6 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
 </script>
-<script id="quarto-axe-checker-options" type="text/plain">dHJ1ZQ==</script>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -222,7 +224,7 @@ window.Quarto = {
 <meta name="citation_reference" content="citation_title=Robust classification for imprecise environments;,citation_author=Foster J. Provost;,citation_author=Tom Fawcett;,citation_publication_date=2001;,citation_cover_date=2001;,citation_year=2001;,citation_issue=3;,citation_doi=10.1023/A:1007601015854;,citation_volume=42;,citation_journal_title=Machine Learning;">
 <meta name="citation_reference" content="citation_title=The relationship between precision-recall and ROC curves;,citation_author=Jesse Davis;,citation_author=Mark Goadrich;,citation_publication_date=2006;,citation_cover_date=2006;,citation_year=2006;,citation_doi=10.1145/1143844.1143874;,citation_conference_title=Proceedings of the 23rd international conference on machine learning;,citation_conference=Association for Computing Machinery;,citation_series_title=ICML ’06;">
 <meta name="citation_reference" content="citation_title=An introduction to ROC analysis;,citation_author=Tom Fawcett;,citation_publication_date=2006;,citation_cover_date=2006;,citation_year=2006;,citation_issue=8;,citation_doi=10.1016/j.patrec.2005.10.010;,citation_volume=27;,citation_journal_title=Pattern Recognition Letters;">
-<meta name="citation_reference" content="citation_title=Precision-recall-gain curves: PR analysis done right;,citation_author=Peter Flach;,citation_author=Meelis Kull;,citation_publication_date=2015;,citation_cover_date=2015;,citation_year=2015;,citation_fulltext_html_url=https://papers.nips.cc/paper/5867-precision-recall-gain-curves-pr-analysis-done-right;,citation_volume=28;,citation_conference_title=Advances in neural information processing systems;,citation_conference=Curran Associates, Inc.;">
+<meta name="citation_reference" content="citation_title=Precision-recall-gain curves: PR analysis done right;,citation_author=Peter Flach;,citation_author=Meelis Kull;,citation_publication_date=2015;,citation_cover_date=2015;,citation_year=2015;,citation_fulltext_html_url=http://papers.nips.cc/paper/by-source-2015-535;,citation_volume=28;,citation_conference_title=Advances in neural information processing systems;,citation_conference=Curran Associates, Inc.;">
 <meta name="citation_reference" content="citation_title=The effect of class imbalance on precision-recall curves;,citation_author=Christopher K. I. Williams;,citation_publication_date=2021-04;,citation_cover_date=2021-04;,citation_year=2021;,citation_issue=4;,citation_doi=10.1162/neco_a_01362;,citation_volume=33;,citation_journal_title=Neural Computation;">
 <meta name="citation_reference" content="citation_title=Note on a method for calculating corrected sums of squares and products;,citation_author=B. P. Welford;,citation_publication_date=1962;,citation_cover_date=1962;,citation_year=1962;,citation_issue=3;,citation_doi=10.1080/00401706.1962.10490022;,citation_volume=4;,citation_journal_title=Technometrics;,citation_publisher=ASA Website;">
 <meta name="citation_reference" content="citation_title=Comparison of several algorithms for computing sample means and variances;,citation_author=Robert F. Ling;,citation_publication_date=1974;,citation_cover_date=1974;,citation_year=1974;,citation_issue=348;,citation_doi=10.1080/01621459.1974.10480219;,citation_volume=69;,citation_journal_title=Journal of the American Statistical Association;,citation_publisher=ASA Website;">
@@ -230,7 +232,7 @@ window.Quarto = {
 <meta name="citation_reference" content="citation_title=Algorithms for computing the sample variance: Analysis and recommendations;,citation_author=Tony F. Chan;,citation_author=Gene H. Golub;,citation_author=Randall J. Leveque;,citation_publication_date=1983;,citation_cover_date=1983;,citation_year=1983;,citation_issue=3;,citation_doi=10.1080/00031305.1983.10483115;,citation_volume=37;,citation_journal_title=The American Statistician;,citation_publisher=ASA Website;">
 <meta name="citation_reference" content="citation_title=Speeding up the xbox recommender system using a euclidean transformation for inner-product spaces;,citation_author=Yoram Bachrach;,citation_author=Yehuda Finkelstein;,citation_author=Ran Gilad-Bachrach;,citation_author=Liran Katzir;,citation_author=Noam Koenigstein;,citation_author=Nir Nice;,citation_author=Ulrich Paquet;,citation_publication_date=2014;,citation_cover_date=2014;,citation_year=2014;,citation_doi=10.1145/2645710.2645741;,citation_conference_title=Proceedings of the 8th ACM conference on recommender systems;,citation_conference=Association for Computing Machinery;,citation_series_title=RecSys ’14;">
 <meta name="citation_reference" content="citation_title=The faiss library;,citation_author=Matthijs Douze;,citation_author=Alexandr Guzhva;,citation_author=Chengqi Deng;,citation_author=Jeff Johnson;,citation_author=Gergely Szilvasy;,citation_author=Pierre-Emmanuel Mazaré;,citation_author=Maria Lomeli;,citation_author=Lucas Hosseini;,citation_author=Hervé Jégou;,citation_publication_date=2025;,citation_cover_date=2025;,citation_year=2025;,citation_fulltext_html_url=https://arxiv.org/abs/2401.08281;">
-<meta name="citation_reference" content="citation_title=Non-metric similarity graphs for maximum inner product search;,citation_author=Stanislav Morozov;,citation_author=Artem Babenko;,citation_publication_date=2018;,citation_cover_date=2018;,citation_year=2018;,citation_fulltext_html_url=http://papers.neurips.cc/paper/7722-non-metric-similarity-graphs-for-maximum-inner-product-search;,citation_conference_title=Proceedings of the 32nd international conference on neural information processing systems;,citation_conference=Curran Associates Inc.;,citation_series_title=NIPS’18;">
+<meta name="citation_reference" content="citation_title=Non-metric similarity graphs for maximum inner product search;,citation_author=Stanislav Morozov;,citation_author=Artem Babenko;,citation_publication_date=2018;,citation_cover_date=2018;,citation_year=2018;,citation_fulltext_html_url=http://papers.nips.cc/paper/by-source-2018-2294;,citation_conference_title=Proceedings of the 32nd international conference on neural information processing systems;,citation_conference=Curran Associates Inc.;,citation_series_title=NIPS’18;">
 </head>
 
 <body class="floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -648,7 +650,7 @@ Figure&nbsp;1: Demonstration of relationships. Arrows indicate the transformatio
 <section id="transformation" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="transformation"><span class="header-section-number">3</span> Transformation</h2>
 <p>This section demonstrates how to transform between distance metrics through order-preserving transformations. For each transformation, we provide the mathematical formulation, a proof of correctness, and a Python implementation to verify the results.</p>
-<div id="c17fd7fb" class="cell" data-execution_count="1">
+<div id="168fad3b" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -680,7 +682,7 @@ Figure&nbsp;1: Demonstration of relationships. Arrows indicate the transformatio
 \text{Database: } \mathbf{y'} &amp;= \mathbf{y}/\|\mathbf{y}\|
 \end{align*}
 \tag{5}</span></span></p>
-<div id="62e35365" class="cell" data-execution_count="2">
+<div id="34615bac" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ip_to_cs(X, Y):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    Xp <span class="op">=</span> X <span class="op">/</span> np.linalg.norm(X, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    Yp <span class="op">=</span> Y <span class="op">/</span> np.linalg.norm(Y, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
@@ -692,7 +694,7 @@ Figure&nbsp;1: Demonstration of relationships. Arrows indicate the transformatio
 \tag{6}</span></span></p>
 </div>
 <p>To verify the implementation, we can compare the ranking results of IP on <span class="math inline">\mathbf{x'}</span> and <span class="math inline">\mathbf{y'}</span> with the ranking results of CS on <span class="math inline">\mathbf{x}</span> and <span class="math inline">\mathbf{y}</span>.</p>
-<div id="56112b28" class="cell" data-execution_count="3">
+<div id="c290473e" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Xp, Yp <span class="op">=</span> ip_to_cs(X, Y)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"IP(X',Y'):"</span>, np.argsort(<span class="op">-</span>dist_func(Xp, Yp, <span class="st">"IP"</span>)))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"CS(X, Y) :"</span>, np.argsort(<span class="op">-</span>dist_func(X, Y, <span class="st">"CS"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -711,7 +713,7 @@ CS(X, Y) : [[1 4 3 2 0 5]]</code></pre>
 \text{Database: } \mathbf{y'} &amp;= \mathbf{y}/\|\mathbf{y}\|
 \end{align*}
 \tag{7}</span></span></p>
-<div id="c62ec903" class="cell" data-execution_count="4">
+<div id="ef36991a" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ed_to_cs(X, Y):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    Xp <span class="op">=</span> X <span class="op">/</span> np.linalg.norm(X, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    Yp <span class="op">=</span> Y <span class="op">/</span> np.linalg.norm(Y, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
@@ -728,7 +730,7 @@ CS(X, Y) : [[1 4 3 2 0 5]]</code></pre>
 \tag{8}</span></span></p>
 </div>
 <p>Comparing the ranking results of ED on <span class="math inline">\mathbf{x'}</span> and <span class="math inline">\mathbf{y'}</span> with the ranking results of CS on <span class="math inline">\mathbf{x}</span> and <span class="math inline">\mathbf{y}</span>.</p>
-<div id="62969e97" class="cell" data-execution_count="5">
+<div id="b7f4e674" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Xp, Yp <span class="op">=</span> ed_to_cs(X, Y)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ED(X',Y'):"</span>, np.argsort(dist_func(Xp, Yp, <span class="st">"ED"</span>)))</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"CS(X, Y) :"</span>, np.argsort(<span class="op">-</span>dist_func(X, Y, <span class="st">"CS"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -756,7 +758,7 @@ CS(X, Y) : [[1 4 3 2 0 5]]</code></pre>
 \end{gather*}
 \tag{10}</span></span></p>
 <p>In fact, we also need <span class="math inline">\alpha&gt;0</span> to make sure the transformation is order preserving (detail in the proof). So we choose <span class="math inline">\alpha</span> to be slightly smaller than <span class="math inline">\min_i 1/\|\mathbf{y}^{(i)}\|</span>.</p>
-<div id="247b81b2" class="cell" data-execution_count="6">
+<div id="e7ad4241" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cs_to_ip(X, Y):</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    Xp <span class="op">=</span> np.hstack([X, np.zeros((X.shape[<span class="dv">0</span>], <span class="dv">1</span>))])</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    Y_norms <span class="op">=</span> np.linalg.norm(Y, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
@@ -775,7 +777,7 @@ CS(X, Y) : [[1 4 3 2 0 5]]</code></pre>
 \tag{11}</span></span></p>
 </div>
 <p>Note that <span class="math inline">\|\mathbf{x}\|</span> and <span class="math inline">\alpha</span> are constants with respect to <span class="math inline">i</span>, so they don’t affect the <span class="math inline">\argmax</span> operation. We then compare the ranking results of CS on <span class="math inline">\mathbf{x'}</span> and <span class="math inline">\mathbf{y'}</span> with the ranking results of IP on <span class="math inline">\mathbf{x}</span> and <span class="math inline">\mathbf{y}</span>.</p>
-<div id="5881ab0a" class="cell" data-execution_count="7">
+<div id="72929bad" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Xp, Yp <span class="op">=</span> cs_to_ip(X, Y)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"CS(X',Y'):"</span>, np.argsort(<span class="op">-</span>dist_func(Xp, Yp, <span class="st">"CS"</span>)))</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"IP(X, Y) :"</span>, np.argsort(<span class="op">-</span>dist_func(X, Y, <span class="st">"IP"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -803,7 +805,7 @@ IP(X, Y) : [[1 4 3 2 0 5]]</code></pre>
 \end{gather*}
 \tag{13}</span></span></p>
 <p>We choose <span class="math inline">\alpha</span> to be slightly larger than <span class="math inline">\max_i\|\mathbf{y}^{(i)}\|</span>.</p>
-<div id="598f651d" class="cell" data-execution_count="8">
+<div id="bfc729fe" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ed_to_ip(X, Y):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    Xp <span class="op">=</span> np.hstack([X, np.zeros((X.shape[<span class="dv">0</span>], <span class="dv">1</span>))])</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    Y_norms <span class="op">=</span> np.linalg.norm(Y, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
@@ -822,7 +824,7 @@ IP(X, Y) : [[1 4 3 2 0 5]]</code></pre>
 \tag{14}</span></span></p>
 </div>
 <p>Removing <span class="math inline">\|\mathbf{x}\|^2</span> and <span class="math inline">\alpha^2</span> doesn’t affect the operation. Again, we compare the ranking results of ED on <span class="math inline">\mathbf{x'}</span> and <span class="math inline">\mathbf{y'}</span> with the ranking results of IP on <span class="math inline">\mathbf{x}</span> and <span class="math inline">\mathbf{y}</span>.</p>
-<div id="dbeabe3e" class="cell" data-execution_count="9">
+<div id="204e326d" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Xp, Yp <span class="op">=</span> ed_to_ip(X, Y)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ED(X',Y'):"</span>, np.argsort(dist_func(Xp, Yp, <span class="st">"ED"</span>)))</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"IP(X, Y) :"</span>, np.argsort(<span class="op">-</span>dist_func(X, Y, <span class="st">"IP"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -842,7 +844,7 @@ IP(X, Y) : [[1 4 3 2 0 5]]</code></pre>
 \end{align*}
 \tag{15}</span></span></p>
 <p>Here, <span class="math inline">\alpha</span> can be any non-zero value. For simplicity, we set <span class="math inline">\alpha=1</span>.</p>
-<div id="34340b96" class="cell" data-execution_count="10">
+<div id="9e7f6404" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ip_to_ed(X, Y):</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    alpha <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    Xp <span class="op">=</span> np.hstack([X, <span class="op">-</span>alpha <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> np.ones((X.shape[<span class="dv">0</span>], <span class="dv">1</span>))])</span>
@@ -861,7 +863,7 @@ IP(X, Y) : [[1 4 3 2 0 5]]</code></pre>
 \tag{16}</span></span></p>
 </div>
 <p>Similarly, adding <span class="math inline">\|\mathbf{x}\|^2</span> doesn’t affect the <span class="math inline">\argmax</span> operation. We then compare the ranking results of IP on <span class="math inline">\mathbf{x'}</span> and <span class="math inline">\mathbf{y'}</span> with the ranking results of ED on <span class="math inline">\mathbf{x}</span> and <span class="math inline">\mathbf{y}</span>.</p>
-<div id="709e0d35" class="cell" data-execution_count="11">
+<div id="322be90e" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Xp, Yp <span class="op">=</span> ip_to_ed(X, Y)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"IP(X',Y'):"</span>, np.argsort(<span class="op">-</span>dist_func(Xp, Yp, <span class="st">"IP"</span>)))</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ED(X, Y) :"</span>, np.argsort(dist_func(X, Y, <span class="st">"ED"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -889,7 +891,7 @@ ED(X, Y) : [[1 3 0 5 4 2]]</code></pre>
 \end{gather*}
 \tag{18}</span></span></p>
 <p>Here, we also need <span class="math inline">\beta&gt;0</span> to ensure the transformation is order-preserving (see proof). For <span class="math inline">\alpha</span>, it only requires <span class="math inline">\alpha\neq 0</span>, so we simply set <span class="math inline">\alpha=1</span>.</p>
-<div id="0d67d61e" class="cell" data-execution_count="12">
+<div id="fed47ec3" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cs_to_ed(X, Y):</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    alpha <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    Xp <span class="op">=</span> np.hstack(</span>
@@ -919,7 +921,7 @@ ED(X, Y) : [[1 3 0 5 4 2]]</code></pre>
 \tag{19}</span></span></p>
 </div>
 <p>Comparing the ranking results of CS on <span class="math inline">\mathbf{x'}</span> and <span class="math inline">\mathbf{y'}</span> with the ranking results of ED on <span class="math inline">\mathbf{x}</span> and <span class="math inline">\mathbf{y}</span>.</p>
-<div id="a459a47e" class="cell" data-execution_count="13">
+<div id="4f22d3cd" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Xp, Yp <span class="op">=</span> cs_to_ed(X, Y)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"CS(X',Y'):"</span>, np.argsort(<span class="op">-</span>dist_func(Xp, Yp, <span class="st">"CS"</span>)))</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ED(X, Y) :"</span>, np.argsort(dist_func(X, Y, <span class="st">"ED"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -957,7 +959,7 @@ ED(X, Y) : [[1 3 0 5 4 2]]</code></pre>
 \tag{22}</span></span></p>
 <p>However, this is not equivalent to maximizing the inner product <span class="math inline">\langle\mathbf{u}, \mathbf{v}\rangle</span> alone, since the second term also depends on the vector norms. Vectors with larger norms will have a larger first term but a smaller second term. Consequently, the algorithm will cluster vectors differently in the transformed space compared to the original IP space, potentially leading to suboptimal results.</p>
 <p>To illustrate this issue, we compare the ranking results of ED on <span class="math inline">\mathbf{u'}</span> and <span class="math inline">\mathbf{v'}</span> with the ranking results of IP on <span class="math inline">\mathbf{u}</span> and <span class="math inline">\mathbf{v}</span>. The two ranking results are different.</p>
-<div id="bda6288b" class="cell" data-execution_count="14">
+<div id="8bb623f2" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>_, Yp <span class="op">=</span> ed_to_ip(X, Y)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>Up, Vp <span class="op">=</span> Yp[<span class="dv">0</span>].reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>), Yp[<span class="dv">1</span>:]</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ED(U',V'):"</span>, np.argsort(dist_func(Up, Vp, <span class="st">"ED"</span>)))</span>
@@ -975,15 +977,15 @@ IP(U, V) : [[1 0 2 4 3]]</code></pre>
 
 </section>
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-Bachrach2014" class="csl-entry" role="listitem">
-Bachrach, Yoram, Yehuda Finkelstein, Ran Gilad-Bachrach, Liran Katzir, Noam Koenigstein, Nir Nice, and Ulrich Paquet. 2014. <span>“Speeding up the Xbox Recommender System Using a Euclidean Transformation for Inner-Product Spaces.”</span> In <em>Proceedings of the 8th ACM Conference on Recommender Systems</em>, 257–64. RecSys ’14. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/2645710.2645741">https://doi.org/10.1145/2645710.2645741</a>.
+Bachrach, Yoram, Yehuda Finkelstein, Ran Gilad-Bachrach, et al. 2014. <span>“Speeding up the Xbox Recommender System Using a Euclidean Transformation for Inner-Product Spaces.”</span> <em>Proceedings of the 8th ACM Conference on Recommender Systems</em> (New York, NY, USA), RecSys ’14, 257–64. <a href="https://doi.org/10.1145/2645710.2645741">https://doi.org/10.1145/2645710.2645741</a>.
 </div>
 <div id="ref-Douze2025" class="csl-entry" role="listitem">
-Douze, Matthijs, Alexandr Guzhva, Chengqi Deng, Jeff Johnson, Gergely Szilvasy, Pierre-Emmanuel Mazaré, Maria Lomeli, Lucas Hosseini, and Hervé Jégou. 2025. <span>“The Faiss Library.”</span> <a href="https://arxiv.org/abs/2401.08281">https://arxiv.org/abs/2401.08281</a>.
+Douze, Matthijs, Alexandr Guzhva, Chengqi Deng, et al. 2025. <em>The Faiss Library</em>. <a href="https://arxiv.org/abs/2401.08281">https://arxiv.org/abs/2401.08281</a>.
 </div>
 <div id="ref-Morozov2018" class="csl-entry" role="listitem">
-Morozov, Stanislav, and Artem Babenko. 2018. <span>“Non-Metric Similarity Graphs for Maximum Inner Product Search.”</span> In <em>Proceedings of the 32nd International Conference on Neural Information Processing Systems</em>, 4726–35. NIPS’18. Red Hook, NY, USA: Curran Associates Inc. <a href="http://papers.neurips.cc/paper/7722-non-metric-similarity-graphs-for-maximum-inner-product-search">http://papers.neurips.cc/paper/7722-non-metric-similarity-graphs-for-maximum-inner-product-search</a>.
+Morozov, Stanislav, and Artem Babenko. 2018. <span>“Non-Metric Similarity Graphs for Maximum Inner Product Search.”</span> <em>Proceedings of the 32nd International Conference on Neural Information Processing Systems</em> (Red Hook, NY, USA), NIPS’18, 4726–35. <a href="http://papers.nips.cc/paper/by-source-2018-2294">http://papers.nips.cc/paper/by-source-2018-2294</a>.
 </div>
 </div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{distance-metrics,
   author = {Xu, Xuefeng},
@@ -994,7 +996,7 @@ Morozov, Stanislav, and Artem Babenko. 2018. <span>“Non-Metric Similarity Grap
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-distance-metrics" class="csl-entry quarto-appendix-citeas" role="listitem">
 Xu, Xuefeng. 2026. <span>“Transforming Between Distance Metrics.”</span>
-February 22, 2026. <a href="https://xuefeng-xu.github.io/blog/distance-metrics.html">https://xuefeng-xu.github.io/blog/distance-metrics.html</a>.
+February 22. <a href="https://xuefeng-xu.github.io/blog/distance-metrics.html">https://xuefeng-xu.github.io/blog/distance-metrics.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -1329,8 +1331,21 @@ February 22, 2026. <a href="https://xuefeng-xu.github.io/blog/distance-metrics.h
   loadGiscus();
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/xuefeng-xu/xuefeng-xu.github.io/blob/master/blog/distance-metrics.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>© 2026 <a href="..">Xuefeng Xu</a><br> License <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
+</div>
+  </div>
+</footer>
 
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/xuefeng-xu/xuefeng-xu.github.io/blob/master/blog/distance-metrics.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div></div></footer></body></html>
+</body></html>

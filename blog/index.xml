@@ -9,8 +9,8 @@
 <link>https://xuefeng-xu.github.io/blog/</link>
 <atom:link href="https://xuefeng-xu.github.io/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Xuefeng Xu&#39;s Blog</description>
-<generator>quarto-1.8.27</generator>
-<lastBuildDate>Sat, 21 Feb 2026 22:00:00 GMT</lastBuildDate>
+<generator>quarto-1.9.37</generator>
+<lastBuildDate>Sun, 22 Feb 2026 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Transforming Between Distance Metrics</title>
   <dc:creator>Xuefeng Xu</dc:creator>
@@ -20,7 +20,7 @@
   <category>Metric</category>
   <category>Python</category>
   <guid>https://xuefeng-xu.github.io/blog/distance-metrics.html</guid>
-  <pubDate>Sat, 21 Feb 2026 22:00:00 GMT</pubDate>
+  <pubDate>Sun, 22 Feb 2026 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>How NOT to Compute Variance?</title>
@@ -31,7 +31,7 @@
   <category>Statistics</category>
   <category>Python</category>
   <guid>https://xuefeng-xu.github.io/blog/variance.html</guid>
-  <pubDate>Thu, 02 Oct 2025 21:00:00 GMT</pubDate>
+  <pubDate>Thu, 02 Oct 2025 23:00:00 GMT</pubDate>
 </item>
 <item>
   <title>ROC, PR, and PRG Curves</title>
@@ -42,7 +42,7 @@
   <category>Metric</category>
   <category>Python</category>
   <guid>https://xuefeng-xu.github.io/blog/roc-pr-curve.html</guid>
-  <pubDate>Wed, 30 Jul 2025 21:00:00 GMT</pubDate>
+  <pubDate>Wed, 30 Jul 2025 23:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Numerically Stable Power Transform</title>
@@ -53,7 +53,7 @@
   <category>Transform</category>
   <category>Python</category>
   <guid>https://xuefeng-xu.github.io/blog/power-transform.html</guid>
-  <pubDate>Sun, 13 Apr 2025 21:00:00 GMT</pubDate>
+  <pubDate>Sun, 13 Apr 2025 23:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Monotone Piecewise Cubic Interpolation</title>
@@ -63,7 +63,7 @@
   <category>Math</category>
   <category>Statistics</category>
   <guid>https://xuefeng-xu.github.io/blog/pchip.html</guid>
-  <pubDate>Wed, 12 Mar 2025 22:00:00 GMT</pubDate>
+  <pubDate>Thu, 13 Mar 2025 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

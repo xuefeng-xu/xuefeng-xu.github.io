@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>FedPS: Federated data Preprocessing  via aggregated Statistics – Xuefeng Xu</title>
+<title>Continuous Monitoring of Bayesian A/B Tests  under Differential Privacy – Xuefeng Xu</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -132,16 +132,11 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="FedPS: Federated data Preprocessing via aggregated Statistics – Xuefeng Xu">
-<meta property="og:description" content="A unified framework for tabular data preprocessing in federated learning.">
-<meta property="og:image" content="https://xuefeng-xu.github.io/research/fedps/img/overview.png">
+<meta property="og:title" content="Continuous Monitoring of Bayesian A/B Tests under Differential Privacy – Xuefeng Xu">
+<meta property="og:description" content="Noise-aware differentially private sequential Bayesian A/B testing.">
 <meta property="og:site_name" content="Xuefeng Xu">
-<meta property="og:image:height" content="322">
-<meta property="og:image:width" content="585">
-<meta name="twitter:title" content="FedPS: Federated data Preprocessing via aggregated Statistics – Xuefeng Xu">
-<meta name="twitter:description" content="Xuefeng Xu’s Homepage">
-<meta name="twitter:image" content="https://xuefeng-xu.github.io/research/fedps/img/cover-iid-mlp.svg">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Continuous Monitoring of Bayesian A/B Tests under Differential Privacy – Xuefeng Xu">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -382,307 +377,33 @@ window.Quarto = {
 <div class="quarto-about-jolla">
  <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">FedPS: Federated data Preprocessing<br> via aggregated Statistics</h1>
+<h1 class="title">Continuous Monitoring of Bayesian A/B Tests<br> under Differential Privacy</h1>
 </div>
 <div class="quarto-title-meta">
   </div>
 </header><div id="heading">
 <div class="center">
-<section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c207661722078756566656e6778203e7d7d1-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c207661722067726168616d63203e7d7d2" class="level5">
-<h5 data-anchor-id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c207661722078756566656e6778203e7d7d1-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c207661722067726168616d63203e7d7d2"><a href="../..">Xuefeng Xu</a><span class="math inline">^1</span>, <a href="http://dimacs.rutgers.edu/~graham/">Graham Cormode</a><span class="math inline">^2</span></h5>
+<section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c207661722078756566656e6778203e7d7d1-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20766172206a6f6f6e61736a203e7d7d2-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2076617220616e74746968203e7d7d2-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c207661722067726168616d63203e7d7d3" class="level5">
+<h5 data-anchor-id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c207661722078756566656e6778203e7d7d1-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20766172206a6f6f6e61736a203e7d7d2-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2076617220616e74746968203e7d7d2-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c207661722067726168616d63203e7d7d3"><a href="../..">Xuefeng Xu</a><span class="math inline">^1</span>, <a href="https://dblp.org/pid/188/5963.html">Joonas Jälkö</a><span class="math inline">^2</span>, <a href="https://www.cs.helsinki.fi/u/ahonkela/">Antti Honkela</a><span class="math inline">^2</span>, <a href="http://dimacs.rutgers.edu/~graham/">Graham Cormode</a><span class="math inline">^3</span></h5>
 </section>
-<section id="university-of-warwick-2university-of-oxford" class="level5">
-<h5 data-anchor-id="university-of-warwick-2university-of-oxford"><span class="math inline">^1</span>University of Warwick, <span class="math inline">^2</span>University of Oxford</h5>
+<section id="university-of-warwick-2university-of-helsinki-3university-of-oxford" class="level5">
+<h5 data-anchor-id="university-of-warwick-2university-of-helsinki-3university-of-oxford"><span class="math inline">^1</span>University of Warwick, <span class="math inline">^2</span>University of Helsinki, <span class="math inline">^3</span>University of Oxford</h5>
 </section>
-<section id="preprint-2026" class="level5">
-<h5 data-anchor-id="preprint-2026">Preprint 2026</h5>
+<section id="coming-soon" class="level5">
+<h5 data-anchor-id="coming-soon">Coming Soon</h5>
 </section>
 </div>
-</div> 
-  <hr class="about-sep">
-   <div class="about-links">
-  <a href="https://arxiv.org/abs/2602.10870" class="about-link" rel="" target="">
-    <i class="bi bi-file-earmark-pdf-fill"></i>
-     <span class="about-link-text">Paper</span>
-  </a>
-  <a href="https://github.com/xuefeng-xu/fedps" class="about-link" rel="" target="">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">Code</span>
-  </a>
-</div>
+</div>  
 </div>
 
 <section id="tldr-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206d657461206f70656e2d67726170682e6465736372697074696f6e203e7d7d" class="level5">
-<h5 data-anchor-id="tldr-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206d657461206f70656e2d67726170682e6465736372697074696f6e203e7d7d"><strong>TL;DR</strong>: A unified framework for tabular data preprocessing in federated learning.</h5>
-</section>
-<section id="why-federated-preprocessing" class="level2">
-<h2 data-anchor-id="why-federated-preprocessing">Why Federated Preprocessing?</h2>
-<p><a href="https://en.wikipedia.org/wiki/Data_preprocessing">Data preprocessing</a> is a crucial step in machine learning pipelines, transforming raw data into a suitable format for model training. However, in <a href="https://en.wikipedia.org/wiki/Federated_learning">federated learning</a>, this step is often overlooked.</p>
-<p>We introduce <strong>FedPS</strong>, a federated data preprocessing framework that uses aggregated summary statistics from clients to perform core preprocessing tasks, including scaling, encoding, transformation, discretization, and missing-value imputation, while keeping raw data decentralized.</p>
-</section>
-<section id="preprocessing-tasks" class="level2">
-<h2 data-anchor-id="preprocessing-tasks">Preprocessing Tasks</h2>
-<ul>
-<li><strong>Scaling</strong>: Normalize features to comparable ranges.</li>
-<li><strong>Encoding</strong>: Convert categorical values into numerical form.</li>
-<li><strong>Transformation</strong>: Apply non-linear mappings (distribution adjustments).</li>
-<li><strong>Discretization</strong>: Convert continuous values into discrete form.</li>
-<li><strong>Imputation</strong>: Fill in missing values (univariate or multivariate).</li>
-</ul>
-</section>
-<section id="how-fedps-works" class="level2">
-<h2 data-anchor-id="how-fedps-works">How FedPS Works?</h2>
-<p>The FedPS framework operates in five steps (<a href="#fig-overview" class="quarto-xref">Figure&nbsp;1</a>):</p>
-<div class="steps">
-<ul>
-<li><span class="circled">1</span> Compute local statistics;</li>
-<li><span class="circled">2</span> Share and aggregate statistics;</li>
-<li><span class="circled">3</span> Derive preprocessing parameters;</li>
-<li><span class="circled">4</span> Broadcast parameters to clients;</li>
-<li><span class="circled">5</span> Apply preprocessing locally.</li>
-</ul>
-</div>
-<div id="fig-overview" class="quarto-float quarto-figure quarto-figure-center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="img/overview.svg" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Overview of FedPS preprocessing framework.
-</figcaption>
-</figure>
-</div>
-<p>For example, to implement <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html"><em>StandardScaler</em></a>, which ensures features have zero mean and unit variance:</p>
-<div class="steps">
-<ul>
-<li><span class="circled">1</span> Clients computes statistics <span class="math inline">(n, c, s)</span>, where <span class="math inline">n</span> is number of samples, <span class="math inline">c=\sum_i x_i</span> and <span class="math inline">s=\sum_i x_i^2</span>.</li>
-<li><span class="circled">2</span> Server aggregates these statistics by summation to obtain <span class="math inline">(N, C, S)</span>.</li>
-<li><span class="circled">3</span> Server computes the global mean and variance: <span class="math inline">\mu=C/N</span>, <span class="math inline">\sigma^2=S/N-\mu^2</span>.</li>
-<li><span class="circled">4</span> The server broadcasts <span class="math inline">(\mu, \sigma)</span> to all clients.</li>
-<li><span class="circled">5</span> Clients apply feature scaling on local data: <span class="math inline">x'=(x-\mu)/\sigma</span>.</li>
-</ul>
-</div>
-</section>
-<section id="what-statistics-are-needed" class="level2">
-<h2 data-anchor-id="what-statistics-are-needed">What Statistics Are Needed?</h2>
-<p>We examine the summary statistics required by common preprocessors in <a href="https://scikit-learn.org/stable/modules/preprocessing.html">Scikit-learn</a>. <a href="#tbl-statistics" class="quarto-xref">Table&nbsp;1</a> highlights representative preprocessors and their formulations. The complete table and communication analysis appear in the paper.</p>
-<div id="tbl-statistics" class="striped hover quarto-float quarto-figure quarto-figure-center">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-statistics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Preprocessors and associated statistics.
-</figcaption>
-<div aria-describedby="tbl-statistics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="table-striped table-hover caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: center;">Categories</th>
-<th style="text-align: center;">Preprocessors</th>
-<th style="text-align: center;">Formulation</th>
-<th style="text-align: center;">Statistics</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><p>Scaling</p></td>
-<td style="text-align: center;"><p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html"><em>MinMaxScaler</em></a></p>
-<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html"><em>StandardScaler</em></a></p>
-<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html"><em>RobustScaler</em></a></p></td>
-<td style="text-align: center;"><p><span class="math inline">(x-x_{\max})/(x_{\max}-x_{\min})</span></p>
-<p><span class="math inline">(x-\mu)/\sigma</span></p>
-<p><span class="math inline">(x-Q_2)/(Q_3-Q_1)</span></p></td>
-<td style="text-align: center;"><p>Min, Max</p>
-<p>Mean, Variance</p>
-<p>Quantile</p></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><p>Encoding</p></td>
-<td style="text-align: center;"><p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html"><em>LabelEncoder</em></a></p>
-<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html"><em>OneHotEncoder</em></a></p>
-<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html"><em>OrdinalEncoder</em></a></p></td>
-<td style="text-align: center;"><p>ordinal(<span class="math inline">y</span>)</p>
-<p>one-hot(<span class="math inline">x</span>)</p>
-<p>ordinal(<span class="math inline">x</span>)</p></td>
-<td style="text-align: center;"><p>Set Union</p>
-<p>Set Union, Frequent items</p>
-<p>Set Union, Frequent items</p></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><p>Transformation</p></td>
-<td style="text-align: center;"><p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PowerTransformer.html"><em>PowerTransformer</em></a></p>
-<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.QuantileTransformer.html"><em>QuantileTransformer</em></a></p></td>
-<td style="text-align: center;"><p><span class="math inline">\psi(\lambda,x)</span></p>
-<p>CDF(<span class="math inline">x</span>), <span class="math inline">\Phi^{-1}</span>(CDF(<span class="math inline">x</span>))</p></td>
-<td style="text-align: center;"><p>Sum, Mean, Variance</p>
-<p>Quantile</p></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">Discretization</td>
-<td style="text-align: center;"><p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.KBinsDiscretizer.html"><em>KBinsDiscretizer</em></a></p></td>
-<td style="text-align: center;"><span class="math inline">j</span> if <span class="math inline">T_j\le x&lt;T_{j+1}</span></td>
-<td style="text-align: center;">Min, Max, Quantile, Mean</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><p>Imputation</p></td>
-<td style="text-align: center;"><p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html"><em>SimpleImputer</em></a></p>
-<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html"><em>KNNImputer</em></a></p>
-<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html"><em>IterativeImputer</em></a></p></td>
-<td style="text-align: center;"><p>mean(<span class="math inline">x</span>), median(<span class="math inline">x</span>), freq(<span class="math inline">x</span>)</p>
-<p>mean(<span class="math inline">k</span>-NN of <span class="math inline">x</span>)</p>
-<p>RegressionModel(<span class="math inline">x</span>)</p></td>
-<td style="text-align: center;"><p>Mean, Quantile, Freq-items</p>
-<p>Min, Mean, Sum</p>
-<p>Sum</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</figure>
-</div>
-<p>Basic statistics, Min, Max, Mean, Variance, are inexpensive to compute in a federated setting. In contrast, statistics like quantiles and frequent items require substantial communication if computed exactly. For these, we use <a href="https://datasketches.apache.org/">data sketching</a> techniques (quantile sketches, frequent-items sketches) to compute them.</p>
-<p>Some preprocessors rely on machine learning models, for example:</p>
-<ul>
-<li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.KBinsDiscretizer.html"><em>KBinsDiscretizer</em></a> uses <a href="https://en.wikipedia.org/wiki/K-means_clustering"><span class="math inline">k</span>-means clustering</a>.</li>
-<li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html"><em>KNNImputer</em></a> uses <a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm"><span class="math inline">k</span>-nearest neighbors</a>.</li>
-<li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html"><em>IterativeImputer</em></a> uses <a href="https://en.wikipedia.org/wiki/Bayesian_linear_regression">Bayesian linear regression</a>.</li>
-</ul>
-<p>We extend these algorithms to the federated setting, with sufficient statistics summarized in <a href="#tbl-statistics" class="quarto-xref">Table&nbsp;1</a>.</p>
-</section>
-<section id="why-not-other-approaches" class="level2">
-<h2 data-anchor-id="why-not-other-approaches">Why Not Other Approaches?</h2>
-<p>Several preprocessing approaches are possible in federated learning:</p>
-<ol type="1">
-<li><strong>Centralized preprocessing</strong>: upload all data to the server.</li>
-<li><strong>No preprocessing</strong>: skip preprocessing entirely.</li>
-<li><strong>Transfer preprocessing</strong>: use public data or pre-trained models.</li>
-<li><strong>Local preprocessing</strong>: each client processes data independently.</li>
-<li><strong>Federated preprocessing</strong>: our proposed FedPS framework.</li>
-</ol>
-<p>All alternatives except federated preprocessing have major limitations (<a href="#tbl-approaches" class="quarto-xref">Table&nbsp;2</a>).</p>
-<div id="tbl-approaches" class="striped hover quarto-float quarto-figure quarto-figure-center">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-approaches-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2: Approaches for data preprocessing in federated learning.
-</figcaption>
-<div aria-describedby="tbl-approaches-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="table-striped table-hover caption-top table">
-<colgroup>
-<col style="width: 39%">
-<col style="width: 60%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Approaches</th>
-<th style="text-align: left;">Key Summary</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><ol type="1">
-<li>Centralized preprocessing</li>
-</ol></td>
-<td style="text-align: left;"><ul>
-<li>Pros: Consistent across clients</li>
-<li>Cons: Infeasible in real setting</li>
-</ul></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><ol start="2" type="1">
-<li>No preprocessing</li>
-</ol></td>
-<td style="text-align: left;"><ul>
-<li>Cons: Data issues remain</li>
-<li>Cons: Poor model performance</li>
-</ul></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><ol start="3" type="1">
-<li>Transfer preprocessing</li>
-</ol></td>
-<td style="text-align: left;"><ul>
-<li>Pros: Works for easy tasks</li>
-<li>Cons: Fails on complex tasks</li>
-</ul></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><ol start="4" type="1">
-<li>Local preprocessing</li>
-</ol></td>
-<td style="text-align: left;"><ul>
-<li>Pros: Easy to implement and deploy</li>
-<li>Cons: Inconsistent transforms across clients</li>
-</ul></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><ol start="5" type="1">
-<li>Federated preprocessing</li>
-</ol></td>
-<td style="text-align: left;"><ul>
-<li>Pros: Consistent global preprocessing</li>
-<li>Pros: Better model performance</li>
-</ul></td>
-</tr>
-</tbody>
-</table>
-</div>
-</figure>
-</div>
-</section>
-<section id="experiments" class="level2">
-<h2 data-anchor-id="experiments">Experiments</h2>
-<p>We evaluate <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html"><em>StandardScaler</em></a> and <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html"><em>OrdinalEncoder</em></a> using three preprocessing strategies, federated preprocessing, local preprocessing, and no preprocessing, on the <a href="https://archive.ics.uci.edu/dataset/31/covertype">Cover dataset</a>. We train using the <a href="https://arxiv.org/abs/1602.05629">FedAvg</a> algorithm and an <a href="https://en.wikipedia.org/wiki/Multilayer_perceptron">MLP model</a>. Test accuracy results are shown in <a href="#fig-accuracy" class="quarto-xref">Figure&nbsp;2</a>.</p>
-<p>We consider two types of client data distributions:</p>
-<ul>
-<li><strong>IID setting</strong>: data is uniformly partitioned across clients.</li>
-<li><strong>Non-IID setting</strong>: data is partitioned with skewed label distributions.</li>
-</ul>
-<div id="fig-accuracy" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-accuracy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/cover-iid-mlp.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/cover-niid-mlp.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-accuracy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Test accuracy comparison under IID (left) and non-IID (right) settings.
-</figcaption>
-</figure>
-</div>
-<p>The results highlight three key observations:</p>
-<ol type="1">
-<li>Preprocessing is essential, i.e, large accuracy gap vs.&nbsp;no preprocessing.</li>
-<li>Local preprocessing fails in non-IID settings due to inconsistent transforms.</li>
-<li>Federated preprocessing achieves stable and superior performance in all scenarios.</li>
-</ol>
+<h5 data-anchor-id="tldr-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206d657461206f70656e2d67726170682e6465736372697074696f6e203e7d7d"><strong>TL;DR</strong>: Noise-aware differentially private sequential Bayesian A/B testing.</h5>
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{Xu2026fedps,
-  author = {Xu, Xuefeng and Cormode, Graham},
-  title = {FedPS: {Federated} Data {Preprocessing} via Aggregated
-    {Statistics}},
-  date = {2026},
-  url = {https://arxiv.org/abs/2602.10870},
-  langid = {en}
-}
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-Xu2026fedps" class="csl-entry quarto-appendix-citeas" role="listitem">
-Xu, Xuefeng, and Graham Cormode. 2026. <span>“FedPS: Federated Data
-Preprocessing via Aggregated Statistics.”</span> Preprint. <a href="https://arxiv.org/abs/2602.10870">https://arxiv.org/abs/2602.10870</a>.
-</div></div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -984,7 +705,7 @@ Preprocessing via Aggregated Statistics.”</span> Preprint. <a href="https://ar
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/xuefeng-xu/xuefeng-xu.github.io/blob/master/research/fedps/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.com/xuefeng-xu/xuefeng-xu.github.io/blob/master/research/dptest/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>© 2026 <a href="../..">Xuefeng Xu</a><br> License <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
 </div>
