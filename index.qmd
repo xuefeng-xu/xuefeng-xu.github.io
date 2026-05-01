@@ -23,29 +23,27 @@ Email: [xuefeng.xu@warwick.ac.uk](mailto:xuefeng.xu@warwick.ac.uk)
 ### About Me
 
 I am a second-year Ph.D. student in the Department of Computer Science at the University of Warwick, co-supervised by {{< var grahamc >}} and {{< var hakanf >}}.
-Currently, I am a visiting doctoral researcher at the University of Helsinki, working with {{< var anttih >}}.
-Previously, I received my M.E. from Beihang University and B.E. from Jilin University.
+Previously, I was a visiting doctoral researcher at the University of Helsinki, working with {{< var anttih >}}.
+I received my M.E. from Beihang University and B.E. from Jilin University.
 
 ### Research Interests
 
-My research centers on the design, analysis, and implementation of privacy-preserving algorithms, including but not limited to federated learning and analytics, differential privacy, and nearest neighbor search.
+My research centers on the design, analysis, and implementation of privacy-preserving algorithms, including but not limited to differential privacy, federated learning, and nearest neighbor search.
 I am particularly interested in creating elegant algorithmic solutions that achieve strong, non-trivial theoretical guarantees, a philosophy that ensures both robustness and practical applicability.
 
 ### Recent News
 
-<details open>
-<summary>2026</summary>
+- 05/2026 \| {{< var poster >}} Presented a poster on {{< var powertf >}} at [AISTATS 2026](https://virtual.aistats.org/Conferences/2026)
 - 02/2026 \| {{< var blog >}} Published a blog post: [Transforming Between Distance Metrics](blog/distance-metrics.qmd)
 - 02/2026 \| {{< var talk >}} Gave a talk on {{< var fedcurve >}} and {{< var sprint >}} at the [Trustworthy Machine Learning group](https://www.helsinki.fi/en/researchgroups/trustworthy-machine-learning)
-- 01/2026 \| {{< var visit >}} Visiting {{< var anttih >}} at the University of Helsinki
-- 01/2026 \| {{< var paper >}} {{< var powertf >}} accepted at [AISTATS 2026](https://virtual.aistats.org/Conferences/2026)
-</details>
-
-<details>
-<summary>2025</summary>
+- 01/2026 \| {{< var visit >}} Research visit hosted by {{< var anttih >}} at the University of Helsinki
+- 01/2026 \| {{< var paper >}} {{< var powertf >}} was accepted at [AISTATS 2026](https://virtual.aistats.org/Conferences/2026)
 - 10/2025 \| {{< var blog >}} Published a blog post: [How NOT to Compute Variance?](blog/variance.qmd)
 - 09/2025 \| {{< var volunteer >}} Volunteered at [VLDB 2025](https://vldb.org/2025/)
 - 08/2025 \| {{< var poster >}} Presented a poster on {{< var fedcurve >}} at the [CISPA–ELLIS Summer School 2025](https://cispa.de/summer-school-2025)
+
+<details>
+<summary>See more</summary>
 - 07/2025 \| {{< var blog >}} Published a blog post: [ROC, PR and PRG Curves](blog/roc-pr-curve.qmd)
 - 04/2025 \| {{< var blog >}} Published a blog post: [Numerically Stable Power Transform](blog/power-transform.qmd)
 - 03/2025 \| {{< var talk >}} Gave an [online talk](https://www.youtube.com/live/C0pce6jfcWg?feature=shared&t=35500) on {{< var fedps >}} at the [Flower AI Summit 2025](https://flower.ai/events/flower-ai-summit-2025/)

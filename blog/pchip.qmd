@@ -40,7 +40,7 @@ from scipy.interpolate import interp1d
 import matplotlib.pyplot as plt
 
 x = [-3, -2, -1, 0, 1, 2, 3]
-y = [-2, -2, -2, 0, 2, 2, 2]
+y = [-6, -5, -1, 0, 1, 5, 6]
 
 linear_interp = interp1d(x, y, kind="linear")
 plot_interp(linear_interp, x, y)
@@ -64,7 +64,7 @@ One of the most effective interpolation methods that preserves monotonicity whil
 from scipy.interpolate import PchipInterpolator
 
 x = [-3, -2, -1, 0, 1, 2, 3]
-y = [-2, -2, -2, 0, 2, 2, 2]
+y = [-6, -5, -1, 0, 1, 5, 6]
 
 pchip_interp = PchipInterpolator(x, y)
 plot_interp(pchip_interp, x, y)
@@ -73,7 +73,7 @@ plot_interp(pchip_interp, x, y)
 #| label: fig-pchip-nonmonotone
 #| fig-cap: "PCHIP on Non-Monotone Data"
 x = [-3, -2, -1, 0, 1, 2, 3]
-y = [-2, -1, -1.5, 0, 1, 0.5, 2]
+y = [-6, -2, -4, 0, 4, 2, 6]
 
 pchip_interp = PchipInterpolator(x, y)
 plot_interp(pchip_interp, x, y)

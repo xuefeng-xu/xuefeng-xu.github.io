@@ -13,7 +13,7 @@ about:
 :::{#heading}
 :::{.center}
 
-##### {{< var xuefengx >}}$^1$, {{< var grahamc >}}$^2$, and {{< var hakanf >}}$^1$
+##### {{< var xuefengx >}}$^1$, {{< var grahamc >}}$^2$, {{< var hakanf >}}$^1$
 
 ##### $^1$University of Warwick, $^2$University of Oxford
 

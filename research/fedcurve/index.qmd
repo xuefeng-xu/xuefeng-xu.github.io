@@ -12,18 +12,27 @@ about:
   links:
     - text: Paper
       icon: file-earmark-pdf-fill
-      url: "https://arxiv.org/abs/2510.04979"
+      url: https://arxiv.org/abs/2510.04979
     - text: Code
       icon: github
-      url: "https://github.com/xuefeng-xu/fedcurve"
+      url: https://github.com/xuefeng-xu/fedcurve
+citation:
+  type: article
+  id: Xu2025fedcurve
+  author:
+  - Xuefeng Xu
+  - Graham Cormode
+  issued:
+    year: 2025
+  url: https://arxiv.org/abs/2510.04979
 ---
 
 :::{#heading}
 :::{.center}
 
-##### {{< var xuefengx >}} and {{< var grahamc >}}
+##### {{< var xuefengx >}}$^1$, {{< var grahamc >}}$^2$
 
-##### University of Warwick
+##### $^1$University of Warwick, $^2$University of Oxford
 
 ##### Preprint 2025
 
@@ -149,17 +158,3 @@ Key observations are as follows:
 1. Area Error decreases with more quantiles $Q$.
 2. PR curve incurs slightly higher error than ROC curve.
 3. With DP, error plateaus and grows as $\varepsilon$ decreases (stronger privacy).
-
-## Citation
-
-```bibtex
-@misc{Xu2025fedcurve,
-  title={Federated Computation of ROC and PR Curves},
-  author={Xuefeng Xu and Graham Cormode},
-  year={2025},
-  eprint={2510.04979},
-  archivePrefix={arXiv},
-  primaryClass={cs.LG},
-  url={https://arxiv.org/abs/2510.04979},
-}
-```

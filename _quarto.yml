@@ -15,7 +15,6 @@ website:
   open-graph: true
   twitter-card: true
   google-analytics: "G-9QXY2VK8LM"
-  back-to-top-navigation: true
   navbar:
     left:
       - href: research/index.qmd
@@ -31,6 +30,9 @@ website:
     right:
       - icon: rss
         href: blog/index.xml
+  page-footer:
+    right: "© 2026 [Xuefeng Xu](/)<br> License [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)"
+    border: true
 
 format:
   html:

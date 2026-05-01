@@ -1,7 +1,7 @@
 # icon
 blog: "{{< iconify vscode-icons:file-type-rss >}}"
 paper: "{{< iconify twemoji:party-popper >}}"
-poster: "{{< iconify twemoji:spiral-notepad >}}"
+poster: "{{< iconify fxemoji:documentwithpicture >}}"
 talk: "{{< iconify twemoji:loudspeaker >}}"
 visit: "{{< iconify noto:globe-showing-asia-australia >}}"
 volunteer: "{{< iconify noto:green-heart >}}"
@@ -10,6 +10,7 @@ volunteer: "{{< iconify noto:green-heart >}}"
 anttih: "[Antti Honkela](https://www.cs.helsinki.fi/u/ahonkela/)"
 grahamc: "[Graham Cormode](http://dimacs.rutgers.edu/~graham/)"
 hakanf: "[Hakan Ferhatosmanoglu](https://warwick.ac.uk/fac/sci/dcs/people/hakan_ferhatosmanoglu/)"
+joonasj: "[Joonas Jälkö](https://dblp.org/pid/188/5963.html)"
 xuefengx: "[Xuefeng Xu](/)"
 yanqingy: "[Yanqing Yao](https://scholar.google.com/citations?user=arBASTIAAAAJ)"
 
@@ -22,3 +23,4 @@ sprint: "[SPRINT](/research/sprint/)"
 # venues
 aistats: Annual Conference on Artificial Intelligence and Statistics (AISTATS)
 iclr: International Conference on Learning Representations (ICLR)
+neurips: Annual Conference on Neural Information Processing Systems (NeurIPS)

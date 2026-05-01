@@ -12,20 +12,38 @@ about:
   links:
     - text: Paper
       icon: file-earmark-pdf-fill
-      url: "https://arxiv.org/abs/2510.04995"
+      url: https://arxiv.org/abs/2510.04995
     - text: Code
       icon: github
-      url: "https://github.com/xuefeng-xu/powertf"
+      url: https://github.com/xuefeng-xu/powertf
+    - text: Blog
+      icon: rss-fill
+      url: blog/power-transform.qmd
+    - text: "{{< iconify ri:keynote-fill >}} Slides"
+      url: https://www.icloud.com/keynote/047P_eIh0Tro774iCTJ0YWcgg#powertf-slides
+    - text: Poster
+      icon: file-earmark-richtext-fill
+      url: https://www.overleaf.com/read/ztntgcbkvxpy#1fbbb8
+citation:
+  type: article
+  id: Xu2025powertf
+  title: "Power Transform Revisited: Numerically Stable, and Federated"
+  author:
+  - Xuefeng Xu
+  - Graham Cormode
+  issued:
+    year: 2025
+  url: https://arxiv.org/abs/2510.04995
 ---
 
 :::{#heading}
 :::{.center}
 
-##### {{< var xuefengx >}}$^1$ and {{< var grahamc >}}$^2$
+##### {{< var xuefengx >}}$^1$, {{< var grahamc >}}$^2$
 
 ##### $^1$University of Warwick, $^2$University of Oxford
 
-##### AISTATS 2026
+##### [AISTATS 2026](https://virtual.aistats.org/virtual/2026/poster/13885)
 
 :::
 :::
@@ -137,13 +155,13 @@ NLL computed in log-domain vs. linear-domain.
 
 In federated learning, we want to estimate a global $\lambda^*$ across distributed clients. This requires stable computation of global NLL under communication constraints.
 
-A naive one-pass method has clients send $(n, \sum x_i, \sum x_i^2)$, and the server sums each component. The variance is then computed as:
+A naive one-pass method has clients send $(n, \sum_i x_i, \sum_i x_i^2)$, and the server sums each component. The variance is then computed as:
 
 $$
 \frac{1}{n} \sum_{i=1}^n x_i^2 - \frac{1}{n^2} \left(\sum_{i=1}^n x_i\right)^2
 $$ {#eq-var-naive}
 
-[The @eq-var-naive is unstable](/blog/variance.qmd#numerical-cancellation). Instead, we adopt the pairwise algorithm: clients send $(n, \bar{x}, s)$ with mean $\bar{x}$ and sum of squared deviations $s=\sum(x-\bar{x})^2$. The server merges them in a tree structure (@fig-tree-queue):
+[The @eq-var-naive is unstable](/blog/variance.qmd#numerical-cancellation). Instead, we adopt the pairwise algorithm: clients send $(n, \bar{x}, s)$ with mean $\bar{x}$ and sum of squared deviations $s=\sum_i(x_i-\bar{x})^2$. The server merges them in a tree structure (@fig-tree-queue):
 
 ::: {#fig-tree-queue}
 ![](img/tree-queue.svg)
@@ -182,17 +200,3 @@ Our methods have been integrated into [SciPy](https://scipy.org/) and [Scikit-le
 - [scipy.special.boxcox](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.boxcox.html) and [scipy.special.boxcox1p](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.boxcox1p.html)
 - [scipy.special.inv_boxcox](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.inv_boxcox.html) and [scipy.special.inv_boxcox1p](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.inv_boxcox1p.html)
 - [sklearn.preprocessing.PowerTransformer](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PowerTransformer.html)
-
-## Citation
-
-```bibtex
-@misc{Xu2025powertf,
-  title={Power Transform Revisited: Numerically Stable, and Federated},
-  author={Xuefeng Xu and Graham Cormode},
-  year={2025},
-  eprint={2510.04995},
-  archivePrefix={arXiv},
-  primaryClass={cs.LG},
-  url={https://arxiv.org/abs/2510.04995},
-}
-```

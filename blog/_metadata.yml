@@ -17,7 +17,7 @@ jupyter: python3
 # Citation
 author: Xuefeng Xu
 citation:
-  type: post-weblog
+  type: post
 google-scholar: true
 
 # Subscription

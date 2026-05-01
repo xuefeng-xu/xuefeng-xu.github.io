@@ -1,0 +1,25 @@
+---
+title: "Continuous Monitoring of Bayesian A/B Tests<br> under Differential Privacy"
+aliases:
+  - /dptest.html
+toc: false
+open-graph:
+  description: "Noise-aware differentially private sequential Bayesian A/B testing."
+about:
+  id: heading
+  template: jolla
+---
+
+:::{#heading}
+:::{.center}
+
+##### {{< var xuefengx >}}$^1$, {{< var joonasj >}}$^2$, {{< var anttih >}}$^2$, {{< var grahamc >}}$^3$
+
+##### $^1$University of Warwick, $^2$University of Helsinki, $^3$University of Oxford
+
+##### Coming Soon
+
+:::
+:::
+
+##### **TL;DR**: {{< meta open-graph.description >}}

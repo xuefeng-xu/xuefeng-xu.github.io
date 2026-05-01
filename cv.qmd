@@ -26,7 +26,7 @@ date-modified: last-modified
 <ul class="loose_margin">
   <li>
     University of Helsinki \| Helsinki, Finland<br>
-    Visiting Doctoral Researcher \| January 2026 -- Present
+    Visiting Doctoral Researcher \| January 2026 -- April 2026
   </li>
   <li>
     PrimiHub \| Beijing, China<br>
@@ -51,4 +51,5 @@ date-modified: last-modified
 ##### Conference Reviewer
 
 - {{< var aistats >}}: 2026
+- {{< var neurips >}}: 2026
 - {{< var iclr >}}: 2026, 2025

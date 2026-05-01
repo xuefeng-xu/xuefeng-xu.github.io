@@ -12,16 +12,38 @@ about:
   links:
     - text: Paper
       icon: file-earmark-pdf-fill
-      url: "https://arxiv.org/abs/2602.10870"
+      url: https://arxiv.org/abs/2602.10870
     - text: Code
       icon: github
-      url: "https://github.com/xuefeng-xu/fedps"
+      url: https://github.com/xuefeng-xu/fedps
+citation:
+  type: article
+  id: Xu2026fedps
+  title: "FedPS: Federated data Preprocessing via aggregated Statistics"
+  author:
+  - Xuefeng Xu
+  - Graham Cormode
+  issued:
+    year: 2026
+  url: https://arxiv.org/abs/2602.10870
+MinMaxScaler: "[*MinMaxScaler*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html)"
+StandardScaler: "[*StandardScaler*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)"
+RobustScaler: "[*RobustScaler*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html)"
+LabelEncoder: "[*LabelEncoder*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html)"
+OneHotEncoder: "[*OneHotEncoder*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html)"
+OrdinalEncoder: "[*OrdinalEncoder*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html)"
+PowerTransformer: "[*PowerTransformer*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PowerTransformer.html)"
+QuantileTransformer: "[*QuantileTransformer*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.QuantileTransformer.html)"
+KBinsDiscretizer: "[*KBinsDiscretizer*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.KBinsDiscretizer.html)"
+SimpleImputer: "[*SimpleImputer*](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html)"
+KNNImputer: "[*KNNImputer*](https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html)"
+IterativeImputer: "[*IterativeImputer*](https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html)"
 ---
 
 :::{#heading}
 :::{.center}
 
-##### {{< var xuefengx >}}$^1$ and {{< var grahamc >}}$^2$
+##### {{< var xuefengx >}}$^1$, {{< var grahamc >}}$^2$
 
 ##### $^1$University of Warwick, $^2$University of Oxford
 
@@ -64,7 +86,7 @@ The FedPS framework operates in five steps (@fig-overview):
 Overview of FedPS preprocessing framework.
 :::
 
-For example, to implement [*StandardScaler*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html), which ensures features have zero mean and unit variance:
+For example, to implement {{< meta StandardScaler >}}, which ensures features have zero mean and unit variance:
 
 ::: {.steps}
 - <span class="circled">1</span> Clients computes statistics $(n, c, s)$, where $n$ is number of samples, $c=\sum_i x_i$ and $s=\sum_i x_i^2$.
@@ -78,43 +100,89 @@ For example, to implement [*StandardScaler*](https://scikit-learn.org/stable/mod
 
 We examine the summary statistics required by common preprocessors in [Scikit-learn](https://scikit-learn.org/stable/modules/preprocessing.html). @tbl-statistics highlights representative preprocessors and their formulations. The complete table and communication analysis appear in the paper.
 
-+----------------+---------------------------------------------------------------------------------------------------------------------------+------------------------------------+----------------------------+
-| Categories     | Preprocessors                                                                                                             | Formulation                        | Statistics                 |
-+:==============:+:=========================================================================================================================:+:==================================:+:==========================:+
-|                | [*MinMaxScaler*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html)               | $(x-x_{\max})/(x_{\max}-x_{\min})$ | Min, Max                   |
-|                +---------------------------------------------------------------------------------------------------------------------------+------------------------------------+----------------------------+
-| Scaling        | [*StandardScaler*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)           | $(x-\mu)/\sigma$                   | Mean, Variance             |
-|                +---------------------------------------------------------------------------------------------------------------------------+------------------------------------+----------------------------+
-|                | [*RobustScaler*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html)               | $(x-Q_2)/(Q_3-Q_1)$                | Quantile                   |
-+----------------+---------------------------------------------------------------------------------------------------------------------------+------------------------------------+----------------------------+
-|                | [*LabelEncoder*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html)               | ordinal($y$)                       | Set Union                  |
-|                +---------------------------------------------------------------------------------------------------------------------------+------------------------------------+----------------------------+
-| Encoding       | [*OneHotEncoder*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html)             | one-hot($x$)                       | Set Union, Frequent items  |
-|                +---------------------------------------------------------------------------------------------------------------------------+------------------------------------+----------------------------+
-|                | [*OrdinalEncoder*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html)           | ordinal($x$)                       | Set Union, Frequent items  |
-+----------------+---------------------------------------------------------------------------------------------------------------------------+------------------------------------+----------------------------+
-|                | [*PowerTransformer*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PowerTransformer.html)       | $\psi(\lambda,x)$                  | Sum, Mean, Variance        |
-| Transformation +---------------------------------------------------------------------------------------------------------------------------+------------------------------------+----------------------------+
-|                | [*QuantileTransformer*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.QuantileTransformer.html) | CDF($x$), $\Phi^{-1}$(CDF($x$))    | Quantile                   |
-+----------------+---------------------------------------------------------------------------------------------------------------------------+------------------------------------+----------------------------+
-| Discretization | [*KBinsDiscretizer*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.KBinsDiscretizer.html)       | $j$ if $T_j\le x<T_{j+1}$          | Min, Max, Quantile, Mean   |
-+----------------+---------------------------------------------------------------------------------------------------------------------------+------------------------------------+----------------------------+
-|                | [*SimpleImputer*](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html)                    | mean($x$), median($x$), freq($x$)  | Mean, Quantile, Freq-items |
-|                +---------------------------------------------------------------------------------------------------------------------------+------------------------------------+----------------------------+
-| Imputation     | [*KNNImputer*](https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html)                          | mean($k$-NN of $x$)                | Min, Mean, Sum             |
-|                +---------------------------------------------------------------------------------------------------------------------------+------------------------------------+----------------------------+
-|                | [*IterativeImputer*](https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html)              | RegressionModel($x$)               | Sum                        |
-+----------------+---------------------------------------------------------------------------------------------------------------------------+------------------------------------+----------------------------+
+::: {#tbl-statistics .list-table .striped .hover aligns="c,c,c,c"}
+Preprocessors and associated statistics.
 
-: Preprocessors and associated statistics. {#tbl-statistics .striped .hover}
+- - Categories
+  - Preprocessors
+  - Formulation
+  - Statistics
+
+- - Scaling
+  - {{< meta MinMaxScaler >}}
+
+    {{< meta StandardScaler >}}
+
+    {{< meta RobustScaler >}}
+  - $(x-x_{\max})/(x_{\max}-x_{\min})$
+
+    $(x-\mu)/\sigma$
+
+    $(x-Q_2)/(Q_3-Q_1)$
+  - Min, Max
+
+    Mean, Variance
+
+    Quantile
+
+- - Encoding
+  - {{< meta LabelEncoder >}}
+
+    {{< meta OneHotEncoder >}}
+
+    {{< meta OrdinalEncoder >}}
+  - ordinal($y$)
+
+    one-hot($x$)
+
+    ordinal($x$)
+  - Set Union
+
+    Set Union, Frequent items
+
+    Set Union, Frequent items
+
+- - Transformation
+  - {{< meta PowerTransformer >}}
+
+    {{< meta QuantileTransformer >}}
+  - $\psi(\lambda,x)$
+
+    CDF($x$), $\Phi^{-1}$(CDF($x$))
+  - Sum, Mean, Variance
+
+    Quantile
+
+- - Discretization
+  - {{< meta KBinsDiscretizer >}}
+  - $j$ if $T_j\le x<T_{j+1}$
+  - Min, Max, Quantile, Mean
+
+- - Imputation
+  - {{< meta SimpleImputer >}}
+
+    {{< meta KNNImputer >}}
+
+    {{< meta IterativeImputer >}}
+  - mean($x$), median($x$), freq($x$)
+
+    mean($k$-NN of $x$)
+
+    RegressionModel($x$)
+  - Mean, Quantile, Freq-items
+
+    Min, Mean, Sum
+
+    Sum
+:::
 
 Basic statistics, Min, Max, Mean, Variance, are inexpensive to compute in a federated setting. In contrast, statistics like quantiles and frequent items require substantial communication if computed exactly. For these, we use [data sketching](https://datasketches.apache.org/) techniques (quantile sketches, frequent-items sketches) to compute them.
 
 Some preprocessors rely on machine learning models, for example:
 
-- [*KBinsDiscretizer*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.KBinsDiscretizer.html) uses [$k$-means clustering](https://en.wikipedia.org/wiki/K-means_clustering).
-- [*KNNImputer*](https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html) uses [$k$-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).
-- [*IterativeImputer*](https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html) uses [Bayesian linear regression](https://en.wikipedia.org/wiki/Bayesian_linear_regression).
+- {{< meta KBinsDiscretizer >}} uses [$k$-means clustering](https://en.wikipedia.org/wiki/K-means_clustering).
+- {{< meta KNNImputer >}} uses [$k$-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).
+- {{< meta IterativeImputer >}} uses [Bayesian linear regression](https://en.wikipedia.org/wiki/Bayesian_linear_regression).
 
 We extend these algorithms to the federated setting, with sufficient statistics summarized in @tbl-statistics.
 
@@ -173,17 +241,3 @@ The results highlight three key observations:
 1. Preprocessing is essential, i.e, large accuracy gap vs. no preprocessing.
 2. Local preprocessing fails in non-IID settings due to inconsistent transforms.
 3. Federated preprocessing achieves stable and superior performance in all scenarios.
-
-## Citation
-
-```bibtex
-@misc{Xu2026fedps,
-  title={FedPS: Federated data Preprocessing via aggregated Statistics},
-  author={Xuefeng Xu and Graham Cormode},
-  year={2026},
-  eprint={2602.10870},
-  archivePrefix={arXiv},
-  primaryClass={cs.LG},
-  url={https://arxiv.org/abs/2602.10870},
-}
-```
