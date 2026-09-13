@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,17 +42,18 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/quarto-axe/axe.min.js"></script>
 <script src="site_libs/quarto-axe/axe-check.js" type="module"></script>
 <script id="quarto-axe-checker-options" type="text/plain">dHJ1ZQ==</script>
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2b4cb18426099a5056dbe00b6eeac45f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-39b5940464e35d1b96ef0325bc82d60b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-2b4cb18426099a5056dbe00b6eeac45f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-<script src="site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-306a71d23513db73bc208cb2cc005136.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-7a7a7e64bc2a23f141cc9cfc011b9533.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-306a71d23513db73bc208cb2cc005136.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -360,7 +364,7 @@ gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
 
 <section id="about-me" class="level3">
 <h3 data-anchor-id="about-me">About Me</h3>
-<p>I am a second-year Ph.D.&nbsp;student in the Department of Computer Science at the University of Warwick, co-supervised by <a href="http://dimacs.rutgers.edu/~graham/">Graham Cormode</a> and <a href="https://warwick.ac.uk/fac/sci/dcs/people/hakan_ferhatosmanoglu/">Hakan Ferhatosmanoglu</a>. Previously, I was a visiting doctoral researcher at the University of Helsinki, working with <a href="https://www.cs.helsinki.fi/u/ahonkela/">Antti Honkela</a>. I received my M.E. from Beihang University and B.E. from Jilin University.</p>
+<p>I am a Ph.D.&nbsp;student in the Department of Computer Science at the University of Warwick, co-supervised by <a href="https://www.cs.ox.ac.uk/people/graham.cormode/newindex.html">Graham Cormode</a> and <a href="https://warwick.ac.uk/fac/sci/dcs/people/hakan_ferhatosmanoglu/">Hakan Ferhatosmanoglu</a>. Currently, I am a visiting research student at the University of Oxford. In spring 2026, I was a visiting doctoral researcher at the University of Helsinki, working with <a href="https://www.cs.helsinki.fi/u/ahonkela/">Antti Honkela</a>. I received my M.E. from Beihang University and B.E. from Jilin University.</p>
 </section>
 <section id="research-interests" class="level3">
 <h3 data-anchor-id="research-interests">Research Interests</h3>
@@ -369,29 +373,32 @@ gtag('config', 'G-9QXY2VK8LM', { 'anonymize_ip': true});
 <section id="recent-news" class="level3">
 <h3 data-anchor-id="recent-news">Recent News</h3>
 <ul>
+<li>09/2026 | <iconify-icon role="img" inline="" icon="noto:globe-showing-asia-australia" aria-label="Icon globe-showing-asia-australia from noto Iconify.design set." title="Icon globe-showing-asia-australia from noto Iconify.design set."></iconify-icon> Research visit at the University of Oxford</li>
+<li>08/2026 | <iconify-icon role="img" inline="" icon="twemoji:party-popper" aria-label="Icon party-popper from twemoji Iconify.design set." title="Icon party-popper from twemoji Iconify.design set."></iconify-icon> <a href="./research/fedps/">FedPS</a> was accepted at <a href="https://jmlr.org/tmlr/">TMLR 2026</a></li>
 <li>05/2026 | <iconify-icon role="img" inline="" icon="fxemoji:documentwithpicture" aria-label="Icon documentwithpicture from fxemoji Iconify.design set." title="Icon documentwithpicture from fxemoji Iconify.design set."></iconify-icon> Presented a poster on <a href="./research/powertf/">PowerTF</a> at <a href="https://virtual.aistats.org/Conferences/2026">AISTATS 2026</a></li>
-<li>02/2026 | <iconify-icon role="img" inline="" icon="vscode-icons:file-type-rss" aria-label="Icon file-type-rss from vscode-icons Iconify.design set." title="Icon file-type-rss from vscode-icons Iconify.design set."></iconify-icon> Published a blog post: <a href="./blog/distance-metrics.html">Transforming Between Distance Metrics</a></li>
-<li>02/2026 | <iconify-icon role="img" inline="" icon="twemoji:loudspeaker" aria-label="Icon loudspeaker from twemoji Iconify.design set." title="Icon loudspeaker from twemoji Iconify.design set."></iconify-icon> Gave a talk on <a href="./research/fedcurve/">FedCurve</a> and <a href="./research/sprint/">SPRINT</a> at the <a href="https://www.helsinki.fi/en/researchgroups/trustworthy-machine-learning">Trustworthy Machine Learning group</a></li>
-<li>01/2026 | <iconify-icon role="img" inline="" icon="noto:globe-showing-asia-australia" aria-label="Icon globe-showing-asia-australia from noto Iconify.design set." title="Icon globe-showing-asia-australia from noto Iconify.design set."></iconify-icon> Research visit hosted by <a href="https://www.cs.helsinki.fi/u/ahonkela/">Antti Honkela</a> at the University of Helsinki</li>
-<li>01/2026 | <iconify-icon role="img" inline="" icon="twemoji:party-popper" aria-label="Icon party-popper from twemoji Iconify.design set." title="Icon party-popper from twemoji Iconify.design set."></iconify-icon> <a href="./research/powertf/">PowerTF</a> was accepted at <a href="https://virtual.aistats.org/Conferences/2026">AISTATS 2026</a></li>
-<li>10/2025 | <iconify-icon role="img" inline="" icon="vscode-icons:file-type-rss" aria-label="Icon file-type-rss from vscode-icons Iconify.design set." title="Icon file-type-rss from vscode-icons Iconify.design set."></iconify-icon> Published a blog post: <a href="./blog/variance.html">How NOT to Compute Variance?</a></li>
-<li>09/2025 | <iconify-icon role="img" inline="" icon="noto:green-heart" aria-label="Icon green-heart from noto Iconify.design set." title="Icon green-heart from noto Iconify.design set."></iconify-icon> Volunteered at <a href="https://vldb.org/2025/">VLDB 2025</a></li>
-<li>08/2025 | <iconify-icon role="img" inline="" icon="fxemoji:documentwithpicture" aria-label="Icon documentwithpicture from fxemoji Iconify.design set." title="Icon documentwithpicture from fxemoji Iconify.design set."></iconify-icon> Presented a poster on <a href="./research/fedcurve/">FedCurve</a> at the <a href="https://cispa.de/summer-school-2025">CISPA–ELLIS Summer School 2025</a></li>
 </ul>
 <details>
 <summary>
-See more
+Older news
 </summary>
 <ul>
-<li>07/2025 | <iconify-icon role="img" inline="" icon="vscode-icons:file-type-rss" aria-label="Icon file-type-rss from vscode-icons Iconify.design set." title="Icon file-type-rss from vscode-icons Iconify.design set."></iconify-icon> Published a blog post: <a href="./blog/roc-pr-curve.html">ROC, PR and PRG Curves</a></li>
-<li>04/2025 | <iconify-icon role="img" inline="" icon="vscode-icons:file-type-rss" aria-label="Icon file-type-rss from vscode-icons Iconify.design set." title="Icon file-type-rss from vscode-icons Iconify.design set."></iconify-icon> Published a blog post: <a href="./blog/power-transform.html">Numerically Stable Power Transform</a></li>
+<li>02/2026 | <iconify-icon role="img" inline="" icon="vscode-icons:file-type-rss" aria-label="Icon file-type-rss from vscode-icons Iconify.design set." title="Icon file-type-rss from vscode-icons Iconify.design set."></iconify-icon> New blog: <a href="./blog/distance-metrics.html">Transforming Between Distance Metrics</a></li>
+<li>02/2026 | <iconify-icon role="img" inline="" icon="twemoji:loudspeaker" aria-label="Icon loudspeaker from twemoji Iconify.design set." title="Icon loudspeaker from twemoji Iconify.design set."></iconify-icon> Gave a talk on <a href="./research/fedcurve/">FedCurve</a> and <a href="./research/sprint/">SPRINT</a> at the <a href="https://www.helsinki.fi/en/researchgroups/trustworthy-machine-learning">Trustworthy Machine Learning group</a></li>
+<li>01/2026 | <iconify-icon role="img" inline="" icon="noto:globe-showing-asia-australia" aria-label="Icon globe-showing-asia-australia from noto Iconify.design set." title="Icon globe-showing-asia-australia from noto Iconify.design set."></iconify-icon> Research visit hosted by <a href="https://www.cs.helsinki.fi/u/ahonkela/">Antti Honkela</a> at the University of Helsinki</li>
+<li>01/2026 | <iconify-icon role="img" inline="" icon="twemoji:party-popper" aria-label="Icon party-popper from twemoji Iconify.design set." title="Icon party-popper from twemoji Iconify.design set."></iconify-icon> <a href="./research/powertf/">PowerTF</a> was accepted at <a href="https://virtual.aistats.org/Conferences/2026">AISTATS 2026</a></li>
+<li>10/2025 | <iconify-icon role="img" inline="" icon="vscode-icons:file-type-rss" aria-label="Icon file-type-rss from vscode-icons Iconify.design set." title="Icon file-type-rss from vscode-icons Iconify.design set."></iconify-icon> New blog: <a href="./blog/variance.html">How NOT to Compute Variance?</a></li>
+<li>09/2025 | <iconify-icon role="img" inline="" icon="noto:green-heart" aria-label="Icon green-heart from noto Iconify.design set." title="Icon green-heart from noto Iconify.design set."></iconify-icon> Volunteered at <a href="https://vldb.org/2025/">VLDB 2025</a></li>
+<li>08/2025 | <iconify-icon role="img" inline="" icon="fxemoji:documentwithpicture" aria-label="Icon documentwithpicture from fxemoji Iconify.design set." title="Icon documentwithpicture from fxemoji Iconify.design set."></iconify-icon> Presented a poster on <a href="./research/fedcurve/">FedCurve</a> at the <a href="https://cispa.de/summer-school-2025">CISPA–ELLIS Summer School 2025</a></li>
+<li>07/2025 | <iconify-icon role="img" inline="" icon="vscode-icons:file-type-rss" aria-label="Icon file-type-rss from vscode-icons Iconify.design set." title="Icon file-type-rss from vscode-icons Iconify.design set."></iconify-icon> New blog: <a href="./blog/roc-pr-curve.html">ROC, PR and PRG Curves</a></li>
+<li>04/2025 | <iconify-icon role="img" inline="" icon="vscode-icons:file-type-rss" aria-label="Icon file-type-rss from vscode-icons Iconify.design set." title="Icon file-type-rss from vscode-icons Iconify.design set."></iconify-icon> New blog: <a href="./blog/power-transform.html">Numerically Stable Power Transform</a></li>
 <li>03/2025 | <iconify-icon role="img" inline="" icon="twemoji:loudspeaker" aria-label="Icon loudspeaker from twemoji Iconify.design set." title="Icon loudspeaker from twemoji Iconify.design set."></iconify-icon> Gave an <a href="https://www.youtube.com/live/C0pce6jfcWg?feature=shared&amp;t=35500">online talk</a> on <a href="./research/fedps/">FedPS</a> at the <a href="https://flower.ai/events/flower-ai-summit-2025/">Flower AI Summit 2025</a></li>
-<li>03/2025 | <iconify-icon role="img" inline="" icon="vscode-icons:file-type-rss" aria-label="Icon file-type-rss from vscode-icons Iconify.design set." title="Icon file-type-rss from vscode-icons Iconify.design set."></iconify-icon> Published a blog post: <a href="./blog/pchip.html">Monotone Piecewise Cubic Interpolation</a></li>
+<li>03/2025 | <iconify-icon role="img" inline="" icon="vscode-icons:file-type-rss" aria-label="Icon file-type-rss from vscode-icons Iconify.design set." title="Icon file-type-rss from vscode-icons Iconify.design set."></iconify-icon> New blog: <a href="./blog/pchip.html">Monotone Piecewise Cubic Interpolation</a></li>
 <li>02/2025 | <iconify-icon role="img" inline="" icon="twemoji:loudspeaker" aria-label="Icon loudspeaker from twemoji Iconify.design set." title="Icon loudspeaker from twemoji Iconify.design set."></iconify-icon> Gave a lightning talk on <a href="./research/fedps/">FedPS</a> at the <a href="https://www.imperial.ac.uk/events/183182/privacy-in-machine-learning-meetup-imperial/">Privacy in Machine Learning Meetup</a></li>
 </ul>
 </details>
 <hr>
-<p>Last updated: May 01, 2026</p>
+<p>My name, in Mandarin Chinese, is pronounced roughly as “Shweh-fung Shoo” /ʃwɛ fʊŋ ʃuː/.</p>
+<p>Last updated 09/2026</p>
 
 
 

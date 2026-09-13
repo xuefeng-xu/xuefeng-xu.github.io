@@ -5,11 +5,15 @@
   margin-left: 0em;
 }
 
+.tight_margin li {
+  margin-left: 0em;
+}
+
 a:link {
-    text-decoration: none;
+  text-decoration: none;
 }
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 body {
@@ -17,11 +21,11 @@ body {
 }
 
 .center {
-    text-align: center;
+  text-align: center;
 }
 
 figcaption {
-    text-align: center;
+  text-align: center;
 }
 
 .katex-display { overflow: auto hidden }
@@ -52,5 +56,22 @@ figcaption {
 
 .steps li {
   position: relative;
+}
+
+.split-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+  gap: 1rem;
+}
+
+.split-row .left {
+  text-align: left;
+}
+
+.split-row .right {
+  text-align: right;
+  white-space: nowrap;
 }
 
