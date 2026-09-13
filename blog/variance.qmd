@@ -130,14 +130,13 @@ This instability makes the textbook one-pass formula unsuitable for real-world u
 Why does this happen? Because floating-point numbers can only represent a finite number of digits. Squaring a large number, for example, can lose precision:
 
 ```{python}
-1000000001.0 ** 2
-# 1.000000002000000001e+18
+print(1000000001.0 ** 2)  # 1.000000002000000001e+18
 ```
 
 Moreover, floating point numbers cannot exactly represent all values, especially very large numbers, leading to rounding errors.
 
 ```{python}
-1000000002000000001.0
+print(1000000002000000001.0)
 ```
 
 Most systems use the [IEEE 754 standard](https://en.wikipedia.org/wiki/IEEE_754). In double precision (64-bit), numbers have 53 bits of precision, so integers larger than $2^{53}-1$ (9007199254740991) cannot be represented exactly. For example, adding small increments beyond this threshold reveals precision loss:
@@ -148,12 +147,12 @@ print(9007199254740991.0 + 1.0)  # still correct
 print(9007199254740991.0 + 2.0)  # wrong
 ```
 
-The hex representation makes this clear:
+The hex representation makes this clear (note that integers can be exact, but floating-point representations cannot):
 
 ```{python}
 print(hex(9007199254740991))  # exact
 print(hex(9007199254740992))  # exact
-print(hex(9007199254740993))  # last bit lost
+print(hex(9007199254740993))  # last bit lost for floating-point
 ```
 
 Large numbers like:

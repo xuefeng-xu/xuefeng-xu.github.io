@@ -4,17 +4,12 @@
   <li>
     [Continuous Monitoring of Bayesian A/B Tests under Differential Privacy](/research/dptest/)<br>
     <u>Xuefeng Xu</u>, {{< var joonasj >}}, {{< var anttih >}}, {{< var grahamc >}}<br>
-    Coming Soon<br>
+    Draft available on request<br>
   </li>
   <li>
     [SPRINT: Scalable Private Retrieval with Indexed Neighbor Trees](/research/sprint/)<br>
     <u>Xuefeng Xu</u>, {{< var grahamc >}}, {{< var hakanf >}}<br>
-    Coming Soon<br>
-  </li>
-  <li>
-    [FedPS: Federated data Preprocessing via aggregated Statistics](/research/fedps/)<br>
-    <u>Xuefeng Xu</u>, {{< var grahamc >}}<br>
-    Preprint 2026<br>
+    Draft available on request<br>
   </li>
   <li>
     [Federated Computation of ROC and PR Curves](/research/fedcurve/)<br>
@@ -26,6 +21,11 @@
 ##### Published
 
 <ol reversed class="loose_margin">
+  <li>
+    [FedPS: Federated Preprocessing for structured data via aggregated Statistics](/research/fedps/)<br>
+    <u>Xuefeng Xu</u>, {{< var grahamc >}}<br>
+    {{< var tmlr >}} 2026<br>
+  </li>
   <li>
     [Power Transform Revisited: Numerically Stable, and Federated](/research/powertf/)<br>
     <u>Xuefeng Xu</u>, {{< var grahamc >}}<br>

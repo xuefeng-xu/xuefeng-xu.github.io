@@ -25,15 +25,20 @@ about:
       icon: file-earmark-richtext-fill
       url: https://www.overleaf.com/read/ztntgcbkvxpy#1fbbb8
 citation:
-  type: article
-  id: Xu2025powertf
+  type: paper-conference
+  id: Xu2026powertf
   title: "Power Transform Revisited: Numerically Stable, and Federated"
   author:
   - Xuefeng Xu
   - Graham Cormode
   issued:
-    year: 2025
-  url: https://arxiv.org/abs/2510.04995
+    year: 2026
+  url: https://proceedings.mlr.press/v300/xu26d.html
+  volume: 300
+  page: 2800-2808
+  container-title: Proceedings of the 29th international conference on artificial intelligence and statistics
+  publisher: PMLR
+  collection-title: Proceedings of Machine Learning Research
 ---
 
 :::{#heading}
@@ -100,7 +105,7 @@ As shown in @fig-nll-formula, different forms yield very different numerical beh
 NLL computed under different variance formulas.
 :::
 
-##### *[Takeaway 1]{.mark} -- Equivalent formulas can behave differently, careful analysis is essential.*
+##### *[Takeaway 1: Equivalent formulas can behave differently, careful analysis is essential.]{.mark}*
 
 ## Challenge 2: Numerical Overflow
 
@@ -149,7 +154,7 @@ To avoid overflow, we use [log-domain computation](/blog/power-transform.qmd#log
 NLL computed in log-domain vs. linear-domain.
 :::
 
-##### *[Takeaway 2]{.mark} -- Use log-domain computation when handling extreme values.*
+##### *[Takeaway 2: Use log-domain computation when handling extreme values.]{.mark}*
 
 ## Challenge 3: Federated Aggregation
 
@@ -189,7 +194,7 @@ $$ {#eq-var-pairwise}
 NLL in federated setting: naive vs. pairwise.
 :::
 
-##### *[Takeaway 3]{.mark} -- Avoid textbook one-pass variance formula in numerical computing.*
+##### *[Takeaway 3: Avoid textbook one-pass variance formula in numerical computing.]{.mark}*
 
 ## Open Source Contributions
 

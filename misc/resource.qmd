@@ -13,7 +13,7 @@ title: Study Resources
 -   [Probabilistic Machine Learning](https://github.com/probml/pml-book)
 -   [Foundations of Machine Learning](https://cs.nyu.edu/~mohri/mlbook/)
 -   [The Algorithmic Foundations of Differential Privacy](https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf)
--   [The Complexity of Differential Privacy](https://scholar.harvard.edu/files/salil/files/manuscript_2017.pdf)
+-   [The Complexity of Differential Privacy](https://link.springer.com/chapter/10.1007/978-3-319-57048-8_7)
 -   [Introduction to Modern Cryptography](https://www.cs.umd.edu/~jkatz/imc.html)
 -   [Effective Python](https://effectivepython.com)
 

@@ -8,13 +8,14 @@ volunteer: "{{< iconify noto:green-heart >}}"
 
 # people
 anttih: "[Antti Honkela](https://www.cs.helsinki.fi/u/ahonkela/)"
-grahamc: "[Graham Cormode](http://dimacs.rutgers.edu/~graham/)"
+grahamc: "[Graham Cormode](https://www.cs.ox.ac.uk/people/graham.cormode/newindex.html)"
 hakanf: "[Hakan Ferhatosmanoglu](https://warwick.ac.uk/fac/sci/dcs/people/hakan_ferhatosmanoglu/)"
-joonasj: "[Joonas Jälkö](https://dblp.org/pid/188/5963.html)"
+joonasj: "[Joonas Jälkö](https://scholar.google.com/citations?user=7w8nM6MAAAAJ)"
 xuefengx: "[Xuefeng Xu](/)"
 yanqingy: "[Yanqing Yao](https://scholar.google.com/citations?user=arBASTIAAAAJ)"
 
 # projects
+dptest: "[DPTest](/research/dptest/)"
 fedcurve: "[FedCurve](/research/fedcurve/)"
 fedps: "[FedPS](/research/fedps/)"
 powertf: "[PowerTF](/research/powertf/)"
@@ -24,3 +25,4 @@ sprint: "[SPRINT](/research/sprint/)"
 aistats: Annual Conference on Artificial Intelligence and Statistics (AISTATS)
 iclr: International Conference on Learning Representations (ICLR)
 neurips: Annual Conference on Neural Information Processing Systems (NeurIPS)
+tmlr: Transactions on Machine Learning Research (TMLR)
