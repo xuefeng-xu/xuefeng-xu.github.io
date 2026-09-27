@@ -11,16 +11,16 @@
     <u>Xuefeng Xu</u>, {{< var grahamc >}}, {{< var hakanf >}}<br>
     Draft available on request<br>
   </li>
-  <li>
-    [Federated Computation of ROC and PR Curves](/research/fedcurve/)<br>
-    <u>Xuefeng Xu</u>, {{< var grahamc >}}<br>
-    Preprint 2025<br>
-  </li>
 </ol>
 
 ##### Published
 
 <ol reversed class="loose_margin">
+  <li>
+    [Federated Computation of ROC and PR Curves](/research/fedcurve/)<br>
+    <u>Xuefeng Xu</u>, {{< var grahamc >}}<br>
+    {{< var vldb >}} 2027<br>
+  </li>
   <li>
     [FedPS: Federated Preprocessing for structured data via aggregated Statistics](/research/fedps/)<br>
     <u>Xuefeng Xu</u>, {{< var grahamc >}}<br>

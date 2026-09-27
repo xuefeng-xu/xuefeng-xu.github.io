@@ -1,10 +1,11 @@
 ---
 title: "Power Transform Revisited:<br> Numerically Stable, and Federated"
+description: Numerically stable power transforms with an extension to federated learning.
+date: February 12, 2026
 aliases:
   - /powertf.html
-toc: false
 open-graph:
-  description: "Numerically stable power transforms with an extension to federated learning."
+  description: "{{< meta description >}}"
   image: "./img/tree-queue.png"
 about:
   id: heading
@@ -53,7 +54,7 @@ citation:
 :::
 :::
 
-##### **TL;DR**: {{< meta open-graph.description >}}
+##### **TL;DR**: {{< meta description >}}
 
 ## Introduction
 

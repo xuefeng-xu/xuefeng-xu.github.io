@@ -6,87 +6,44 @@ date-modified: last-modified
 
 ## Education
 
-```{=html}
 <ul class="loose_margin">
-  <li>
-    <div class="split-row">
-      <span class="left">University of Warwick</span>
-      <span class="right">Coventry, UK</span>
-    </div>
-    <div class="split-row">
-      <span class="left">Ph.D. in Computer Science</span>
-      <span class="right">09/2024 - Present</span>
-    </div>
-  </li>
-  <li>
-    <div class="split-row">
-      <span class="left">Beihang University</span>
-      <span class="right">Beijing, China</span>
-    </div>
-    <div class="split-row">
-      <span class="left">M.E. in Cyberspace Security</span>
-      <span class="right">09/2019 - 01/2022</span>
-    </div>
-  </li>
-  <li>
-    <div class="split-row">
-      <span class="left">Jilin University</span>
-      <span class="right">Changchun, China</span>
-    </div>
-    <div class="split-row">
-      <span class="left">B.E. in Communication Engineering</span>
-      <span class="right">09/2015 - 07/2019</span>
-    </div>
-  </li>
+<li>
+<div class="split-row"><span class="left">University of Warwick</span><span class="right">Coventry, UK</span></div>
+<div class="split-row"><span class="left">Ph.D. in Computer Science</span><span class="right">09/2024 - Present</span></div>
+Supervisor: {{< var grahamc >}} and {{< var hakanf >}}
+</li>
+<li>
+<div class="split-row"><span class="left">Beihang University</span><span class="right">Beijing, China</span></div>
+<div class="split-row"><span class="left">M.E. in Cyberspace Security</span><span class="right">09/2019 - 01/2022</span></div>
+</li>
+<li>
+<div class="split-row"><span class="left">Jilin University</span><span class="right">Changchun, China</span></div>
+<div class="split-row"><span class="left">B.E. in Communication Engineering</span><span class="right">09/2015 - 07/2019</span></div>
+</li>
 </ul>
-```
 
 ## Experience
 
-```{=html}
 <ul class="loose_margin">
-  <li>
-    <div class="split-row">
-      <span class="left">University of Oxford</span>
-      <span class="right">Oxford, UK</span>
-    </div>
-    <div class="split-row">
-      <span class="left">Visiting Research Student</span>
-      <span class="right">09/2026 - Present</span>
-    </div>
-  </li>
-  <li>
-    <div class="split-row">
-      <span class="left">University of Helsinki</span>
-      <span class="right">Helsinki, Finland</span>
-    </div>
-    <div class="split-row">
-      <span class="left">Visiting Doctoral Researcher</span>
-      <span class="right">01/2026 - 04/2026</span>
-    </div>
-  </li>
-  <li>
-    <div class="split-row">
-      <span class="left">PrimiHub</span>
-      <span class="right">Beijing, China</span>
-    </div>
-    <div class="split-row">
-      <span class="left">Privacy Engineer</span>
-      <span class="right">12/2022 - 08/2024</span>
-    </div>
-  </li>
-  <li>
-    <div class="split-row">
-      <span class="left">OPPO Research</span>
-      <span class="right">Shenzhen, China</span>
-    </div>
-    <div class="split-row">
-      <span class="left">Machine Learning Intern</span>
-      <span class="right">05/2022 - 08/2022</span>
-    </div>
-  </li>
+<li>
+<div class="split-row"><span class="left">University of Oxford</span><span class="right">Oxford, UK</span></div>
+<div class="split-row"><span class="left">Visiting Research Student</span><span class="right">09/2026 - Present</span></div>
+Host: {{< var grahamc >}}
+</li>
+<li>
+<div class="split-row"><span class="left">University of Helsinki</span><span class="right">Helsinki, Finland</span></div>
+<div class="split-row"><span class="left">Visiting Doctoral Researcher</span><span class="right">01/2026 - 04/2026</span></div>
+Host: {{< var anttih >}}
+</li>
+<li>
+<div class="split-row"><span class="left">PrimiHub</span><span class="right">Beijing, China</span></div>
+<div class="split-row"><span class="left">Privacy Engineer</span><span class="right">12/2022 - 08/2024</span></div>
+</li>
+<li>
+<div class="split-row"><span class="left">OPPO Research</span><span class="right">Shenzhen, China</span></div>
+<div class="split-row"><span class="left">Machine Learning Intern</span><span class="right">05/2022 - 08/2022</span></div>
+</li>
 </ul>
-```
 
 ## Research
 
@@ -100,25 +57,14 @@ date-modified: last-modified
 
 ##### Conference Reviewer
 
-```{=html}
 <ul class="tight_margin">
-  <li>
-    <div class="split-row">
-      <span class="left">{{< var neurips >}}</span>
-      <span class="right">2026</span>
-    </div>
-  </li>
-  <li>
-    <div class="split-row">
-      <span class="left">{{< var aistats >}}</span>
-      <span class="right">2026</span>
-    </div>
-  </li>
-  <li>
-    <div class="split-row">
-      <span class="left">{{< var iclr >}}</span>
-      <span class="right">2025 - 2027</span>
-    </div>
-  </li>
+<li>
+<div class="split-row"><span class="left">{{< var neurips >}}</span><span class="right">2026</span></div>
+</li>
+<li>
+<div class="split-row"><span class="left">{{< var aistats >}}</span><span class="right">2026 - 2027</span></div>
+</li>
+<li>
+<div class="split-row"><span class="left">{{< var iclr >}}</span><span class="right">2025 - 2027</span></div>
+</li>
 </ul>
-```

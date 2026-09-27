@@ -34,12 +34,14 @@ I am particularly interested in creating elegant algorithmic solutions that achi
 
 ### Recent News
 
-- 09/2026 \| {{< var visit >}} Research visit at the University of Oxford
+- 09/2026 \| {{< var poster >}} Presented a poster on {{< var fedcurve >}} at the [EuroTDP Workshop](https://eurotdp.pages.ista.ac.at/)
+- 09/2026 \| {{< var paper >}} {{< var fedcurve >}} was accepted at [VLDB 2027](https://vldb.org/2027/)
+- 09/2026 \| {{< var visit >}} Research visit hosted by {{< var grahamc >}} at the University of Oxford
 - 08/2026 \| {{< var paper >}} {{< var fedps >}} was accepted at [TMLR 2026](https://jmlr.org/tmlr/)
-- 05/2026 \| {{< var poster >}} Presented a poster on {{< var powertf >}} at [AISTATS 2026](https://virtual.aistats.org/Conferences/2026)
 
 <details>
 <summary>Older news</summary>
+- 05/2026 \| {{< var poster >}} Presented a poster on {{< var powertf >}} at [AISTATS 2026](https://virtual.aistats.org/Conferences/2026)
 - 02/2026 \| {{< var blog >}} New blog: [Transforming Between Distance Metrics](blog/distance-metrics.qmd)
 - 02/2026 \| {{< var talk >}} Gave a talk on {{< var fedcurve >}} and {{< var sprint >}} at the [Trustworthy Machine Learning group](https://www.helsinki.fi/en/researchgroups/trustworthy-machine-learning)
 - 01/2026 \| {{< var visit >}} Research visit hosted by {{< var anttih >}} at the University of Helsinki

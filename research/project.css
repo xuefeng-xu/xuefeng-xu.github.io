@@ -1,0 +1,7 @@
+/* css styles for project pages */
+
+#title-block-header .description,
+#title-block-header .quarto-title-meta-heading,
+#title-block-header .date {
+  display: none;
+}

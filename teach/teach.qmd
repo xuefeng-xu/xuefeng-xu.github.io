@@ -2,38 +2,22 @@
 
 ##### \ \ \ \ @ University of Warwick
 
-```{=html}
 <ul class="tight_margin">
-  <li>
-    <div class="split-row">
-      <span class="left">CS275 Probability and Statistics</span>
-      <span class="right">Autumn 2025</span>
-    </div>
-  </li>
-  <li>
-    <div class="split-row">
-      <span class="left">CS909 Machine Learning Algorithms and Practice</span>
-      <span class="right">Spring 2025</span>
-    </div>
-  </li>
-  <li>
-    <div class="split-row">
-      <span class="left">CS133 Professional Skills</span>
-      <span class="right">Autumn 2024</span>
-    </div>
-  </li>
+<li>
+<div class="split-row"><span class="left">CS275 Probability and Statistics</span><span class="right">Autumn 2025</span></div>
+</li>
+<li>
+<div class="split-row"><span class="left">CS909 Machine Learning Algorithms and Practice</span><span class="right">Spring 2025</span></div>
+</li>
+<li>
+<div class="split-row"><span class="left">CS133 Professional Skills</span><span class="right">Autumn 2024</span></div>
+</li>
 </ul>
-```
 
 ##### \ \ \ \ @ Beihang University
 
-```{=html}
 <ul class="tight_margin">
-  <li>
-    <div class="split-row">
-      <span class="left">39112201 Abstract Algebra</span>
-      <span class="right">Autumn 2019</span>
-    </div>
-  </li>
+<li>
+<div class="split-row"><span class="left">39112201 Abstract Algebra</span><span class="right">Autumn 2019</span></div>
+</li>
 </ul>
-```

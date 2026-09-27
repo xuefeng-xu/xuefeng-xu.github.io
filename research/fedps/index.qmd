@@ -1,10 +1,11 @@
 ---
 title: "FedPS: Federated Preprocessing for structured data<br> via aggregated Statistics"
+description: A framework for preprocessing tabular data in federated learning.
+date: September 14, 2026
 aliases:
   - /fedps.html
-toc: false
 open-graph:
-  description: "A framework for preprocessing tabular data in federated learning."
+  description: "{{< meta description >}}"
   image: "./img/overview.png"
 about:
   id: heading
@@ -30,12 +31,14 @@ about:
 citation:
   type: article-journal
   id: Xu2026fedps
-  title: "FedPS: Federated Preprocessing for structured data via aggregated Statistics"
+  title: 'FedPS: Federated Preprocessing <span class="nocase">for structured data via aggregated</span> Statistics'
   author:
   - Xuefeng Xu
   - Graham Cormode
   issued:
     year: 2026
+    month: 9
+    day: 24
   url: https://openreview.net/forum?id=MdeXZVjNKu
   container-title: Transactions on Machine Learning Research
 MinMaxScaler: "[*MinMaxScaler*](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html)"
@@ -64,7 +67,7 @@ IterativeImputer: "[*IterativeImputer*](https://scikit-learn.org/stable/modules/
 :::
 :::
 
-##### **TL;DR**: {{< meta open-graph.description >}}
+##### **TL;DR**: {{< meta description >}}
 
 ## Why Federated Preprocessing?
 

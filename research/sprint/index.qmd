@@ -1,10 +1,11 @@
 ---
 title: "SPRINT: Scalable Private Retrieval<br> with Indexed Neighbor Trees"
+description: Private nearest neighbor search over vector databases using a tree-indexed structure.
+date: last-modified
 aliases:
   - /sprint.html
-toc: false
 open-graph:
-  description: "Private nearest neighbor search over vector databases using a tree-indexed structure."
+  description: "{{< meta description >}}"
 about:
   id: heading
   template: jolla
@@ -22,4 +23,4 @@ about:
 :::
 :::
 
-##### **TL;DR**: {{< meta open-graph.description >}}
+##### **TL;DR**: {{< meta description >}}

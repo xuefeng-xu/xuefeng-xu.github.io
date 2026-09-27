@@ -1,5 +1,19 @@
 ---
+listing:
+  id: rss-listing
+  contents:
+    - "powertf/*.qmd"
+    - "fedps/*.qmd"
+    - "fedcurve/*.qmd"
+  sort: "date desc"
+  feed:
+    type: metadata
 pagetitle: "Research"
+description: "Xuefeng Xu's Research"
+toc: true
 ---
 
 {{< include research.qmd >}}
+
+::: {#rss-listing style="display: none"}
+:::

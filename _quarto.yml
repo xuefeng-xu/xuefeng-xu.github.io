@@ -29,6 +29,10 @@ website:
         text: Misc.
     right:
       - icon: rss
+        text: Research
+        href: research/index.xml
+      - icon: rss
+        text: Blog
         href: blog/index.xml
   page-footer:
     right: "© 2026 [Xuefeng Xu](/)<br> License [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)"

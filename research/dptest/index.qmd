@@ -1,10 +1,11 @@
 ---
 title: "Continuous Monitoring of Bayesian A/B Tests<br> under Differential Privacy"
+description: Noise-aware differentially private sequential Bayesian A/B testing.
+date: last-modified
 aliases:
   - /dptest.html
-toc: false
 open-graph:
-  description: "Noise-aware differentially private sequential Bayesian A/B testing."
+  description: "{{< meta description >}}"
 about:
   id: heading
   template: jolla
@@ -22,4 +23,4 @@ about:
 :::
 :::
 
-##### **TL;DR**: {{< meta open-graph.description >}}
+##### **TL;DR**: {{< meta description >}}
