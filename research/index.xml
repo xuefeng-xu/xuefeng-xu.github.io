@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Xuefeng Xu</title>
+<link>https://xuefeng-xu.github.io/research/</link>
+<atom:link href="https://xuefeng-xu.github.io/research/index.xml" rel="self" type="application/rss+xml"/>
+<description>Xuefeng Xu&#39;s Research</description>
+<generator>quarto-1.10.18</generator>
+<lastBuildDate>Sat, 26 Sep 2026 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Federated Computation of ROC and PR Curves</title>
+  <link>https://xuefeng-xu.github.io/research/fedcurve/</link>
+  <description><![CDATA[ Privacy-preserving ROC/PR curve approximation for federated learning. ]]></description>
+  <guid>https://xuefeng-xu.github.io/research/fedcurve/</guid>
+  <pubDate>Sat, 26 Sep 2026 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>FedPS: Federated Preprocessing for structured data via aggregated Statistics</title>
+  <link>https://xuefeng-xu.github.io/research/fedps/</link>
+  <description><![CDATA[ A framework for preprocessing tabular data in federated learning. ]]></description>
+  <guid>https://xuefeng-xu.github.io/research/fedps/</guid>
+  <pubDate>Sun, 13 Sep 2026 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Power Transform Revisited: Numerically Stable, and Federated</title>
+  <link>https://xuefeng-xu.github.io/research/powertf/</link>
+  <description><![CDATA[ Numerically stable power transforms with an extension to federated learning. ]]></description>
+  <guid>https://xuefeng-xu.github.io/research/powertf/</guid>
+  <pubDate>Thu, 12 Feb 2026 00:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

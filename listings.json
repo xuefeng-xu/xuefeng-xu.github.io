@@ -1,5 +1,13 @@
 [
   {
+    "listing": "/research/index.html",
+    "items": [
+      "/research/fedcurve/index.html",
+      "/research/fedps/index.html",
+      "/research/powertf/index.html"
+    ]
+  },
+  {
     "listing": "/blog/index.html",
     "items": [
       "/blog/distance-metrics.html",
